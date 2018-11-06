@@ -1,0 +1,35 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="QuoteApp.FrontEnd.View.ItemView.QuoteItemView"
+             x:Name="this">
+    <ContentPage.Content>
+        <Grid BindingContext="{x:Reference this}"
+              BackgroundColor="#905000">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+            
+            <Image Grid.Row="0" Source="quoteitemheader.png"/>
+
+            <Label x:Name="QuoteItemTextView" Grid.Row="1" 
+                   Text="{Binding QuoteItem.Text}"
+                   HorizontalOptions="CenterAndExpand"
+                   VerticalOptions="CenterAndExpand"
+                   FontSize="Large"
+                   FontAttributes="Italic,Bold"/>
+
+            <StackLayout Grid.Row="2" HorizontalOptions="End">
+                <Label x:Name="QuoteItemAutorsView" Text="Cat"/>
+                <Label x:Name="QuoteItemDateView" Text="{Binding QuoteItem.Date}"/>
+            </StackLayout>
+
+            <Label Grid.Row="3"
+                   x:Name="QuoteItemContextView"
+                   Text="{Binding QuoteItem.Context}"/>
+        </Grid>
+    </ContentPage.Content>
+</ContentPage> 

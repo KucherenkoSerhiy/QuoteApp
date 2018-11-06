@@ -1,0 +1,48 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <DebugType>pdbonly</DebugType>
+    <DebugSymbols>true</DebugSymbols>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="FrontEnd\Resources\ResourcesRaw\Drawings\QuoteItemHeader.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="sqlite-net-pcl" Version="1.5.231" />
+    <PackageReference Include="System.Data.SQLite" Version="1.0.109.2" />
+    <PackageReference Include="Xamarin.Forms" Version="3.1.0.697729" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Update="FrontEnd\View\ItemView\QuoteItemView.xaml.cs">
+      <DependentUpon>QuoteItemView.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="FrontEnd\View\RotationSliderPage.xaml.cs">
+      <DependentUpon>RotationSliderPage.xaml</DependentUpon>
+    </Compile>
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Update="FrontEnd\Resources\ResourcesApp\ImageSources.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="FrontEnd\View\ItemView\QuoteItemView.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="FrontEnd\View\RotationSliderPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="FrontEnd\Resources\ResourcesRaw\Drawings\" />
+    <Folder Include="FrontEnd\Resources\ResourcesRaw\Icons\" />
+    <Folder Include="FrontEnd\View\ListView\" />
+  </ItemGroup>
+</Project>

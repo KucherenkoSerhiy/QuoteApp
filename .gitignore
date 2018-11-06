@@ -1,0 +1,7 @@
+QuoteApp/QuoteApp/bin/
+QuoteApp/QuoteApp/obj/
+QuoteApp/QuoteApp.Android/bin/
+QuoteApp/QuoteApp.Android/obj/
+QuoteApp/QuoteApp.iOS/obj/
+QuoteApp/QuoteApp.UWP/obj/
+.vs/
