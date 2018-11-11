@@ -16,7 +16,6 @@ namespace QuoteApp.Backend.BusinessLogic.Manager
 
         public static DatabaseManager Instance => _instance ?? (_instance = new DatabaseManager());
 
-        //TODO: link objects
         private DatabaseManager()
         {
             _sqliteDbManager = SqliteDbManager.Instance;
@@ -33,6 +32,8 @@ namespace QuoteApp.Backend.BusinessLogic.Manager
             {
                 InitializeDatabase();
             }
+
+            CreateLinks();
         }
 
         #endregion
@@ -65,6 +66,25 @@ namespace QuoteApp.Backend.BusinessLogic.Manager
             string summary = $"Total: Quotes={Quotes.Count}, Autors={Autors.Count}, Themes={Themes.Count}, Links={AutorQuoteThemes.Count}";
 
             PersistentProperties.Instance.DatabaseIsInitialized = true;
+        }
+
+        private void CreateLinks()
+        {
+            foreach (var autorQuoteTheme in AutorQuoteThemes)
+            {
+                Autor autor = Autors.Single(x => x.Id == autorQuoteTheme.AutorId);
+                Quote quote = Quotes.Single(x => x.Id == autorQuoteTheme.QuoteId);
+                Theme theme = Themes.Single(x => x.Id == autorQuoteTheme.ThemeId);
+
+                autor.Quotes.Add(quote);
+                autor.Themes.Add(theme);
+
+                quote.Autors.Add(autor);
+                quote.Themes.Add(theme);
+
+                theme.Autors.Add(autor);
+                theme.Quotes.Add(quote);
+            }
         }
 
         //TODO: theme colors

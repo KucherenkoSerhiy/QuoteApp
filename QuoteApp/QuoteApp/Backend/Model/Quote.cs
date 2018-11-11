@@ -18,5 +18,12 @@ namespace QuoteApp.Backend.Model
         public List<Autor> Autors { get; set; }
         [Ignore]
         public List<Theme> Themes { get; set; }
+
+        public Quote()
+        {
+            Autors = new List<Autor>();
+            Themes = new List<Theme>();
+        }
+
     }
 }

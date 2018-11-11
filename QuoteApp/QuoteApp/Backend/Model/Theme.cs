@@ -16,5 +16,12 @@ namespace QuoteApp.Backend.Model
         public List<Autor> Autors { get; set; }
         [Ignore]
         public List<ThemeColor> Colors { get; set; }
+        
+        public Theme()
+        {
+            Quotes = new List<Quote>();
+            Autors = new List<Autor>();
+            Colors = new List<ThemeColor>();
+        }
     }
 }
