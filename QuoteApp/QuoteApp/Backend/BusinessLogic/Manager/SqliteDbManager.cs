@@ -1,5 +1,7 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.IO;
+using QuoteApp.Backend.BusinessLogic.Subsystem.PersistentProperties;
 using QuoteApp.Backend.Model;
 using QuoteApp.Globals;
 using SQLite;
@@ -15,57 +17,40 @@ namespace QuoteApp.Backend.BusinessLogic.Manager
 
         private SqliteDbManager()
         {
-            dataBase = new SQLiteConnection(dbPath);
-            InitializeDb();
+            if (!PersistentProperties.Instance.DatabaseIsInitialized)
+            {
+                Directory.CreateDirectory(Path.GetDirectoryName(_dbPath));
+                if (File.Exists(_dbPath)) File.Delete(_dbPath);
+            }
+
+            _dataBase = new SQLiteConnection(_dbPath);
         }
 
         #endregion
 
-        private readonly string dbPath = Path.Combine(System.Environment.GetFolderPath(System.Environment.SpecialFolder.Personal), QuoteAppConstants.DatabaseFilePath);
-        readonly SQLiteConnection dataBase;
+        private readonly string _dbPath = Path
+            .Combine(Environment.GetFolderPath(System.Environment.SpecialFolder.Personal),
+                QuoteAppConstants.DatabaseFilePath).Substring(1);
+        private SQLiteConnection _dataBase;
 
         public void CreateTable<T>()
         {
-            dataBase.CreateTable<T>();
+            _dataBase.CreateTable<T>();
         }
 
-        
-        private void InitializeDb()
+        public void InsertList<T>(IEnumerable<T> objectToInsert)
         {
-            CreateTable<Quote>();
-            CreateTable<Autor>();
-            CreateTable<Theme>();
-
-            // read autors
-            // read quotes
-            // read themes
-            // create relations
-        }
-
-
-        public void Insert <T>(T objectToInsert)
-        {
-            dataBase.Insert(objectToInsert);
+            _dataBase.InsertAll(objectToInsert);
         }
 
         public void Update<T>(T objectToUpdate)
         {
-            dataBase.Update(objectToUpdate);
+            _dataBase.Update(objectToUpdate);
         }
-
-        public void Delete<T>(T objectToDelete)
-        {
-            dataBase.Delete(objectToDelete);
-        }
-
-        public T Get<T>(int id) where T: new()
-        {
-            return dataBase.Get<T>(id);
-        }
-
+        
         public List<T> GetList<T>() where T: new()
         {
-            return dataBase.Table<T>().ToList();
+            return _dataBase.Table<T>().ToList();
         }
     }
 }

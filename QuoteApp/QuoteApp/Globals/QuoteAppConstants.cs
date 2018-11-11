@@ -2,6 +2,7 @@
 {
     public class QuoteAppConstants
     {
-        public const string DatabaseFilePath = "QuoteApp/Database.db";
+        public const string DatabaseFilePath = "QuoteApp/Database.db3";
+        public const string PropertiesFilePath = "QuoteApp/Properties";
     }
 }

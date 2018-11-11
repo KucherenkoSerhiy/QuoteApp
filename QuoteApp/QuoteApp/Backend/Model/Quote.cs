@@ -7,7 +7,6 @@ namespace QuoteApp.Backend.Model
     public class Quote
     {
         [PrimaryKey]
-        [AutoIncrement]
         public int Id { get; set; }
 
         public string Text { get; set; }
@@ -19,12 +18,5 @@ namespace QuoteApp.Backend.Model
         public List<Autor> Autors { get; set; }
         [Ignore]
         public List<Theme> Themes { get; set; }
-        
-        public void SetValues(Quote quote)
-        {
-            this.Text = quote.Text;
-            this.Context = quote.Context;
-            this.Date = quote.Date;
-        }
     }
 }

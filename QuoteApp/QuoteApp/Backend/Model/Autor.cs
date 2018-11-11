@@ -7,7 +7,6 @@ namespace QuoteApp.Backend.Model
     public class Autor
     {
         [PrimaryKey]
-        [AutoIncrement]
         public int Id { get; set; }
 
         public string FullName { get; set; }
@@ -19,13 +18,5 @@ namespace QuoteApp.Backend.Model
         public List<Quote> Quotes { get; set; }
         [Ignore]
         public List<Theme> Themes { get; set; }
-
-        public void SetValues(Autor autor)
-        {
-            this.FullName = autor.FullName;
-            this.Title = autor.Title;
-            this.BirthDate = autor.BirthDate;
-            this.DeathDate = autor.DeathDate;
-        }
     }
 }

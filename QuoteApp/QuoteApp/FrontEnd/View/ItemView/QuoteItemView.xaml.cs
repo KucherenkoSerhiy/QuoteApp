@@ -16,7 +16,7 @@ namespace QuoteApp.FrontEnd.View.ItemView
             {
                 Date = DateTime.Now,
                 Text = "I used to think I was indecisive, but now I'm not too sure.",
-                Context = "Said by some anonymous person in the street, let's suppos it's said by a cat."
+                Context = "Said by some anonymous person in the street, let's suppose it's said by a cat."
             };
 
             InitializeComponent();

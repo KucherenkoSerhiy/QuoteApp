@@ -7,8 +7,21 @@ namespace QuoteApp.Backend.Model
     /// </summary>
     public class AutorQuoteTheme
     {
-        [PrimaryKey] public int AutorId { get; set; }
-        [PrimaryKey] public int QuoteId { get; set; }
-        [PrimaryKey] public int ThemeId { get; set; }
+        public int AutorId { get; set; }
+
+        public int QuoteId { get; set; }
+
+        public int ThemeId { get; set; }
+
+        public AutorQuoteTheme(int autorId, int quoteId, int themeId)
+        {
+            AutorId = autorId;
+            QuoteId = quoteId;
+            ThemeId = themeId;
+        }
+
+        public AutorQuoteTheme()
+        {
+        }
     }
 }
