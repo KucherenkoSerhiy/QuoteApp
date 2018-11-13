@@ -2,27 +2,64 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="QuoteApp.MainPage">
-
-    <StackLayout x:Name="ButtonStackLayout">
-        <!-- Place new controls here -->
-        <Label Text="This is Jimmy" 
-           HorizontalOptions="Center"
-           VerticalOptions="Start" />
-
-        <Image x:Name="MyImage"/>
-
-        <Button x:Name="RotationSliderPageNavigationButton"
+    <ContentPage.Content>
+        <ScrollView>
+            <StackLayout x:Name="ButtonStackLayout">
+                <Button x:Name="RotationSliderPageNavigationButton"
                 Text="Navigate to Rotation Slider"
+                FontSize="Small"
                 HorizontalOptions="Center"
                 VerticalOptions="Center"
                 Clicked="RotationSliderPageNavigationButton_OnClicked"/>
-
-        <Button x:Name="QuoteItemPageNavigationButton"
-                Text="Navigate to Quote Item Page"
+                <Button x:Name="QuoteItemDayPageNavigationButton"
+                Text="Quote Item Day Page"
+                FontSize="Small"
                 HorizontalOptions="Center"
                 VerticalOptions="Center"
-                Clicked="QuoteItemPageNavigationButton_OnClicked"/>
-
-    </StackLayout>
-
+                Clicked="QuoteItemDayPageNavigationButton_OnClicked"/>
+                <Button x:Name="QuoteItemNightPageNavigationButton"
+                Text="Quote Item Night Page"
+                FontSize="Small"
+                HorizontalOptions="Center"
+                VerticalOptions="Center"
+                Clicked="QuoteItemNightPageNavigationButton_OnClicked"/>
+                <Button x:Name="ThemeListDayPageNavigationButton"
+                Text="Theme List Day Page"
+                FontSize="Small"
+                HorizontalOptions="Center"
+                VerticalOptions="Center"
+                Clicked="ThemeListDayPageNavigationButton_OnClicked"/>
+                <Button x:Name="ThemeListNightPageNavigationButton"
+                Text="Theme List Night Page"
+                FontSize="Small"
+                HorizontalOptions="Center"
+                VerticalOptions="Center"
+                Clicked="ThemeListNightPageNavigationButton_OnClicked"/>
+                <Button x:Name="AutorListDayPageNavigationButton"
+                Text="Autor List Day Page"
+                FontSize="Small"
+                HorizontalOptions="Center"
+                VerticalOptions="Center"
+                Clicked="AutorListDayPageNavigationButton_OnClicked"/>
+                <Button x:Name="AutorListNightPageNavigationButton"
+                Text="Autor List Night Page"
+                FontSize="Small"
+                HorizontalOptions="Center"
+                VerticalOptions="Center"
+                Clicked="AutorListNightPageNavigationButton_OnClicked"/>
+                <Button x:Name="SettingsDayPageNavigationButton"
+                Text="Settings Day Page"
+                FontSize="Small"
+                HorizontalOptions="Center"
+                VerticalOptions="Center"
+                Clicked="SettingsDayPageNavigationButton_OnClicked"/>
+                <Button x:Name="SettingsNightPageNavigationButton"
+                Text="Settings Night Page"
+                FontSize="Small"
+                HorizontalOptions="Center"
+                VerticalOptions="Center"
+                Clicked="SettingsNightPageNavigationButton_OnClicked"/>
+            </StackLayout>
+        </ScrollView>
+    </ContentPage.Content>
 </ContentPage>

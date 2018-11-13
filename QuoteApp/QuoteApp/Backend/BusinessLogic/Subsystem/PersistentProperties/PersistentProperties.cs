@@ -17,9 +17,32 @@ namespace QuoteApp.Backend.BusinessLogic.Subsystem.PersistentProperties
         #region Singleton
         private static PersistentProperties _instance;
 
-        public static PersistentProperties Instance => _instance ?? (_instance = File.Exists(FilePath)
-                                                           ? QuoteAppUtils.DeserializeXml<PersistentProperties>(FilePath)
-                                                           : new PersistentProperties());
+        public static PersistentProperties Instance
+        {
+            get
+            {
+                if (_instance != null) return _instance;
+
+                if (File.Exists(FilePath))
+                {
+                    if (!string.IsNullOrWhiteSpace(File.ReadAllText(FilePath)))
+                    {
+                        _instance = QuoteAppUtils.DeserializeXml<PersistentProperties>(FilePath);
+                    }
+                    else
+                    {
+                        File.Delete(FilePath);
+                        _instance = new PersistentProperties();
+                    }
+                }
+                else
+                {
+                    _instance = new PersistentProperties();
+                }
+
+                return _instance;
+            }
+        }
 
         private PersistentProperties()
         {
@@ -29,6 +52,7 @@ namespace QuoteApp.Backend.BusinessLogic.Subsystem.PersistentProperties
         #endregion
 
         public bool DatabaseIsInitialized { get; set; }
+        public bool NightModeActivated { get; set; }
 
         public void SerializeToXml()
         {

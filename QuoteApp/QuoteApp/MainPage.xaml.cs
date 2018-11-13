@@ -1,4 +1,5 @@
 ﻿using System;
+using QuoteApp.Backend.BusinessLogic.Subsystem.PersistentProperties;
 using QuoteApp.FrontEnd.View;
 using QuoteApp.FrontEnd.View.ItemView;
 using Xamarin.Forms;
@@ -10,9 +11,7 @@ namespace QuoteApp
         public MainPage()
         {
             InitializeComponent();
-            MyImage.Source = Device.RuntimePlatform == Device.Android 
-                ? ImageSource.FromFile("quote_item_header.png") 
-                : ImageSource.FromFile("Images/quote_item_header.png");
+            NavigationPage.SetHasNavigationBar(this, false);
         }
 
         private async void RotationSliderPageNavigationButton_OnClicked(object sender, EventArgs e)
@@ -20,9 +19,52 @@ namespace QuoteApp
             await Navigation.PushAsync(new RotationSliderPage());
         }
 
-        private async void QuoteItemPageNavigationButton_OnClicked(object sender, EventArgs e)
+        private async void QuoteItemDayPageNavigationButton_OnClicked(object sender, EventArgs e)
         {
+            PersistentProperties.Instance.NightModeActivated = false;
             await Navigation.PushAsync(new QuoteItemView());
+        }
+
+        private async void QuoteItemNightPageNavigationButton_OnClicked(object sender, EventArgs e)
+        {
+            PersistentProperties.Instance.NightModeActivated = true;
+            await Navigation.PushAsync(new QuoteItemView());
+        }
+
+        private void ThemeListDayPageNavigationButton_OnClicked(object sender, EventArgs e)
+        {
+            PersistentProperties.Instance.NightModeActivated = false;
+
+        }
+
+        private void ThemeListNightPageNavigationButton_OnClicked(object sender, EventArgs e)
+        {
+            PersistentProperties.Instance.NightModeActivated = true;
+
+        }
+
+        private void AutorListDayPageNavigationButton_OnClicked(object sender, EventArgs e)
+        {
+            PersistentProperties.Instance.NightModeActivated = false;
+
+        }
+
+        private void AutorListNightPageNavigationButton_OnClicked(object sender, EventArgs e)
+        {
+            PersistentProperties.Instance.NightModeActivated = true;
+
+        }
+
+        private void SettingsDayPageNavigationButton_OnClicked(object sender, EventArgs e)
+        {
+            PersistentProperties.Instance.NightModeActivated = false;
+
+        }
+
+        private void SettingsNightPageNavigationButton_OnClicked(object sender, EventArgs e)
+        {
+            PersistentProperties.Instance.NightModeActivated = true;
+
         }
     }
 }
