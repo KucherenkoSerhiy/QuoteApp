@@ -14,6 +14,9 @@ namespace QuoteApp.Droid
     {
         protected override void OnCreate(Bundle savedInstanceState)
         {
+            App.ScreenWidth = (int)Resources.DisplayMetrics.WidthPixels; // real pixels
+            App.ScreenHeight = (int)Resources.DisplayMetrics.HeightPixels; // real pixels
+
             TabLayoutResource = Resource.Layout.Tabbar;
             ToolbarResource = Resource.Layout.Toolbar;
 

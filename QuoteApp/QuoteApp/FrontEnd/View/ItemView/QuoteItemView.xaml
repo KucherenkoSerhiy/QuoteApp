@@ -1,11 +1,11 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:forms="clr-namespace:SkiaSharp.Views.Forms;assembly=SkiaSharp.Views.Forms"
              x:Class="QuoteApp.FrontEnd.View.ItemView.QuoteItemView"
              x:Name="this">
     <ContentPage.Content>
-        <Grid BindingContext="{x:Reference this}"
-              BackgroundColor="#905000">
+        <Grid x:Name="ContentRoot" BindingContext="{x:Reference this}">
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="*"/>

@@ -13,17 +13,5 @@ namespace QuoteApp.Backend.Model
         public string Context { get; set; }
         public DateTime Date { get; set; }
 
-        
-        [Ignore]
-        public List<Autor> Autors { get; set; }
-        [Ignore]
-        public List<Theme> Themes { get; set; }
-
-        public Quote()
-        {
-            Autors = new List<Autor>();
-            Themes = new List<Theme>();
-        }
-
     }
 }
