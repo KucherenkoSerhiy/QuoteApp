@@ -65,6 +65,10 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <AndroidAsset Include="Assets\Fonts\LiberationSerif-Bold.ttf" />
+    <AndroidAsset Include="Assets\Fonts\LiberationSerif-BoldItalic.ttf" />
+    <AndroidAsset Include="Assets\Fonts\LiberationSerif-Italic.ttf" />
+    <AndroidAsset Include="Assets\Fonts\LiberationSerif-Regular.ttf" />
     <None Include="Resources\AboutResources.txt" />
     <None Include="Assets\AboutAssets.txt" />
     <None Include="Properties\AndroidManifest.xml" />
@@ -101,6 +105,9 @@
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Resources\drawable\quote_item_header.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Assets\Fonts\SIL Open Font License.txt" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\Android\Xamarin.Android.CSharp.targets" />
 </Project>

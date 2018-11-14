@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using QuoteApp.Backend.BusinessLogic.Subsystem.PersistentProperties;
 using QuoteApp.Backend.Model;
+using QuoteApp.Globals;
 using SkiaSharp;
 using SkiaSharp.Views.Forms;
 using Xamarin.Forms;
@@ -16,14 +17,28 @@ namespace QuoteApp.FrontEnd.View.ItemView
         public Autor AutorItem { get; set; }
         public Quote QuoteItem { get; set; }
         public Theme ThemeItem { get; set; }
+
         public List<ThemeColor> ThemeDayBackgroundColorItems { get; set; }
         public List<ThemeColor> ThemeNightBackgroundColorItems { get; set; }
+        public Color LineColor => PersistentProperties.Instance.NightModeActivated ? NightLineColor : DayLineColor;
+        public Color TextColor => PersistentProperties.Instance.NightModeActivated ? NightTextColor : DayTextColor;
+
+        private Color DayLineColor { get; set; }
+        private Color DayTextColor { get; set; }
+        private Color NightLineColor { get; set; }
+        private Color NightTextColor { get; set; }
 
         public QuoteItemView()
         {
+            InitializeDefaultValues();
             RetrieveDependencies();
 
             InitializeComponent();
+            SetPageContent();
+        }
+
+        private void SetPageContent()
+        {
             NavigationPage.SetHasNavigationBar(this, false);
 
             SKCanvasView canvasView = new SKCanvasView();
@@ -39,23 +54,21 @@ namespace QuoteApp.FrontEnd.View.ItemView
             };
         }
 
+        private void InitializeDefaultValues()
+        {
+            ThemeDayBackgroundColorItems = QuoteAppConstants.DefaultDayBackgroundColorGradientItems;
+            DayLineColor = Color.FromHex(QuoteAppConstants.DefaultDayLineColor);
+            DayTextColor = Color.FromHex(QuoteAppConstants.DefaultDayTextColor);
+            ThemeNightBackgroundColorItems = QuoteAppConstants.DefaultNightBackgroundColorGradientItems;
+            NightLineColor = Color.FromHex(QuoteAppConstants.DefaultNightLineColor);
+            NightTextColor = Color.FromHex(QuoteAppConstants.DefaultNightTextColor);
+        }
+
         private void RetrieveDependencies()
         {
             AutorItem = new Autor { FullName = "Indecisive anonymous" };
             QuoteItem = new Quote { Text = "I used to think I was indecisive, but now I'm not too sure." };
             ThemeItem = new Theme { Name = "Life" };
-            ThemeDayBackgroundColorItems = new List<ThemeColor>
-            {
-                new ThemeColor{ ColorCode = "fffefc", GradientPosition = 0 },
-                new ThemeColor{ ColorCode = "babfa6", GradientPosition = 0.625f },
-                new ThemeColor{ ColorCode = "666666", GradientPosition = 0.9f }
-            };
-            ThemeNightBackgroundColorItems = new List<ThemeColor>
-            {
-                new ThemeColor{ ColorCode = "141414", GradientPosition = 0 },
-                new ThemeColor{ ColorCode = "353535", GradientPosition = 0.625f },
-                new ThemeColor{ ColorCode = "bda2a1", GradientPosition = 0.9f }
-            };
         }
 
         void OnCanvasViewPaintSurface(object sender, SKPaintSurfaceEventArgs args)
