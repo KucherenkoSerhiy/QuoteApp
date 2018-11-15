@@ -54,10 +54,12 @@
 
                 <Button x:Name="ButtonBack" Text="Back" FontSize="{Binding ButtonTextSize}"
                         Style="{StaticResource ButtonDefaultStyle}" Grid.Column="0"
-                        BorderColor="{Binding LineColor}" TextColor="{Binding TextColor}"/>
+                        BorderColor="{Binding LineColor}" TextColor="{Binding TextColor}"
+                        Clicked="ButtonBack_OnClicked"/>
                 <Button x:Name="ButtonNextQuote" Text="Next Quote" FontSize="{Binding ButtonTextSize}"
                         Style="{StaticResource ButtonDefaultStyle}"  Grid.Column="2"
-                        BorderColor="{Binding LineColor}" TextColor="{Binding TextColor}"/>
+                        BorderColor="{Binding LineColor}" TextColor="{Binding TextColor}"
+                        Clicked="ButtonNextQuote_OnClicked"/>
             </Grid>
         </Grid>
     </ContentPage.Content>

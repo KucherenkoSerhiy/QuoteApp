@@ -113,5 +113,16 @@ namespace QuoteApp.FrontEnd.View.ItemView
                                 gradientPositions,
                                 SKShaderTileMode.Repeat);
         }
+
+        private async void ButtonBack_OnClicked(object sender, EventArgs e)
+        {
+            await Navigation.PopAsync();
+        }
+
+        private async void ButtonNextQuote_OnClicked(object sender, EventArgs e)
+        {
+            PersistentProperties.Instance.NightModeActivated = !PersistentProperties.Instance.NightModeActivated;
+            await Navigation.PushAsync(new QuoteItemView());
+        }
     }
 }
