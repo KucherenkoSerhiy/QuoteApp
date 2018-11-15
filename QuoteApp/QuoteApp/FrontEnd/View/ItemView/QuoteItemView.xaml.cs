@@ -18,6 +18,10 @@ namespace QuoteApp.FrontEnd.View.ItemView
         public Quote QuoteItem { get; set; }
         public Theme ThemeItem { get; set; }
 
+        public int QuoteTextSize => QuoteAppUtils.PxToPt(App.ScreenHeight/50);
+        public int ThemeTextSize => QuoteAppUtils.PxToPt(App.ScreenHeight/25);
+        public int ButtonTextSize => QuoteAppUtils.PxToPt(App.ScreenHeight/40);
+
         public List<ThemeColor> ThemeDayBackgroundColorItems { get; set; }
         public List<ThemeColor> ThemeNightBackgroundColorItems { get; set; }
         public Color LineColor => PersistentProperties.Instance.NightModeActivated ? NightLineColor : DayLineColor;

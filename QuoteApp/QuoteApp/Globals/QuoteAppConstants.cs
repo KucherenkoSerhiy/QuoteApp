@@ -8,6 +8,8 @@ namespace QuoteApp.Globals
         public const string DatabaseFilePath = "QuoteApp/Database.db3";
         public const string PropertiesFilePath = "QuoteApp/Properties";
 
+        #region Style Colors
+
         public static readonly List<ThemeColor> DefaultDayBackgroundColorGradientItems = new List<ThemeColor>
         {
             new ThemeColor{ ColorCode = "fffefc", GradientPosition = 0 },
@@ -25,5 +27,7 @@ namespace QuoteApp.Globals
         };
         public const string DefaultNightLineColor = "666666";
         public const string DefaultNightTextColor = "ffffff";
+
+        #endregion
     }
 }

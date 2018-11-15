@@ -60,5 +60,14 @@ namespace QuoteApp.Globals
             string[] lines = text.Split(new[] { Environment.NewLine }, StringSplitOptions.None);
             return lines;
         }
+
+        /// <summary>
+        /// Used to get font size
+        /// </summary>
+        /// <returns></returns>
+        public static int PxToPt(double px)
+        {
+            return (int)(px * 0.75);
+        }
     }
 }

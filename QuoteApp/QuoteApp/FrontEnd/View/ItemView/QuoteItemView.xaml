@@ -16,21 +16,14 @@
                 <RowDefinition Height="Auto"/>
             </Grid.RowDefinitions>
             
-            <Button x:Name="AutorItemNameView" Text="{Binding ThemeItem.Name}" TextColor="{Binding TextColor}"
-                    BackgroundColor="Transparent" BorderColor="{Binding LineColor}"
-                    Grid.Row="0" FontSize="Large" CornerRadius="20" BorderWidth="1"
-                    HorizontalOptions="Fill" VerticalOptions="Fill">
-                <Button.FontFamily>
-                    <OnPlatform x:TypeArguments="x:String">
-                        <On Platform="iOS" Value="LiberationSerif-Regular"/>
-                        <On Platform="Android" Value="Fonts/LiberationSerif-Regular.ttf#LiberationSerif-Regular"/>
-                        <On Platform="UWP" Value="Assets\Fonts\LiberationSerif-Regular.ttf#LiberationSerif-Regular"/>
-                    </OnPlatform>
-                </Button.FontFamily>
-            </Button>
+            <Button x:Name="ThemeItemNameButton" Text="{Binding ThemeItem.Name}" TextColor="{Binding TextColor}"
+                    Style="{StaticResource ButtonDefaultStyle}"
+                    BorderColor="{Binding LineColor}"
+                    Grid.Row="0" FontSize="{Binding ThemeTextSize}"
+                    HorizontalOptions="Fill" VerticalOptions="Fill"/>
 
             <Label x:Name="QuoteItemTextView" Text="{Binding QuoteItem.Text}" TextColor="{Binding TextColor}"
-                   Grid.Row="2" FontSize="Small" HorizontalTextAlignment="Center" VerticalTextAlignment="Center"
+                   Grid.Row="2" FontSize="{Binding QuoteTextSize}" HorizontalTextAlignment="Center" VerticalTextAlignment="Center"
                    HorizontalOptions="Fill" VerticalOptions="Fill">
                 <Label.FontFamily>
                     <OnPlatform x:TypeArguments="x:String">
@@ -42,7 +35,7 @@
             </Label>
             
             <Label x:Name="QuoteItemAutorView" Text="{Binding AutorItem.FullName}" TextColor="{Binding TextColor}"
-                   Grid.Row="4" HorizontalOptions="End">
+                   Grid.Row="4" HorizontalOptions="End" FontSize="{Binding QuoteTextSize}">
                 <Label.FontFamily>
                     <OnPlatform x:TypeArguments="x:String">
                         <On Platform="iOS" Value="LiberationSerif-Regular"/>
@@ -59,31 +52,12 @@
                     <ColumnDefinition Width="*"/>
                 </Grid.ColumnDefinitions>
 
-                <Button x:Name="ButtonBack" Text="Back" FontSize="Medium" Grid.Column="0"
-                        HorizontalOptions="Fill"
-                        BackgroundColor="Transparent" CornerRadius="20"
-                        BorderWidth="1"
-                        BorderColor="{Binding LineColor}" TextColor="{Binding TextColor}">
-                    <Button.FontFamily>
-                        <OnPlatform x:TypeArguments="x:String">
-                            <On Platform="iOS" Value="LiberationSerif-Regular"/>
-                            <On Platform="Android" Value="Fonts/LiberationSerif-Regular.ttf#LiberationSerif-Regular"/>
-                            <On Platform="UWP" Value="Assets\Fonts\LiberationSerif-Regular.ttf#LiberationSerif-Regular"/>
-                        </OnPlatform>
-                    </Button.FontFamily>
-                </Button>
-                <Button x:Name="ButtonNextQuote" Text="Next Quote" FontSize="Medium" Grid.Column="2"
-                        HorizontalOptions="Fill"
-                        BackgroundColor="Transparent" CornerRadius="20" BorderWidth="1"
-                        BorderColor="{Binding LineColor}" TextColor="{Binding TextColor}">
-                    <Button.FontFamily>
-                        <OnPlatform x:TypeArguments="x:String">
-                            <On Platform="iOS" Value="LiberationSerif-Regular"/>
-                            <On Platform="Android" Value="Fonts/LiberationSerif-Regular.ttf#LiberationSerif-Regular"/>
-                            <On Platform="UWP" Value="Assets\Fonts\LiberationSerif-Regular.ttf#LiberationSerif-Regular"/>
-                        </OnPlatform>
-                    </Button.FontFamily>
-                </Button>
+                <Button x:Name="ButtonBack" Text="Back" FontSize="{Binding ButtonTextSize}"
+                        Style="{StaticResource ButtonDefaultStyle}" Grid.Column="0"
+                        BorderColor="{Binding LineColor}" TextColor="{Binding TextColor}"/>
+                <Button x:Name="ButtonNextQuote" Text="Next Quote" FontSize="{Binding ButtonTextSize}"
+                        Style="{StaticResource ButtonDefaultStyle}"  Grid.Column="2"
+                        BorderColor="{Binding LineColor}" TextColor="{Binding TextColor}"/>
             </Grid>
         </Grid>
     </ContentPage.Content>

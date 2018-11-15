@@ -3,6 +3,22 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="QuoteApp.App">
     <Application.Resources>
-
+        <ResourceDictionary>
+            <Style x:Key="ButtonDefaultStyle" TargetType="Button">
+                <Setter Property="HorizontalOptions" Value="Fill" />
+                <Setter Property="BackgroundColor" Value="Transparent" />
+                <Setter Property="CornerRadius" Value="20"/>
+                <Setter Property="BorderWidth" Value="1" />
+                <Setter Property="FontFamily">
+                    <Setter.Value>
+                        <OnPlatform x:TypeArguments="x:String">
+                            <On Platform="iOS" Value="LiberationSerif-Regular"/>
+                            <On Platform="Android" Value="Fonts/LiberationSerif-Regular.ttf#LiberationSerif-Regular"/>
+                            <On Platform="UWP" Value="Assets\Fonts\LiberationSerif-Regular.ttf#LiberationSerif-Regular"/>
+                        </OnPlatform>
+                    </Setter.Value>
+                </Setter>
+            </Style>
+        </ResourceDictionary>
     </Application.Resources>
 </Application>
