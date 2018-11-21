@@ -42,6 +42,9 @@
     <EmbeddedResource Update="FrontEnd\View\ItemView\QuoteItemView.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
+    <EmbeddedResource Update="FrontEnd\View\ListView\AutorListView.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
     <EmbeddedResource Update="FrontEnd\View\RotationSliderPage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
@@ -50,7 +53,6 @@
   <ItemGroup>
     <Folder Include="FrontEnd\Resources\ResourcesRaw\Drawings\" />
     <Folder Include="FrontEnd\Resources\ResourcesRaw\Icons\" />
-    <Folder Include="FrontEnd\View\ListView\" />
     <Folder Include="Properties\" />
   </ItemGroup>
 

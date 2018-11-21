@@ -6,6 +6,9 @@ using System.Text;
 using System.Xml;
 using System.Xml.Serialization;
 using QuoteApp.Backend.BusinessLogic.Manager;
+using QuoteApp.Backend.BusinessLogic.Subsystem.PersistentProperties;
+using SkiaSharp;
+using SkiaSharp.Views.Forms;
 
 namespace QuoteApp.Globals
 {
@@ -69,5 +72,53 @@ namespace QuoteApp.Globals
         {
             return (int)(px * 0.75);
         }
+
+
+        #region Background painting
+
+        private static SKColor[] _themeColors;
+        private static float[] _gradientPositions;
+
+        public static SKCanvasView CreateGradientBackground(SKColor[] themeColors, float[] gradientPositions)
+        {
+            _themeColors = themeColors;
+            _gradientPositions = gradientPositions;
+
+            SKCanvasView background = new SKCanvasView();
+            background.PaintSurface += OnCanvasViewPaintSurface;
+
+            return background;
+        }
+        
+        private static void OnCanvasViewPaintSurface(object sender, SKPaintSurfaceEventArgs args)
+        {
+            SKSurface surface = args.Surface;
+            SKCanvas canvas = surface.Canvas;
+
+            canvas.Clear();
+
+            using (SKPaint paint = new SKPaint())
+            {
+                SKRect rect = new SKRect(0, 0, App.ScreenWidth, App.ScreenHeight);
+
+                paint.Shader = CreateGradientShader(ref rect);
+
+                // Draw the gradient on the rectangle
+                canvas.DrawRect(rect, paint);
+            }
+        }
+
+        private static SKShader CreateGradientShader(ref SKRect rect)
+        {
+            return SKShader.CreateLinearGradient(
+                new SKPoint(rect.Left, rect.Top),
+                new SKPoint(rect.Right, rect.Bottom),
+                _themeColors,
+                _gradientPositions,
+                SKShaderTileMode.Repeat);
+        }
+
+        #endregion
+
     }
 }

@@ -1,65 +1,61 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="QuoteApp.MainPage">
-    <ContentPage.Content>
-        <ScrollView>
-            <StackLayout x:Name="ButtonStackLayout">
-                <Button x:Name="RotationSliderPageNavigationButton"
-                Text="Navigate to Rotation Slider"
-                FontSize="Small"
-                HorizontalOptions="Center"
-                VerticalOptions="Center"
-                Clicked="RotationSliderPageNavigationButton_OnClicked"/>
-                <Button x:Name="QuoteItemDayPageNavigationButton"
-                Text="Quote Item Day Page"
-                FontSize="Small"
-                HorizontalOptions="Center"
-                VerticalOptions="Center"
-                Clicked="QuoteItemDayPageNavigationButton_OnClicked"/>
-                <Button x:Name="QuoteItemNightPageNavigationButton"
-                Text="Quote Item Night Page"
-                FontSize="Small"
-                HorizontalOptions="Center"
-                VerticalOptions="Center"
-                Clicked="QuoteItemNightPageNavigationButton_OnClicked"/>
-                <Button x:Name="ThemeListDayPageNavigationButton"
-                Text="Theme List Day Page"
-                FontSize="Small"
-                HorizontalOptions="Center"
-                VerticalOptions="Center"
-                Clicked="ThemeListDayPageNavigationButton_OnClicked"/>
-                <Button x:Name="ThemeListNightPageNavigationButton"
-                Text="Theme List Night Page"
-                FontSize="Small"
-                HorizontalOptions="Center"
-                VerticalOptions="Center"
-                Clicked="ThemeListNightPageNavigationButton_OnClicked"/>
-                <Button x:Name="AutorListDayPageNavigationButton"
-                Text="Autor List Day Page"
-                FontSize="Small"
-                HorizontalOptions="Center"
-                VerticalOptions="Center"
-                Clicked="AutorListDayPageNavigationButton_OnClicked"/>
-                <Button x:Name="AutorListNightPageNavigationButton"
-                Text="Autor List Night Page"
-                FontSize="Small"
-                HorizontalOptions="Center"
-                VerticalOptions="Center"
-                Clicked="AutorListNightPageNavigationButton_OnClicked"/>
-                <Button x:Name="SettingsDayPageNavigationButton"
-                Text="Settings Day Page"
-                FontSize="Small"
-                HorizontalOptions="Center"
-                VerticalOptions="Center"
-                Clicked="SettingsDayPageNavigationButton_OnClicked"/>
-                <Button x:Name="SettingsNightPageNavigationButton"
-                Text="Settings Night Page"
-                FontSize="Small"
-                HorizontalOptions="Center"
-                VerticalOptions="Center"
-                Clicked="SettingsNightPageNavigationButton_OnClicked"/>
+             x:Class="QuoteApp.MainPage" x:Name="this">
+     <ContentPage.Content>
+        <Grid x:Name="ContentRoot" Margin="10" BindingContext="{x:Reference this}">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+
+
+            <Label x:Name="GreetingText" Text="Welcome" Grid.Row="0"
+                   Style="{StaticResource LabelDefaultStyle}"
+                   TextColor="{Binding TextColor}" FontSize="{Binding GreetingTextSize}"
+                   HorizontalOptions="Fill" VerticalOptions="Fill" Margin="0,0,0,20"/>
+
+            <Label x:Name="BriefText" Grid.Row="1"
+                   Text="Some inspiring and warm brief..." 
+                   Style="{StaticResource LabelDefaultStyle}" TextColor="{Binding TextColor}"
+                   Margin="0,0,0,20" FontSize="{Binding BriefTextSize}" 
+                   HorizontalOptions="Fill" VerticalOptions="Fill"/>
+
+            <StackLayout Grid.Row="2" Orientation="Vertical">
+                <Button x:Name="ViewRandomQuoteButton" Text="Random Quote"
+                        Style="{StaticResource ButtonDefaultStyle}"
+                        BorderColor="{Binding LineColor}" TextColor="{Binding TextColor}"
+                        Margin="0,0,0,15" FontSize="{Binding ButtonTextSize}"/>
+
+                <Button x:Name="ViewThemesButton" Text="Themes"
+                        Style="{StaticResource ButtonDefaultStyle}"
+                        BorderColor="{Binding LineColor}" TextColor="{Binding TextColor}"
+                        Margin="0,0,0,15" FontSize="{Binding ButtonTextSize}"/>
+
+                <Button x:Name="ViewAutorsButton" Text="Autors"
+                        Style="{StaticResource ButtonDefaultStyle}"
+                        BorderColor="{Binding LineColor}" TextColor="{Binding TextColor}"
+                        Margin="0,0,0,25" FontSize="{Binding ButtonTextSize}"
+                        Clicked="ViewAutorsButton_OnClicked"/>
             </StackLayout>
-        </ScrollView>
+
+            <StackLayout Grid.Row="3" Orientation="Vertical">
+                <Button x:Name="QuoteItemDayPageNavigationButton"
+                        Text="Quote Item Day Page"
+                        FontSize="Small"
+                        HorizontalOptions="Center"
+                        VerticalOptions="Center"
+                        Clicked="QuoteItemDayPageNavigationButton_OnClicked"/>
+                <Button x:Name="QuoteItemNightPageNavigationButton"
+                        Text="Quote Item Night Page"
+                        FontSize="Small"
+                        HorizontalOptions="Center"
+                        VerticalOptions="Center"
+                        Clicked="QuoteItemNightPageNavigationButton_OnClicked"/>
+            </StackLayout>
+            
+        </Grid>
     </ContentPage.Content>
 </ContentPage>

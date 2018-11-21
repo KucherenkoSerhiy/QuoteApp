@@ -19,6 +19,20 @@
                     </Setter.Value>
                 </Setter>
             </Style>
+
+            <Style x:Key="LabelDefaultStyle" TargetType="Label">
+                <Setter Property="HorizontalTextAlignment" Value="Center"/>
+                <Setter Property="VerticalTextAlignment" Value="Center"/>
+                <Setter Property="FontFamily">
+                    <Setter.Value>
+                        <OnPlatform x:TypeArguments="x:String">
+                            <On Platform="iOS" Value="LiberationSerif-Regular"/>
+                            <On Platform="Android" Value="Fonts/LiberationSerif-Regular.ttf#LiberationSerif-Regular"/>
+                            <On Platform="UWP" Value="Assets\Fonts\LiberationSerif-Regular.ttf#LiberationSerif-Regular"/>
+                        </OnPlatform>
+                    </Setter.Value>
+                </Setter>
+            </Style>
         </ResourceDictionary>
     </Application.Resources>
 </Application>

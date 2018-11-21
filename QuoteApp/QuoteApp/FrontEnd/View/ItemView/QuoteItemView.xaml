@@ -5,7 +5,7 @@
              x:Class="QuoteApp.FrontEnd.View.ItemView.QuoteItemView"
              x:Name="this">
     <ContentPage.Content>
-        <Grid x:Name="ContentRoot" BindingContext="{x:Reference this}" Margin="10,10">
+        <Grid x:Name="ContentRoot" BindingContext="{x:Reference this}" Margin="10">
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="10"/>
@@ -20,30 +20,18 @@
                     Style="{StaticResource ButtonDefaultStyle}"
                     BorderColor="{Binding LineColor}"
                     Grid.Row="0" FontSize="{Binding ThemeTextSize}"
-                    HorizontalOptions="Fill" VerticalOptions="Fill"/>
+                    HorizontalOptions="Fill" VerticalOptions="Fill"
+                    Clicked="ThemeItemNameButton_OnClicked"/>
 
             <Label x:Name="QuoteItemTextView" Text="{Binding QuoteItem.Text}" TextColor="{Binding TextColor}"
-                   Grid.Row="2" FontSize="{Binding QuoteTextSize}" HorizontalTextAlignment="Center" VerticalTextAlignment="Center"
-                   HorizontalOptions="Fill" VerticalOptions="Fill">
-                <Label.FontFamily>
-                    <OnPlatform x:TypeArguments="x:String">
-                        <On Platform="iOS" Value="LiberationSerif-Regular"/>
-                        <On Platform="Android" Value="Fonts/LiberationSerif-Regular.ttf#LiberationSerif-Regular"/>
-                        <On Platform="UWP" Value="Assets\Fonts\LiberationSerif-Regular.ttf#LiberationSerif-Regular"/>
-                    </OnPlatform>
-                </Label.FontFamily>
-            </Label>
+                   Grid.Row="2" FontSize="{Binding QuoteTextSize}" 
+                   HorizontalTextAlignment="Center" VerticalTextAlignment="Center"
+                   HorizontalOptions="Fill" VerticalOptions="Fill"
+                   Style="{StaticResource LabelDefaultStyle}"/>
             
             <Label x:Name="QuoteItemAutorView" Text="{Binding AutorItem.FullName}" TextColor="{Binding TextColor}"
-                   Grid.Row="4" HorizontalOptions="End" FontSize="{Binding QuoteTextSize}">
-                <Label.FontFamily>
-                    <OnPlatform x:TypeArguments="x:String">
-                        <On Platform="iOS" Value="LiberationSerif-Regular"/>
-                        <On Platform="Android" Value="Fonts/LiberationSerif-Regular.ttf#LiberationSerif-Regular"/>
-                        <On Platform="UWP" Value="Assets\Fonts\LiberationSerif-Regular.ttf#LiberationSerif-Regular"/>
-                    </OnPlatform>
-                </Label.FontFamily>
-            </Label>
+                   Grid.Row="4" HorizontalOptions="End" FontSize="{Binding QuoteTextSize}"
+                   Style="{StaticResource LabelDefaultStyle}"/>
 
             <Grid Grid.Row="6">
                 <Grid.ColumnDefinitions>

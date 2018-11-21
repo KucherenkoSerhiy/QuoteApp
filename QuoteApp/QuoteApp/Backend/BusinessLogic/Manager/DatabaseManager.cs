@@ -106,7 +106,15 @@ namespace QuoteApp.Backend.BusinessLogic.Manager
                 int themeId;
                 if (!Themes.Any(x => x.Name == themeName))
                 {
-                    Themes.Add(new Theme { Id = themeCount, Name = themeName });
+                    Themes.Add(new Theme
+                    {
+                        Id = themeCount, 
+                        Name = themeName,
+                        DayLineColor = QuoteAppConstants.DefaultDayLineColor,
+                        DayTextColor = QuoteAppConstants.DefaultDayTextColor,
+                        NightLineColor = QuoteAppConstants.DefaultNightLineColor,
+                        NightTextColor = QuoteAppConstants.DefaultNightTextColor
+                    });
                     themeId = themeCount;
                     themeCount++;
                 }
