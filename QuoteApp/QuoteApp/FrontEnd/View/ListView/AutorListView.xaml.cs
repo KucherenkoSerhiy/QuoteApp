@@ -23,6 +23,8 @@ namespace QuoteApp.FrontEnd.View.ListView
         public int AutorItemTextSize => QuoteAppUtils.PxToPt(App.ScreenHeight/50);
         public int ButtonTextSize => QuoteAppUtils.PxToPt(App.ScreenHeight/40);
 
+        public int AutorItemHeight => QuoteAppUtils.PxToPt(App.ScreenHeight/25);
+
         public Color LineColor => PersistentProperties.Instance.NightModeActivated
             ? Color.FromHex(QuoteAppConstants.DefaultNightLineColor)
             : Color.FromHex(QuoteAppConstants.DefaultDayLineColor);
@@ -40,8 +42,6 @@ namespace QuoteApp.FrontEnd.View.ListView
 
             InitializeComponent();
             SetPageContent();
-            
-			MyListView.ItemsSource = Autors;
         }
 
         private void InitializeDefaultValues()
