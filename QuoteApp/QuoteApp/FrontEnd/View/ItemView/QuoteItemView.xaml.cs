@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
+using QuoteApp.Backend.BusinessLogic.Manager;
 using QuoteApp.Backend.BusinessLogic.Subsystem.PersistentProperties;
 using QuoteApp.Backend.Model;
 using QuoteApp.Globals;
@@ -15,15 +17,20 @@ namespace QuoteApp.FrontEnd.View.ItemView
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class QuoteItemView : ContentPage
     {
-        //TODO: Dependency property to understand if got to this view from autor or theme
+        private DatabaseManager _databaseManager;
+
+        private int _quoteIndex;
 
         public Autor AutorItem { get; set; }
-        public Quote QuoteItem { get; set; }
+        public ObservableCollection<Quote> QuoteItems { get; set; }
         public Theme ThemeItem { get; set; }
+
         public List<ThemeColor> ThemeDayBackgroundColorItems { get; set; }
         public List<ThemeColor> ThemeNightBackgroundColorItems { get; set; }
         
         #region Getter Properties
+
+        public Quote QuoteItem => QuoteItems.ElementAt(_quoteIndex);
 
         public int QuoteTextSize => QuoteAppUtils.PxToPt(App.ScreenHeight/50);
         public int ThemeTextSize => QuoteAppUtils.PxToPt(App.ScreenHeight/25);
@@ -47,12 +54,31 @@ namespace QuoteApp.FrontEnd.View.ItemView
             InitializeComponent();
             SetPageContent();
         }
+        /*
+        public QuoteItemView(Theme theme)
+        {
+            InitializeDefaultValues();
+            RetrieveDependencies(theme);
 
+            InitializeComponent();
+            SetPageContent();
+        }
+
+        public QuoteItemView(Autor autor)
+        {
+            InitializeDefaultValues();
+            RetrieveDependencies(autor);
+
+            InitializeComponent();
+            SetPageContent();
+        }
+        */
 
         #region Initialization
 
         private void InitializeDefaultValues()
         {
+            _databaseManager = DatabaseManager.Instance;
             ThemeDayBackgroundColorItems = QuoteAppConstants.DefaultDayBackgroundColorGradientItems;
             ThemeNightBackgroundColorItems = QuoteAppConstants.DefaultNightBackgroundColorGradientItems;
         }
@@ -60,7 +86,12 @@ namespace QuoteApp.FrontEnd.View.ItemView
         private void RetrieveDependencies()
         {
             AutorItem = new Autor { FullName = "Indecisive anonymous" };
-            QuoteItem = new Quote { Text = "I used to think I was indecisive, but now I'm not too sure." };
+            QuoteItems = new ObservableCollection<Quote>
+            {
+                new Quote { Text = "This is the first dummy quote." },
+                new Quote { Text = "I used to think I was indecisive, but now I'm not too sure." },
+                new Quote { Text = "A dummy quote again." }
+            };
             ThemeItem = new Theme
             {
                 Name = "Life",
@@ -70,6 +101,20 @@ namespace QuoteApp.FrontEnd.View.ItemView
                 NightLineColor = QuoteAppConstants.DefaultNightLineColor,
                 NightTextColor = QuoteAppConstants.DefaultNightTextColor
             };
+        }
+
+        private void RetrieveDependencies(Autor autor)
+        {
+            AutorItem = autor;
+            QuoteItems = new ObservableCollection<Quote>(_databaseManager.GetQuotesByAutor(autor));
+            ThemeItem = _databaseManager.GetThemeByAutor(autor);
+        }
+
+        private void RetrieveDependencies(Theme theme)
+        {
+            AutorItem = _databaseManager.GetAutorByTheme(theme);
+            QuoteItems = new ObservableCollection<Quote>(_databaseManager.GetQuotesByTheme(theme));
+            ThemeItem = theme;
         }
 
         private void SetPageContent()
@@ -131,8 +176,15 @@ namespace QuoteApp.FrontEnd.View.ItemView
         /// <param name="e"></param>
         private async void ButtonNextQuote_OnClicked(object sender, EventArgs e)
         {
-            PersistentProperties.Instance.NightModeActivated = !PersistentProperties.Instance.NightModeActivated;
-            await Navigation.PushAsync(new QuoteItemView());
+            if (_quoteIndex < QuoteItems.Count)
+            {
+                _quoteIndex++;
+                OnPropertyChanged(string.Empty);
+            }
+            else
+            {
+                // TODO: select next autor/theme
+            }
         }
 
         #endregion

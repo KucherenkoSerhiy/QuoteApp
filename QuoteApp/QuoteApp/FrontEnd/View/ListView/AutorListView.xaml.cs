@@ -1,10 +1,13 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
 using System.Threading.Tasks;
+using QuoteApp.Backend.BusinessLogic.Manager;
 using QuoteApp.Backend.BusinessLogic.Subsystem.PersistentProperties;
 using QuoteApp.Backend.Model;
+using QuoteApp.FrontEnd.View.ItemView;
 using QuoteApp.Globals;
 using SkiaSharp;
 using Xamarin.Forms;
@@ -15,20 +18,69 @@ namespace QuoteApp.FrontEnd.View.ListView
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class AutorListView : ContentPage
     {
-        public ObservableCollection<Autor> Autors { get; set; }
+        private DatabaseManager DatabaseManager { get; }
+        private int _selectionIndex = 0;
+        private int _numberOfSelectedItems = 20;
+        private string _searchText;
+
+        public Dictionary<string, Autor> Autors { get; set; }
+
+        public string SearchText
+        {
+            get => _searchText;
+            set
+            {
+                _searchText = value;
+                _selectionIndex = 0;
+                OnPropertyChanged(nameof(ShownAutors));
+                OnPropertyChanged(nameof(ListAlphabetIndex));
+                OnPropertyChanged(nameof(ListNumberIndex));
+            }
+        }
+
+        public string ListAlphabetIndex
+        {
+            get
+            {
+                if (ShownAutors.Count <= 1) return "";
+
+                string start = "", end = "";
+                int length = 0;
+
+                while (start == end)
+                {
+                    length++;
+
+                    start = ShownAutors.First().FullName.Substring(0, length);
+                    end = ShownAutors.Last().FullName.Substring(0, length);
+                }
+
+                return start + " - " + end;
+            }
+        }
+
+        public string ListNumberIndex => FilteredAutors.Count + "/" + Autors.Count;
 
         #region Getter Properties
+
+        public Dictionary<string, Autor> FilteredAutors => Autors.Where(FilterCondition).ToDictionary(x => x.Key, x => x.Value);
+
+        public ObservableCollection<Autor> ShownAutors => FilteredAutors.Count == 0
+            ? new ObservableCollection<Autor>()
+            : new ObservableCollection<Autor>(FilteredAutors.Values.Skip(_selectionIndex * _numberOfSelectedItems)
+                .Take(_numberOfSelectedItems));
 
         public int HeaderTextSize => QuoteAppUtils.PxToPt(App.ScreenHeight/25);
         public int AutorItemTextSize => QuoteAppUtils.PxToPt(App.ScreenHeight/50);
         public int ButtonTextSize => QuoteAppUtils.PxToPt(App.ScreenHeight/40);
+        public int AlphabetNavigationTextSize => QuoteAppUtils.PxToPt(App.ScreenHeight/45);
+        public int NumberNavigationTextSize => QuoteAppUtils.PxToPt(App.ScreenHeight/60);
 
         public int AutorItemHeight => QuoteAppUtils.PxToPt(App.ScreenHeight/25);
 
         public Color LineColor => PersistentProperties.Instance.NightModeActivated
             ? Color.FromHex(QuoteAppConstants.DefaultNightLineColor)
             : Color.FromHex(QuoteAppConstants.DefaultDayLineColor);
-
         public Color TextColor => PersistentProperties.Instance.NightModeActivated
             ? Color.FromHex(QuoteAppConstants.DefaultNightTextColor)
             : Color.FromHex(QuoteAppConstants.DefaultDayTextColor);
@@ -37,6 +89,7 @@ namespace QuoteApp.FrontEnd.View.ListView
 
         public AutorListView()
         {
+            DatabaseManager = DatabaseManager.Instance;
             InitializeDefaultValues();
             RetrieveDependencies();
 
@@ -46,20 +99,11 @@ namespace QuoteApp.FrontEnd.View.ListView
 
         private void InitializeDefaultValues()
         {
-            
         }
 
         private void RetrieveDependencies()
         {
-            Autors = new ObservableCollection<Autor>
-            {
-                new Autor{FullName = "Marilyn Monroe"},
-                new Autor{FullName = "Harold Abelson"},
-                new Autor{FullName = "Napoleon Bonaparte"},
-                new Autor{FullName = "Friedrich Nietsche"},
-                new Autor{FullName = "A person with a very very long first name or last name"},
-                new Autor{FullName = "Cat"}
-            };
+            Autors = DatabaseManager.Autors.ToDictionary(x => x.Key, x => x.Value);
         }
 
         private void SetPageContent()
@@ -96,7 +140,9 @@ namespace QuoteApp.FrontEnd.View.ListView
             if (e.Item == null)
                 return;
 
-            await DisplayAlert("Item Tapped", "An item was tapped.", "OK");
+            Autor item = (Autor) e.Item;
+            //await Navigation.PushAsync(new QuoteItemView(item));
+            await Navigation.PushAsync(new QuoteItemView());
 
             //Deselect Item
             ((Xamarin.Forms.ListView)sender).SelectedItem = null;
@@ -107,6 +153,36 @@ namespace QuoteApp.FrontEnd.View.ListView
             await Navigation.PopAsync();
         }
 
+        
+        private void SelectPreviousItems_OnTapped(object sender, EventArgs e)
+        {
+            if (_selectionIndex <= 0) return;
+
+            _selectionIndex--;
+            
+            OnPropertyChanged(nameof(ShownAutors));
+            OnPropertyChanged(nameof(ListAlphabetIndex));
+            OnPropertyChanged(nameof(ListNumberIndex));
+        }
+
+        private void SelectNextItems_OnTapped(object sender, EventArgs e)
+        {
+            if ((_selectionIndex + 1) * _numberOfSelectedItems >= FilteredAutors.Count) return;
+
+            _selectionIndex++;
+            
+            OnPropertyChanged(nameof(ShownAutors));
+            OnPropertyChanged(nameof(ListAlphabetIndex));
+            OnPropertyChanged(nameof(ListNumberIndex));
+        }
+
         #endregion
+
+        private bool FilterCondition(KeyValuePair<string, Autor> fullName)
+        {
+            string[] nameParts = fullName.Key.Split(' ');
+
+            return nameParts.Any(x => x.ToUpper().StartsWith(SearchText == null ? "" : SearchText.ToUpper()));
+        }
     }
 }

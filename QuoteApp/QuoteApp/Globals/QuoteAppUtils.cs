@@ -65,9 +65,8 @@ namespace QuoteApp.Globals
         }
 
         /// <summary>
-        /// Used to get font size
+        /// Used to get font size from one specified in pixels
         /// </summary>
-        /// <returns></returns>
         public static int PxToPt(int px)
         {
             return (int)(px * 0.75);

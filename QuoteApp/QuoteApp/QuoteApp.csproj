@@ -11,9 +11,17 @@
 
   <ItemGroup>
     <None Remove="FrontEnd\Resources\ResourcesRaw\Drawings\QuoteItemHeader.png" />
+    <None Remove="FrontEnd\Resources\ResourcesRaw\Icons\icon_arrow_left.png" />
+    <None Remove="FrontEnd\Resources\ResourcesRaw\Icons\icon_arrow_right.png" />
+    <None Remove="FrontEnd\Resources\ResourcesRaw\Icons\icon_gear.png" />
+    <None Remove="FrontEnd\Resources\ResourcesRaw\Icons\icon_magnifier.jpg" />
   </ItemGroup>
 
   <ItemGroup>
+    <EmbeddedResource Include="FrontEnd\Resources\ResourcesRaw\Icons\icon_arrow_left.png" />
+    <EmbeddedResource Include="FrontEnd\Resources\ResourcesRaw\Icons\icon_arrow_right.png" />
+    <EmbeddedResource Include="FrontEnd\Resources\ResourcesRaw\Icons\icon_gear.png" />
+    <EmbeddedResource Include="FrontEnd\Resources\ResourcesRaw\Icons\icon_magnifier.jpg" />
     <EmbeddedResource Include="Resources\QuotesDatabaseLite.csv">
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </EmbeddedResource>
@@ -29,6 +37,9 @@
   <ItemGroup>
     <Compile Update="FrontEnd\View\ItemView\QuoteItemView.xaml.cs">
       <DependentUpon>QuoteItemView.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="FrontEnd\View\ListView\ThemeListView.xaml.cs">
+      <DependentUpon>ThemeListView.xaml</DependentUpon>
     </Compile>
     <Compile Update="FrontEnd\View\RotationSliderPage.xaml.cs">
       <DependentUpon>RotationSliderPage.xaml</DependentUpon>
@@ -52,7 +63,6 @@
 
   <ItemGroup>
     <Folder Include="FrontEnd\Resources\ResourcesRaw\Drawings\" />
-    <Folder Include="FrontEnd\Resources\ResourcesRaw\Icons\" />
     <Folder Include="Properties\" />
   </ItemGroup>
 

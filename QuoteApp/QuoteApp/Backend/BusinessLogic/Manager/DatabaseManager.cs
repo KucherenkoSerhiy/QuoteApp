@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.Linq;
 using System.Text;
@@ -23,8 +24,8 @@ namespace QuoteApp.Backend.BusinessLogic.Manager
             if (PersistentProperties.Instance.DatabaseIsInitialized)
             {
                 Quotes = _sqliteDbManager.GetList<Quote>();
-                Autors = _sqliteDbManager.GetList<Autor>(); // Todo: suspiciously many autors
-                Themes = _sqliteDbManager.GetList<Theme>();
+                Autors = new SortedDictionary<string, Autor>(_sqliteDbManager.GetList<Autor>().ToDictionary(x => x.FullName, x => x)); // Todo: suspiciously many autors
+                Themes = new SortedDictionary<string, Theme>(_sqliteDbManager.GetList<Theme>().ToDictionary(x => x.Name, x => x));
                 AutorQuoteThemes = _sqliteDbManager.GetList<AutorQuoteTheme>();
                 //Todo: theme colors
             }
@@ -38,18 +39,15 @@ namespace QuoteApp.Backend.BusinessLogic.Manager
 
         private SqliteDbManager _sqliteDbManager;
 
-        public List<Autor> Autors { get; set; }
         public List<Quote> Quotes { get; set; }
-        public List<Theme> Themes { get; set; }
+        public SortedDictionary<string, Autor> Autors { get; set; }
+        public SortedDictionary<string,Theme> Themes { get; set; }
         public List<AutorQuoteTheme> AutorQuoteThemes { get; set; }
         
         private void InitializeDatabase()
         {
             string[] lines = QuoteAppUtils.ReadLocalFile("QuoteApp.Resources.QuotesDatabaseLite.csv").Skip(2).ToArray();
 
-            Autors = new List<Autor>();
-            Quotes = new List<Quote>();
-            Themes = new List<Theme>();
             AutorQuoteThemes = new List<AutorQuoteTheme>();
 
             Stopwatch watch = Stopwatch.StartNew();
@@ -91,36 +89,37 @@ namespace QuoteApp.Backend.BusinessLogic.Manager
 
                 // add autor if not exists and get his/her id (or find id of existent one)
                 int autorId;
-                if (!Autors.Any(x => x.FullName == autorFullName))
+                if (Autors[autorFullName] == null)
                 {
-                    Autors.Add(new Autor { Id = autorCount, FullName = autorFullName });
+                    Autors[autorFullName] = new Autor {Id = autorCount, FullName = autorFullName};
                     autorId = autorCount;
                     autorCount++;
                 }
                 else
                 {
-                    autorId = Autors.First(x => x.FullName == autorFullName).Id;
+                    autorId = Autors[autorFullName].Id;
                 }
 
                 // add theme if not exists and get its id (or find id of existent one)
                 int themeId;
-                if (!Themes.Any(x => x.Name == themeName))
+                if (Themes[themeName] == null)
                 {
-                    Themes.Add(new Theme
+                    Themes[themeName] = new Theme
                     {
-                        Id = themeCount, 
+                        Id = themeCount,
                         Name = themeName,
                         DayLineColor = QuoteAppConstants.DefaultDayLineColor,
                         DayTextColor = QuoteAppConstants.DefaultDayTextColor,
                         NightLineColor = QuoteAppConstants.DefaultNightLineColor,
                         NightTextColor = QuoteAppConstants.DefaultNightTextColor
-                    });
+                    };
+
                     themeId = themeCount;
                     themeCount++;
                 }
                 else
                 {
-                    themeId = Themes.First(x => x.Name == themeName).Id;
+                    themeId = Themes[themeName].Id;
                 }
 
                 // add link
@@ -149,6 +148,35 @@ namespace QuoteApp.Backend.BusinessLogic.Manager
             _sqliteDbManager.InsertList(Autors);
             _sqliteDbManager.InsertList(Themes);
             _sqliteDbManager.InsertList(AutorQuoteThemes);
+        }
+
+        public IEnumerable<Quote> GetQuotesByAutor(Autor autor)
+        {
+            var selectedAutorQuoteThemes = AutorQuoteThemes.Where(aqt => aqt.AutorId == autor.Id);
+
+            return Quotes.Where(q => selectedAutorQuoteThemes.Any(aqt => aqt.QuoteId == q.Id));
+        }
+
+        
+        public IEnumerable<Quote> GetQuotesByTheme(Theme theme)
+        {
+            var selectedAutorQuoteThemes = AutorQuoteThemes.Where(aqt => aqt.AutorId == theme.Id);
+
+            return Quotes.Where(q => selectedAutorQuoteThemes.Any(aqt => aqt.QuoteId == q.Id));
+        }
+
+        public Theme GetThemeByAutor(Autor autor)
+        {
+            var selectedAutorQuoteThemes = AutorQuoteThemes.Where(aqt => aqt.AutorId == autor.Id);
+
+            return Themes.Single(x => x.Value.Id == selectedAutorQuoteThemes.First().ThemeId).Value;
+        }
+
+        public Autor GetAutorByTheme(Theme theme)
+        {
+            var selectedAutorQuoteThemes = AutorQuoteThemes.Where(aqt => aqt.AutorId == theme.Id);
+
+            return Autors.Single(x => x.Value.Id == selectedAutorQuoteThemes.First().AutorId).Value;
         }
     }
 }

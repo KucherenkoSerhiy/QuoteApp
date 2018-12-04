@@ -95,21 +95,25 @@ namespace QuoteApp
         private async void QuoteItemDayPageNavigationButton_OnClicked(object sender, EventArgs e)
         {
             PersistentProperties.Instance.NightModeActivated = false;
-            await Navigation.PushAsync(new QuoteItemView());
+            //await Navigation.PushAsync(new QuoteItemView());
         }
 
         private async void QuoteItemNightPageNavigationButton_OnClicked(object sender, EventArgs e)
         {
             PersistentProperties.Instance.NightModeActivated = true;
-            await Navigation.PushAsync(new QuoteItemView());
+            //await Navigation.PushAsync(new QuoteItemView());
         }
 
-
-        #endregion
+        private async void ViewThemesButton_OnClicked(object sender, EventArgs e)
+        {
+            await Navigation.PushAsync(new ThemeListView());
+        }
 
         private async void ViewAutorsButton_OnClicked(object sender, EventArgs e)
         {
             await Navigation.PushAsync(new AutorListView());
         }
+
+        #endregion
     }
 }

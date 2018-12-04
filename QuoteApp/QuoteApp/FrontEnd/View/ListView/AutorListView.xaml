@@ -6,17 +6,38 @@
     <Grid x:Name="ContentRoot" BindingContext="{x:Reference this}">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
         
+        <!--Header-->
         <Label Text="Autors" TextColor="{Binding TextColor}"
                Style="{StaticResource LabelDefaultStyle}"
                Grid.Row="0" FontSize="{Binding HeaderTextSize}"
                HorizontalOptions="Fill" VerticalOptions="Fill" Margin="0,10,0,0"/>
 
-        <ScrollView Grid.Row="1" Margin="0,10" VerticalOptions="Center">
-            <ListView ItemsSource="{Binding Autors}"
+        <!--Search Bar-->
+        <Grid Grid.Row="1" Margin="10,10,100,10">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+
+            <Image Grid.Column="0" Source="icon_magnifier_a.png"
+                   WidthRequest="40" HeightRequest="40"/>
+
+            <Entry Grid.Column="1" Text="{Binding SearchText}"
+                   TextColor="{Binding TextColor}"
+                   FontSize="{Binding AutorItemTextSize}"
+                   Style="{StaticResource EntryDefaultStyle}"
+                   VerticalOptions="FillAndExpand"/>
+        </Grid>
+
+        <!--Autors List-->
+        <ScrollView Grid.Row="2" Margin="0,0,0,10" VerticalOptions="Center">
+            <ListView ItemsSource="{Binding ShownAutors, Mode=OneWay}"
                       ItemTapped="Handle_ItemTapped"
                       CachingStrategy="RecycleElement"
                       RowHeight="{Binding AutorItemHeight}"
@@ -42,7 +63,47 @@
 
         </ScrollView>
 
-        <Button Grid.Row="2" x:Name="ButtonBack" Text="Back" FontSize="{Binding ButtonTextSize}"
+        <!--Navigation Panel-->
+        <Grid Grid.Row="3" Margin="10">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="Auto"/>
+            </Grid.ColumnDefinitions>
+
+            <Image x:Name="SelectPreviousItems" Source="icon_arrow_left.png"
+                   Grid.Column="0" Aspect="AspectFit"
+                   WidthRequest="80" HeightRequest="80">
+                <Image.GestureRecognizers>
+                    <TapGestureRecognizer Tapped="SelectPreviousItems_OnTapped"/>
+                </Image.GestureRecognizers>
+            </Image>
+            
+            <StackLayout Grid.Column="1" Orientation="Vertical">
+                <Label Text="{Binding ListAlphabetIndex, Mode=OneWay}" TextColor="{Binding TextColor}"
+                       Style="{StaticResource LabelDefaultStyle}"
+                       FontSize="{Binding AlphabetNavigationTextSize}"
+                       HorizontalOptions="Fill" VerticalOptions="Start"
+                       LineBreakMode="TailTruncation"/>
+                
+                <Label Text="{Binding ListNumberIndex, Mode=OneWay}" TextColor="{Binding TextColor}"
+                       Style="{StaticResource LabelDefaultStyle}"
+                       FontSize="{Binding NumberNavigationTextSize}"
+                       HorizontalOptions="Fill" VerticalOptions="End"/>
+            </StackLayout>
+
+            <Image x:Name="SelectNextItems" Source="icon_arrow_right.png"
+                   Grid.Column="2" Aspect="AspectFit"
+                   WidthRequest="80" HeightRequest="80">
+                <Image.GestureRecognizers>
+                    <TapGestureRecognizer Tapped="SelectNextItems_OnTapped"/>
+                </Image.GestureRecognizers>
+            </Image>
+
+        </Grid>
+
+        <!--Back Button-->
+        <Button Grid.Row="4" x:Name="ButtonBack" Text="Back" FontSize="{Binding ButtonTextSize}"
                 Style="{StaticResource ButtonDefaultStyle}"
                 BorderColor="{Binding LineColor}" TextColor="{Binding TextColor}"
                 Clicked="ButtonBack_OnClicked" Margin="10,0,10,10"/>
