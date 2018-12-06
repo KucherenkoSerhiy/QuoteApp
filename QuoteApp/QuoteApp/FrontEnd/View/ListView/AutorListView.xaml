@@ -87,6 +87,7 @@
                        LineBreakMode="TailTruncation"/>
                 
                 <Label Text="{Binding ListNumberIndex, Mode=OneWay}" TextColor="{Binding TextColor}"
+                       IsVisible="{Binding ListNumberIndexIsVisible}"
                        Style="{StaticResource LabelDefaultStyle}"
                        FontSize="{Binding NumberNavigationTextSize}"
                        HorizontalOptions="Fill" VerticalOptions="End"/>

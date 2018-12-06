@@ -32,9 +32,11 @@ namespace QuoteApp.FrontEnd.View.ListView
             {
                 _searchText = value;
                 _selectionIndex = 0;
+                FilteredAutors = Autors.Where(FilterCondition).ToDictionary(x => x.Key, x => x.Value);
                 OnPropertyChanged(nameof(ShownAutors));
                 OnPropertyChanged(nameof(ListAlphabetIndex));
                 OnPropertyChanged(nameof(ListNumberIndex));
+                OnPropertyChanged(nameof(ListNumberIndexIsVisible));
             }
         }
 
@@ -60,10 +62,11 @@ namespace QuoteApp.FrontEnd.View.ListView
         }
 
         public string ListNumberIndex => FilteredAutors.Count + "/" + Autors.Count;
+        public bool ListNumberIndexIsVisible => FilteredAutors.Count != Autors.Count;
 
         #region Getter Properties
 
-        public Dictionary<string, Autor> FilteredAutors => Autors.Where(FilterCondition).ToDictionary(x => x.Key, x => x.Value);
+        public Dictionary<string, Autor> FilteredAutors {get; private set; }
 
         public ObservableCollection<Autor> ShownAutors => FilteredAutors.Count == 0
             ? new ObservableCollection<Autor>()
@@ -104,6 +107,7 @@ namespace QuoteApp.FrontEnd.View.ListView
         private void RetrieveDependencies()
         {
             Autors = DatabaseManager.Autors.ToDictionary(x => x.Key, x => x.Value);
+            FilteredAutors = Autors;
         }
 
         private void SetPageContent()
@@ -165,6 +169,7 @@ namespace QuoteApp.FrontEnd.View.ListView
             OnPropertyChanged(nameof(ShownAutors));
             OnPropertyChanged(nameof(ListAlphabetIndex));
             OnPropertyChanged(nameof(ListNumberIndex));
+            OnPropertyChanged(nameof(ListNumberIndexIsVisible));
         }
 
         private void SelectNextItems_OnTapped(object sender, EventArgs e)
@@ -176,6 +181,7 @@ namespace QuoteApp.FrontEnd.View.ListView
             OnPropertyChanged(nameof(ShownAutors));
             OnPropertyChanged(nameof(ListAlphabetIndex));
             OnPropertyChanged(nameof(ListNumberIndex));
+            OnPropertyChanged(nameof(ListNumberIndexIsVisible));
         }
 
         #endregion
