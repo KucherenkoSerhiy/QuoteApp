@@ -78,6 +78,17 @@ namespace QuoteApp.FrontEnd.View.ItemView
             OnPropertyChanged("");
         }
         
+        public void SetQuote(Quote quote)
+        {
+            _quoteIndex = 0;
+            _quoteSource = EnQuoteSource.Random;
+            QuoteItems = new ObservableCollection<Quote>{ quote };
+            AutorItem = _databaseManager.GetAutorByQuote(quote);
+            ThemeItem = _databaseManager.GetThemeByQuote(quote);
+
+            OnPropertyChanged("");
+        }
+
         #region Initialization
 
         private void InitializeDefaultValues()
@@ -176,6 +187,9 @@ namespace QuoteApp.FrontEnd.View.ItemView
                         break;
                     case EnQuoteSource.Theme:
                         SetTheme(_databaseManager.GetNextTheme(ThemeItem));
+                        break;
+                    case EnQuoteSource.Random:
+                        SetQuote(_databaseManager.GetRandomQuote());
                         break;
                 }
             }

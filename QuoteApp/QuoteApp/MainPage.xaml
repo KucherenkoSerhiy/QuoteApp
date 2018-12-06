@@ -27,7 +27,8 @@
                 <Button x:Name="ViewRandomQuoteButton" Text="Random Quote"
                         Style="{StaticResource ButtonDefaultStyle}"
                         BorderColor="{Binding LineColor}" TextColor="{Binding TextColor}"
-                        Margin="0,0,0,15" FontSize="{Binding ButtonTextSize}"/>
+                        Margin="0,0,0,15" FontSize="{Binding ButtonTextSize}"
+                        Clicked="ViewRandomQuoteButton_OnClicked"/>
 
                 <Button x:Name="ViewThemesButton" Text="Themes"
                         Style="{StaticResource ButtonDefaultStyle}"

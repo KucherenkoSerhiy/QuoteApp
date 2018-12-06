@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using QuoteApp.Backend.BusinessLogic.Manager;
 using QuoteApp.Backend.BusinessLogic.Subsystem.PersistentProperties;
 using QuoteApp.Backend.Model;
 using QuoteApp.FrontEnd.View;
@@ -115,5 +116,13 @@ namespace QuoteApp
         }
 
         #endregion
+
+        private async void ViewRandomQuoteButton_OnClicked(object sender, EventArgs e)
+        {
+            var view = new QuoteItemView();
+            view.SetQuote(DatabaseManager.Instance.GetRandomQuote());
+
+            await Navigation.PushAsync(view);
+        }
     }
 }

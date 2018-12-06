@@ -3,6 +3,7 @@
     internal enum EnQuoteSource
     {
         Autor,
-        Theme
+        Theme,
+        Random
     }
 }
