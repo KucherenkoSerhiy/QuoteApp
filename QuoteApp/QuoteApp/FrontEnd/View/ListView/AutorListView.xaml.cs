@@ -141,8 +141,10 @@ namespace QuoteApp.FrontEnd.View.ListView
                 return;
 
             Autor item = (Autor) e.Item;
-            //await Navigation.PushAsync(new QuoteItemView(item));
-            await Navigation.PushAsync(new QuoteItemView());
+            var view = new QuoteItemView();
+            view.SetAutor(item);
+
+            await Navigation.PushAsync(view);
 
             //Deselect Item
             ((Xamarin.Forms.ListView)sender).SelectedItem = null;

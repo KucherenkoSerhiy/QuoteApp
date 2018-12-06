@@ -23,7 +23,7 @@ namespace QuoteApp.Backend.BusinessLogic.Manager
 
             if (PersistentProperties.Instance.DatabaseIsInitialized)
             {
-                Quotes = _sqliteDbManager.GetList<Quote>();
+                Quotes = _sqliteDbManager.GetList<Quote>().ToDictionary(x => x.Id, x => x);
                 Autors = new SortedDictionary<string, Autor>(_sqliteDbManager.GetList<Autor>().ToDictionary(x => x.FullName, x => x)); // Todo: suspiciously many autors
                 Themes = new SortedDictionary<string, Theme>(_sqliteDbManager.GetList<Theme>().ToDictionary(x => x.Name, x => x));
                 AutorQuoteThemes = _sqliteDbManager.GetList<AutorQuoteTheme>();
@@ -39,7 +39,7 @@ namespace QuoteApp.Backend.BusinessLogic.Manager
 
         private SqliteDbManager _sqliteDbManager;
 
-        public List<Quote> Quotes { get; set; }
+        public Dictionary<int, Quote> Quotes { get; set; }
         public SortedDictionary<string, Autor> Autors { get; set; }
         public SortedDictionary<string,Theme> Themes { get; set; }
         public List<AutorQuoteTheme> AutorQuoteThemes { get; set; }
@@ -83,7 +83,7 @@ namespace QuoteApp.Backend.BusinessLogic.Manager
                 string themeName = new string(a).Trim();
 
                 // add quote and get its id
-                Quotes.Add(new Quote { Id = quoteCount, Text = quoteText });
+                Quotes.Add(quoteCount, new Quote { Id = quoteCount, Text = quoteText });
                 int quoteId = quoteCount;
                 quoteCount++;
 
@@ -154,15 +154,14 @@ namespace QuoteApp.Backend.BusinessLogic.Manager
         {
             var selectedAutorQuoteThemes = AutorQuoteThemes.Where(aqt => aqt.AutorId == autor.Id);
 
-            return Quotes.Where(q => selectedAutorQuoteThemes.Any(aqt => aqt.QuoteId == q.Id));
+            return selectedAutorQuoteThemes.Select(selectedAutorQuoteTheme => Quotes[selectedAutorQuoteTheme.QuoteId]);
         }
-
         
         public IEnumerable<Quote> GetQuotesByTheme(Theme theme)
         {
             var selectedAutorQuoteThemes = AutorQuoteThemes.Where(aqt => aqt.AutorId == theme.Id);
 
-            return Quotes.Where(q => selectedAutorQuoteThemes.Any(aqt => aqt.QuoteId == q.Id));
+            return selectedAutorQuoteThemes.Select(selectedAutorQuoteTheme => Quotes[selectedAutorQuoteTheme.QuoteId]);
         }
 
         public Theme GetThemeByAutor(Autor autor)
@@ -177,6 +176,30 @@ namespace QuoteApp.Backend.BusinessLogic.Manager
             var selectedAutorQuoteThemes = AutorQuoteThemes.Where(aqt => aqt.AutorId == theme.Id);
 
             return Autors.Single(x => x.Value.Id == selectedAutorQuoteThemes.First().AutorId).Value;
+        }
+
+        public Autor GetNextAutor(Autor autor)
+        {
+            try
+            {
+                return Autors.First(x => string.Compare(x.Key, autor.FullName, StringComparison.Ordinal) > 0).Value;
+            }
+            catch
+            {
+                return Autors.First().Value;
+            }
+        }
+
+        public Theme GetNextTheme(Theme theme)
+        {
+            try
+            {
+                return Themes.First(x => string.Compare(x.Key, theme.Name, StringComparison.Ordinal) > 0).Value;
+            }
+            catch
+            {
+                return Themes.First().Value;
+            }
         }
     }
 }

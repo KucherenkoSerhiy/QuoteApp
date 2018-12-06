@@ -20,6 +20,7 @@ namespace QuoteApp.FrontEnd.View.ItemView
         private DatabaseManager _databaseManager;
 
         private int _quoteIndex;
+        private EnQuoteSource _quoteSource;
 
         public Autor AutorItem { get; set; }
         public ObservableCollection<Quote> QuoteItems { get; set; }
@@ -49,31 +50,34 @@ namespace QuoteApp.FrontEnd.View.ItemView
         public QuoteItemView()
         {
             InitializeDefaultValues();
-            RetrieveDependencies();
 
             InitializeComponent();
             SetPageContent();
         }
-        /*
-        public QuoteItemView(Theme theme)
+
+        
+        public void SetAutor(Autor autor)
         {
-            InitializeDefaultValues();
-            RetrieveDependencies(theme);
+            _quoteIndex = 0;
+            _quoteSource = EnQuoteSource.Autor;
+            AutorItem = autor;
+            QuoteItems = new ObservableCollection<Quote>(_databaseManager.GetQuotesByAutor(autor));
+            ThemeItem = _databaseManager.GetThemeByAutor(autor);
 
-            InitializeComponent();
-            SetPageContent();
+            OnPropertyChanged("");
         }
 
-        public QuoteItemView(Autor autor)
+        public void SetTheme(Theme theme)
         {
-            InitializeDefaultValues();
-            RetrieveDependencies(autor);
+            _quoteIndex = 0;
+            _quoteSource = EnQuoteSource.Theme;
+            AutorItem = _databaseManager.GetAutorByTheme(theme);
+            QuoteItems = new ObservableCollection<Quote>(_databaseManager.GetQuotesByTheme(theme));
+            ThemeItem = theme;
 
-            InitializeComponent();
-            SetPageContent();
+            OnPropertyChanged("");
         }
-        */
-
+        
         #region Initialization
 
         private void InitializeDefaultValues()
@@ -81,10 +85,7 @@ namespace QuoteApp.FrontEnd.View.ItemView
             _databaseManager = DatabaseManager.Instance;
             ThemeDayBackgroundColorItems = QuoteAppConstants.DefaultDayBackgroundColorGradientItems;
             ThemeNightBackgroundColorItems = QuoteAppConstants.DefaultNightBackgroundColorGradientItems;
-        }
-
-        private void RetrieveDependencies()
-        {
+        
             AutorItem = new Autor { FullName = "Indecisive anonymous" };
             QuoteItems = new ObservableCollection<Quote>
             {
@@ -101,20 +102,6 @@ namespace QuoteApp.FrontEnd.View.ItemView
                 NightLineColor = QuoteAppConstants.DefaultNightLineColor,
                 NightTextColor = QuoteAppConstants.DefaultNightTextColor
             };
-        }
-
-        private void RetrieveDependencies(Autor autor)
-        {
-            AutorItem = autor;
-            QuoteItems = new ObservableCollection<Quote>(_databaseManager.GetQuotesByAutor(autor));
-            ThemeItem = _databaseManager.GetThemeByAutor(autor);
-        }
-
-        private void RetrieveDependencies(Theme theme)
-        {
-            AutorItem = _databaseManager.GetAutorByTheme(theme);
-            QuoteItems = new ObservableCollection<Quote>(_databaseManager.GetQuotesByTheme(theme));
-            ThemeItem = theme;
         }
 
         private void SetPageContent()
@@ -169,21 +156,28 @@ namespace QuoteApp.FrontEnd.View.ItemView
         }
 
         /// <summary>
-        /// TODO: Selects next quote from list. If no more, changes autor or offers tochange theme
         /// TODO: maybe replace buttons from view by sliding to like/dislike (like in tinder) 
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private async void ButtonNextQuote_OnClicked(object sender, EventArgs e)
+        private void ButtonNextQuote_OnClicked(object sender, EventArgs e)
         {
-            if (_quoteIndex < QuoteItems.Count)
+            if (_quoteIndex < QuoteItems.Count - 1)
             {
                 _quoteIndex++;
                 OnPropertyChanged(string.Empty);
             }
             else
             {
-                // TODO: select next autor/theme
+                switch (_quoteSource)
+                {
+                    case EnQuoteSource.Autor:
+                        SetAutor(_databaseManager.GetNextAutor(AutorItem));
+                        break;
+                    case EnQuoteSource.Theme:
+                        SetTheme(_databaseManager.GetNextTheme(ThemeItem));
+                        break;
+                }
             }
         }
 
