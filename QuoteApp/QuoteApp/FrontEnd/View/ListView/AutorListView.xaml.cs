@@ -40,6 +40,16 @@ namespace QuoteApp.FrontEnd.View.ListView
             }
         }
 
+        #region Getter Properties
+
+        public Dictionary<string, Autor> FilteredAutors {get; private set; }
+
+        public ObservableCollection<Autor> ShownAutors => FilteredAutors.Count == 0
+            ? new ObservableCollection<Autor>()
+            : new ObservableCollection<Autor>(FilteredAutors.Values.Skip(_selectionIndex * _numberOfSelectedItems)
+                .Take(_numberOfSelectedItems));
+
+        
         public string ListAlphabetIndex
         {
             get
@@ -64,14 +74,6 @@ namespace QuoteApp.FrontEnd.View.ListView
         public string ListNumberIndex => FilteredAutors.Count + "/" + Autors.Count;
         public bool ListNumberIndexIsVisible => FilteredAutors.Count != Autors.Count;
 
-        #region Getter Properties
-
-        public Dictionary<string, Autor> FilteredAutors {get; private set; }
-
-        public ObservableCollection<Autor> ShownAutors => FilteredAutors.Count == 0
-            ? new ObservableCollection<Autor>()
-            : new ObservableCollection<Autor>(FilteredAutors.Values.Skip(_selectionIndex * _numberOfSelectedItems)
-                .Take(_numberOfSelectedItems));
 
         public int HeaderTextSize => QuoteAppUtils.PxToPt(App.ScreenHeight/25);
         public int AutorItemTextSize => QuoteAppUtils.PxToPt(App.ScreenHeight/50);
@@ -81,13 +83,6 @@ namespace QuoteApp.FrontEnd.View.ListView
 
         public int AutorItemHeight => QuoteAppUtils.PxToPt(App.ScreenHeight/25);
 
-        public Color LineColor => PersistentProperties.Instance.NightModeActivated
-            ? Color.FromHex(QuoteAppConstants.DefaultNightLineColor)
-            : Color.FromHex(QuoteAppConstants.DefaultDayLineColor);
-        public Color TextColor => PersistentProperties.Instance.NightModeActivated
-            ? Color.FromHex(QuoteAppConstants.DefaultNightTextColor)
-            : Color.FromHex(QuoteAppConstants.DefaultDayTextColor);
-        
         #endregion
 
         public AutorListView()

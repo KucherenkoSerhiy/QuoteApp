@@ -4,14 +4,13 @@ using System.Linq;
 using QuoteApp.Backend.BusinessLogic.Manager;
 using QuoteApp.Backend.BusinessLogic.Subsystem.PersistentProperties;
 using QuoteApp.Backend.Model;
-using QuoteApp.FrontEnd.View;
 using QuoteApp.FrontEnd.View.ItemView;
 using QuoteApp.FrontEnd.View.ListView;
 using QuoteApp.Globals;
 using SkiaSharp;
 using Xamarin.Forms;
 
-namespace QuoteApp
+namespace QuoteApp.FrontEnd.View
 {
     // TODO: Search for the most efficient way to change views
     // TODO: Bindings not working
@@ -20,12 +19,20 @@ namespace QuoteApp
         public List<ThemeColor> ThemeDayBackgroundColorItems { get; set; }
         public List<ThemeColor> ThemeNightBackgroundColorItems { get; set; }
 
-        public int GreetingTextSize { get; private set; }
-        public int BriefTextSize { get; private set; }
-        public int ButtonTextSize { get; private set; }
+        #region Getter Properties
 
-        public Color LineColor { get; private set; }
-        public Color TextColor { get; private set; }
+        public int GreetingTextSize => QuoteAppUtils.PxToPt(App.ScreenHeight / 25);
+        public int BriefTextSize => QuoteAppUtils.PxToPt(App.ScreenHeight / 50);
+        public int ButtonTextSize => QuoteAppUtils.PxToPt(App.ScreenHeight / 40);
+        
+        public Color LineColor => PersistentProperties.Instance.NightModeActivated
+            ? Color.FromHex(QuoteAppConstants.DefaultNightLineColor)
+            : Color.FromHex(QuoteAppConstants.DefaultDayLineColor);
+        public Color TextColor => PersistentProperties.Instance.NightModeActivated
+            ? Color.FromHex(QuoteAppConstants.DefaultNightTextColor)
+            : Color.FromHex(QuoteAppConstants.DefaultDayTextColor);
+
+        #endregion
 
         public MainPage()
         {
@@ -44,18 +51,6 @@ namespace QuoteApp
         {
             ThemeDayBackgroundColorItems = QuoteAppConstants.DefaultDayBackgroundColorGradientItems;
             ThemeNightBackgroundColorItems = QuoteAppConstants.DefaultNightBackgroundColorGradientItems;
-
-            GreetingTextSize = QuoteAppUtils.PxToPt(App.ScreenHeight / 25);
-            BriefTextSize = QuoteAppUtils.PxToPt(App.ScreenHeight / 50);
-            ButtonTextSize = QuoteAppUtils.PxToPt(App.ScreenHeight / 40);
-
-            LineColor = PersistentProperties.Instance.NightModeActivated
-                ? Color.FromHex(QuoteAppConstants.DefaultNightLineColor)
-                : Color.FromHex(QuoteAppConstants.DefaultDayLineColor);
-
-            TextColor = PersistentProperties.Instance.NightModeActivated
-               ? Color.FromHex(QuoteAppConstants.DefaultNightTextColor)
-               : Color.FromHex(QuoteAppConstants.DefaultDayTextColor);
         }
 
         private void RetrieveDependencies()
@@ -90,21 +85,8 @@ namespace QuoteApp
 
         #endregion
 
-        #region UI Events
-
+        #region UI Event Handling
         
-        private async void QuoteItemDayPageNavigationButton_OnClicked(object sender, EventArgs e)
-        {
-            PersistentProperties.Instance.NightModeActivated = false;
-            //await Navigation.PushAsync(new QuoteItemView());
-        }
-
-        private async void QuoteItemNightPageNavigationButton_OnClicked(object sender, EventArgs e)
-        {
-            PersistentProperties.Instance.NightModeActivated = true;
-            //await Navigation.PushAsync(new QuoteItemView());
-        }
-
         private async void ViewThemesButton_OnClicked(object sender, EventArgs e)
         {
             await Navigation.PushAsync(new ThemeListView());
@@ -115,8 +97,6 @@ namespace QuoteApp
             await Navigation.PushAsync(new AutorListView());
         }
 
-        #endregion
-
         private async void ViewRandomQuoteButton_OnClicked(object sender, EventArgs e)
         {
             var view = new QuoteItemView();
@@ -124,5 +104,12 @@ namespace QuoteApp
 
             await Navigation.PushAsync(view);
         }
+
+        private async void ViewSettingsButton_OnClicked(object sender, EventArgs e)
+        {
+            await Navigation.PushAsync(new SettingsView());
+        }
+
+        #endregion
     }
 }

@@ -2925,7 +2925,7 @@ namespace QuoteApp.Droid
 			public const int icon_magnifier = 2130837775;
 			
 			// aapt resource value: 0x7f020110
-			public const int icon_magnifier_a = 2130837776;
+			public const int icon_magnifier_night = 2130837776;
 			
 			// aapt resource value: 0x7f020111
 			public const int mr_button_connected_dark = 2130837777;

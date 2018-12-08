@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="QuoteApp.MainPage" x:Name="this">
+             x:Class="QuoteApp.FrontEnd.View.MainPage" x:Name="this">
      <ContentPage.Content>
         <Grid x:Name="ContentRoot" Margin="10" BindingContext="{x:Reference this}">
             <Grid.RowDefinitions>
@@ -41,23 +41,14 @@
                         BorderColor="{Binding LineColor}" TextColor="{Binding TextColor}"
                         Margin="0,0,0,25" FontSize="{Binding ButtonTextSize}"
                         Clicked="ViewAutorsButton_OnClicked"/>
+
+                <Button x:Name="ViewSettingsButton" Text="Settings"
+                        Style="{StaticResource ButtonDefaultStyle}"
+                        BorderColor="{Binding LineColor}" TextColor="{Binding TextColor}"
+                        Margin="0,0,0,25" FontSize="{Binding ButtonTextSize}"
+                        Clicked="ViewSettingsButton_OnClicked"/>
             </StackLayout>
 
-            <StackLayout Grid.Row="3" Orientation="Vertical">
-                <Button x:Name="QuoteItemDayPageNavigationButton"
-                        Text="Quote Item Day Page"
-                        FontSize="Small"
-                        HorizontalOptions="Center"
-                        VerticalOptions="Center"
-                        Clicked="QuoteItemDayPageNavigationButton_OnClicked"/>
-                <Button x:Name="QuoteItemNightPageNavigationButton"
-                        Text="Quote Item Night Page"
-                        FontSize="Small"
-                        HorizontalOptions="Center"
-                        VerticalOptions="Center"
-                        Clicked="QuoteItemNightPageNavigationButton_OnClicked"/>
-            </StackLayout>
-            
         </Grid>
     </ContentPage.Content>
 </ContentPage>

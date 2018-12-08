@@ -1,6 +1,7 @@
 ﻿using System;
 using QuoteApp.Backend.BusinessLogic.Manager;
 using QuoteApp.Backend.BusinessLogic.Subsystem.PersistentProperties;
+using QuoteApp.FrontEnd.View;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 

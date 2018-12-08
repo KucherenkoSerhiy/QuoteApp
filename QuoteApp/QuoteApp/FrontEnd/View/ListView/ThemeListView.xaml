@@ -25,7 +25,7 @@
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
 
-            <Image Grid.Column="0" Source="icon_magnifier_a.png"
+            <Image Grid.Column="0" Source="icon_magnifier_night.png"
                    WidthRequest="40" HeightRequest="40"/>
 
             <Entry Grid.Column="1" Text="{Binding SearchText}"
