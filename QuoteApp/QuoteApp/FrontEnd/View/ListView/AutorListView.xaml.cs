@@ -83,6 +83,13 @@ namespace QuoteApp.FrontEnd.View.ListView
 
         public int AutorItemHeight => QuoteAppUtils.PxToPt(App.ScreenHeight/25);
 
+        public Color LineColor => PersistentProperties.Instance.NightModeActivated
+            ? Color.FromHex(QuoteAppConstants.DefaultNightLineColor)
+            : Color.FromHex(QuoteAppConstants.DefaultDayLineColor);
+        public Color TextColor => PersistentProperties.Instance.NightModeActivated
+            ? Color.FromHex(QuoteAppConstants.DefaultNightTextColor)
+            : Color.FromHex(QuoteAppConstants.DefaultDayTextColor);
+
         #endregion
 
         public AutorListView()
@@ -92,7 +99,6 @@ namespace QuoteApp.FrontEnd.View.ListView
             RetrieveDependencies();
 
             InitializeComponent();
-            SetPageContent();
         }
 
         private void InitializeDefaultValues()
@@ -133,6 +139,12 @@ namespace QuoteApp.FrontEnd.View.ListView
         }
 
         #region UI Event Handling
+
+        protected override void OnAppearing()
+        {
+            SetPageContent();
+            OnPropertyChanged("");
+        }
 
         async void Handle_ItemTapped(object sender, ItemTappedEventArgs e)
         {

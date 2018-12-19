@@ -6,8 +6,9 @@
         <ResourceDictionary>
             <Style x:Key="ButtonDefaultStyle" TargetType="Button">
                 <Setter Property="HorizontalOptions" Value="Fill" />
+                <Setter Property="HeightRequest" Value="80" />
                 <Setter Property="BackgroundColor" Value="Transparent" />
-                <Setter Property="CornerRadius" Value="20"/>
+                <Setter Property="CornerRadius" Value="30"/>
                 <Setter Property="BorderWidth" Value="1" />
                 <Setter Property="FontFamily">
                     <Setter.Value>

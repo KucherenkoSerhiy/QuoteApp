@@ -28,6 +28,7 @@ namespace QuoteApp.FrontEnd.View
 
 	    public int TitleTextSize => QuoteAppUtils.PxToPt(App.ScreenHeight / 25);
 	    public int ButtonTextSize => QuoteAppUtils.PxToPt(App.ScreenHeight / 40);
+	    public int ToggleButtonTextSize => QuoteAppUtils.PxToPt(App.ScreenHeight / 50);
 	    public int LabelTextSize => QuoteAppUtils.PxToPt(App.ScreenHeight / 60);
         
 	    public Color LineColor => PersistentProperties.Instance.NightModeActivated
@@ -46,7 +47,6 @@ namespace QuoteApp.FrontEnd.View
 		    RetrieveDependencies();
 
 		    InitializeComponent();
-		    SetPageContent();
 		}
 
 	    #region Initialization
@@ -89,12 +89,19 @@ namespace QuoteApp.FrontEnd.View
 	    #endregion
 
 	    #region UI Event Handling
+        
+	    protected override void OnAppearing()
+	    {
+	        SetPageContent();
+	        OnPropertyChanged("");
+	    }
 
 	    private void SetDayModeButton_OnClicked(object sender, EventArgs e)
 	    {
 	        if (!PersistentProperties.Instance.NightModeActivated) return;
 
 	        PersistentProperties.Instance.NightModeActivated = false;
+	        SetPageContent();
 	        OnPropertyChanged("");
 	    }
 
@@ -103,6 +110,7 @@ namespace QuoteApp.FrontEnd.View
 	        if (PersistentProperties.Instance.NightModeActivated) return;
 
 	        PersistentProperties.Instance.NightModeActivated = true;
+	        SetPageContent();
 	        OnPropertyChanged("");
 	    }
 

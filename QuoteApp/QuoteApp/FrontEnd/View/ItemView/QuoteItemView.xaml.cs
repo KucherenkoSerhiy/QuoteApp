@@ -52,7 +52,6 @@ namespace QuoteApp.FrontEnd.View.ItemView
             InitializeDefaultValues();
 
             InitializeComponent();
-            SetPageContent();
         }
 
         
@@ -142,7 +141,12 @@ namespace QuoteApp.FrontEnd.View.ItemView
         #endregion
 
         #region UI Event Handling
-
+        
+        protected override void OnAppearing()
+        {
+            SetPageContent();
+            OnPropertyChanged("");
+        }
 
         // clicking autor label should go to autor list
 

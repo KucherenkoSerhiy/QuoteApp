@@ -47,7 +47,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="FrontEnd\Resources\" />
     <Folder Include="Properties\" />
   </ItemGroup>
 

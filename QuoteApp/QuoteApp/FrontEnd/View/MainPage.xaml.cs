@@ -40,7 +40,6 @@ namespace QuoteApp.FrontEnd.View
             RetrieveDependencies();
 
             InitializeComponent();
-            SetPageContent();
 
         }
 
@@ -87,6 +86,12 @@ namespace QuoteApp.FrontEnd.View
 
         #region UI Event Handling
         
+        protected override void OnAppearing()
+        {
+            SetPageContent();
+            OnPropertyChanged("");
+        }
+
         private async void ViewThemesButton_OnClicked(object sender, EventArgs e)
         {
             await Navigation.PushAsync(new ThemeListView());

@@ -97,7 +97,6 @@ namespace QuoteApp.FrontEnd.View.ListView
             RetrieveDependencies();
 
             InitializeComponent();
-            SetPageContent();
         }
 
         private void InitializeDefaultValues()
@@ -138,6 +137,12 @@ namespace QuoteApp.FrontEnd.View.ListView
         }
 
         #region UI Event Handling
+        
+        protected override void OnAppearing()
+        {
+            SetPageContent();
+            OnPropertyChanged("");
+        }
 
         async void Handle_ItemTapped(object sender, ItemTappedEventArgs e)
         {

@@ -1,6 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:customControls="clr-namespace:QuoteApp.FrontEnd.Resources.CustomControls;assembly=QuoteApp"
              x:Class="QuoteApp.FrontEnd.View.SettingsView"
              x:Name="this">
     <ContentPage.Content>
@@ -9,10 +10,10 @@
             <Label x:Name="SettingsText" Text="Settings"
                    Style="{StaticResource LabelDefaultStyle}"
                    TextColor="{Binding TextColor}" FontSize="{Binding TitleTextSize}"
-                   HorizontalOptions="Fill" VerticalOptions="Fill" Margin="0,0,0,20"/>
+                   HorizontalOptions="Center" VerticalOptions="Fill" Margin="0,0,0,40"/>
 
             <StackLayout VerticalOptions="CenterAndExpand">
-                <Grid Margin="0,0,0,15">
+                <Grid Margin="0,0,0,25">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="*" />
                         <ColumnDefinition Width="20" />
@@ -22,36 +23,39 @@
                     <Button Grid.Column="0" x:Name="SetDayModeButton" Text="Day Mode"
                             Style="{StaticResource ButtonDefaultStyle}"
                             BorderColor="{Binding LineColor}" TextColor="{Binding TextColor}"
-                            FontSize="{Binding ButtonTextSize}"
+                            FontSize="{Binding ToggleButtonTextSize}"
                             Clicked="SetDayModeButton_OnClicked" />
 
                     <Button Grid.Column="2" x:Name="SetNightModeButton" Text="Night Mode"
                             Style="{StaticResource ButtonDefaultStyle}"
                             BorderColor="{Binding LineColor}" TextColor="{Binding TextColor}"
-                            FontSize="{Binding ButtonTextSize}"
-                            Clicked="SetNightModeButton_OnClicked" />
+                            FontSize="{Binding ToggleButtonTextSize}"
+                            Clicked="SetNightModeButton_OnClicked"/>
                 </Grid>
 
-                <Grid Margin="0,0,0,15">
+                <Grid HorizontalOptions="Fill" Margin="0,0,0,15">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="Auto" />
                         <ColumnDefinition Width="20" />
                         <ColumnDefinition Width="*" />
                     </Grid.ColumnDefinitions>
 
-                    <Switch Grid.Column="0" x:Name="OnlyUnreadQuotesSwitch"
-                            IsToggled="{Binding OnlyUnreadQuotes}" />
+                    <customControls:CustomSwitch Grid.Column="0" x:Name="OnlyUnreadQuotesSwitch"
+                                                 IsToggled="{Binding OnlyUnreadQuotes}"
+                                                 SwitchOnColor="Blue" SwitchOffColor="Black"
+                                                 HorizontalOptions="Start" VerticalOptions="Center"
+                                                 Scale="2" Margin="20,0,0,0"/>
 
                     <Label Grid.Column="2"
                            Text="Show only unread quotes"
                            Style="{StaticResource LabelDefaultStyle}" TextColor="{Binding TextColor}"
-                           Margin="0,0,0,20" FontSize="{Binding LabelTextSize}"
-                           HorizontalOptions="Fill" VerticalOptions="Fill" />
+                           FontSize="{Binding LabelTextSize}"
+                           HorizontalOptions="End" VerticalOptions="Center" />
                 </Grid>
             </StackLayout>
 
             <StackLayout Orientation="Vertical" VerticalOptions="End">
-                <Button x:Name="ViewAboutButton" Text="Random Quote"
+                <Button x:Name="ViewAboutButton" Text="About"
                         Style="{StaticResource ButtonDefaultStyle}"
                         BorderColor="{Binding LineColor}" TextColor="{Binding TextColor}"
                         Margin="0,0,0,15" FontSize="{Binding ButtonTextSize}"
