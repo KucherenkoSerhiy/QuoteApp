@@ -10,6 +10,9 @@ namespace QuoteApp.Globals
 
         #region Style Colors
 
+        public const string OnSwitchColor = "009956";
+
+        // Day mode
         public static readonly List<ThemeColor> DefaultDayBackgroundColorGradientItems = new List<ThemeColor>
         {
             new ThemeColor{ ColorCode = "fffefc", GradientPosition = 0 },
@@ -18,7 +21,9 @@ namespace QuoteApp.Globals
         };
         public const string DefaultDayLineColor = "9a9b95";
         public const string DefaultDayTextColor = "000000";
+        public const string DefaultDayListItemSelectionBackgroundColor = "ebe8e8";
 
+        // Night mode
         public static readonly List<ThemeColor> DefaultNightBackgroundColorGradientItems = new List<ThemeColor>
         {
             new ThemeColor{ ColorCode = "141414", GradientPosition = 0 },
@@ -27,6 +32,7 @@ namespace QuoteApp.Globals
         };
         public const string DefaultNightLineColor = "666666";
         public const string DefaultNightTextColor = "ffffff";
+        public const string DefaultNightListItemSelectionBackgroundColor = "211d1d";
 
         #endregion
     }

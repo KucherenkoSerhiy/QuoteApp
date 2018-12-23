@@ -144,19 +144,21 @@ namespace QuoteApp.FrontEnd.View.ListView
             OnPropertyChanged("");
         }
 
-        async void Handle_ItemTapped(object sender, ItemTappedEventArgs e)
+        private async void TapGestureRecognizer_OnTapped(object sender, EventArgs e)
         {
-            if (e.Item == null)
-                return;
+            var itemBackgroundColor = Color.FromHex(PersistentProperties.Instance.NightModeActivated
+                ? QuoteAppConstants.DefaultNightListItemSelectionBackgroundColor
+                : QuoteAppConstants.DefaultDayListItemSelectionBackgroundColor);
 
-            Theme item = (Theme) e.Item;
+            var entity =((Grid)sender);
+            entity.BackgroundColor = itemBackgroundColor;
+            var item = (Theme) entity.BindingContext;
             var view = new QuoteItemView();
             view.SetTheme(item);
 
             await Navigation.PushAsync(view);
 
-            //Deselect Item
-            ((Xamarin.Forms.ListView)sender).SelectedItem = null;
+            ThemesView.SelectedItem = null;
         }
 
         private async void ButtonBack_OnClicked(object sender, EventArgs e)

@@ -145,20 +145,22 @@ namespace QuoteApp.FrontEnd.View.ListView
             SetPageContent();
             OnPropertyChanged("");
         }
-
-        async void Handle_ItemTapped(object sender, ItemTappedEventArgs e)
+        
+        private async void TapGestureRecognizer_OnTapped(object sender, EventArgs e)
         {
-            if (e.Item == null)
-                return;
+            var itemBackgroundColor = Color.FromHex(PersistentProperties.Instance.NightModeActivated
+                ? QuoteAppConstants.DefaultNightListItemSelectionBackgroundColor
+                : QuoteAppConstants.DefaultDayListItemSelectionBackgroundColor);
 
-            Autor item = (Autor) e.Item;
+            var entity =((Grid)sender);
+            entity.BackgroundColor = itemBackgroundColor;
+            var item = (Autor) entity.BindingContext;
             var view = new QuoteItemView();
             view.SetAutor(item);
 
             await Navigation.PushAsync(view);
 
-            //Deselect Item
-            ((Xamarin.Forms.ListView)sender).SelectedItem = null;
+            AutorsView.SelectedItem = null;
         }
 
         private async void ButtonBack_OnClicked(object sender, EventArgs e)

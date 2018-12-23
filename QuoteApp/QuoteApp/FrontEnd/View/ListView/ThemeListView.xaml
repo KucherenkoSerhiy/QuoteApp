@@ -32,13 +32,15 @@
                    TextColor="{Binding TextColor}"
                    FontSize="{Binding ThemeItemTextSize}"
                    Style="{StaticResource EntryDefaultStyle}"
+                   Placeholder="Search"
+                   PlaceholderColor="#aaaaaa"
                    VerticalOptions="FillAndExpand"/>
         </Grid>
 
         <!--Themes List-->
         <ScrollView Grid.Row="2" Margin="0,0,0,10" VerticalOptions="Center">
-            <ListView ItemsSource="{Binding ShownThemes, Mode=OneWay}"
-                      ItemTapped="Handle_ItemTapped"
+            <ListView x:Name="ThemesView" 
+                      ItemsSource="{Binding ShownThemes, Mode=OneWay}"
                       CachingStrategy="RecycleElement"
                       RowHeight="{Binding ThemeItemHeight}"
                       Margin="5">
@@ -55,6 +57,9 @@
                                        Style="{StaticResource LabelDefaultStyle}"
                                        LineBreakMode="TailTruncation"
                                        VerticalOptions="Center"/>
+                                <Grid.GestureRecognizers>
+                                    <TapGestureRecognizer Tapped="TapGestureRecognizer_OnTapped"/>
+                                </Grid.GestureRecognizers>
                             </Grid>
                         </ViewCell>
                     </DataTemplate>

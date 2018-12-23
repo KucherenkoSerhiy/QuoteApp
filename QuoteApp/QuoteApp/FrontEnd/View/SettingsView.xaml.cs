@@ -38,6 +38,8 @@ namespace QuoteApp.FrontEnd.View
 	        ? Color.FromHex(QuoteAppConstants.DefaultNightTextColor)
 	        : Color.FromHex(QuoteAppConstants.DefaultDayTextColor);
 
+	    public Color OnSwitchColor => Color.FromHex(QuoteAppConstants.OnSwitchColor);
+
 	    #endregion
 
 
@@ -59,7 +61,7 @@ namespace QuoteApp.FrontEnd.View
 
 	    private void RetrieveDependencies()
 	    {
-
+            
 	    }
 
 	    private void SetPageContent()

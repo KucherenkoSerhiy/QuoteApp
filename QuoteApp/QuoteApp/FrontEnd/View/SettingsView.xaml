@@ -42,9 +42,10 @@
 
                     <customControls:CustomSwitch Grid.Column="0" x:Name="OnlyUnreadQuotesSwitch"
                                                  IsToggled="{Binding OnlyUnreadQuotes}"
-                                                 SwitchOnColor="Blue" SwitchOffColor="Black"
-                                                 HorizontalOptions="Start" VerticalOptions="Center"
-                                                 Scale="2" Margin="20,0,0,0"/>
+                                                 OnColor="{Binding OnSwitchColor}"
+                                                 SwitchThumbImage="icon_switch_thumb"
+                                                 SwitchOnColor="{Binding OnSwitchColor}"
+                                                 HorizontalOptions="Start" VerticalOptions="Center"/>
 
                     <Label Grid.Column="2"
                            Text="Show only unread quotes"
