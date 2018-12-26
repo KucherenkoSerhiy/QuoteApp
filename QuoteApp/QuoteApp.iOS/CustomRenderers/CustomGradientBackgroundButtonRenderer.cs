@@ -20,6 +20,17 @@ namespace QuoteApp.iOS.CustomRenderers
             if (e.OldElement != null) return;
             if (Equals(_button, null))
                 _button = e.NewElement as CustomGradientBackgroundButton;
+
+            Control.TouchDown += delegate
+            {
+                _button.IsPressed = true;
+                SetNeedsDisplay();
+            };
+            Control.TouchUpInside += delegate
+            {
+                _button.IsPressed = false;
+                SetNeedsDisplay();
+            };
         }
 
         public override void Draw(CGRect rect)
