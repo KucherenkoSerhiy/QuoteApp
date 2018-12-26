@@ -48,6 +48,9 @@ namespace QuoteApp.Backend.BusinessLogic.Manager
         {
             string[] lines = QuoteAppUtils.ReadLocalFile("QuoteApp.Resources.QuotesDatabaseLite.csv").Skip(2).ToArray();
 
+            Quotes = new Dictionary<int, Quote>();
+            Autors = new SortedDictionary<string, Autor>();
+            Themes = new SortedDictionary<string, Theme>();
             AutorQuoteThemes = new List<AutorQuoteTheme>();
 
             Stopwatch watch = Stopwatch.StartNew();
@@ -89,7 +92,7 @@ namespace QuoteApp.Backend.BusinessLogic.Manager
 
                 // add autor if not exists and get his/her id (or find id of existent one)
                 int autorId;
-                if (Autors[autorFullName] == null)
+                if (!Autors.ContainsKey(autorFullName))
                 {
                     Autors[autorFullName] = new Autor {Id = autorCount, FullName = autorFullName};
                     autorId = autorCount;
@@ -102,7 +105,7 @@ namespace QuoteApp.Backend.BusinessLogic.Manager
 
                 // add theme if not exists and get its id (or find id of existent one)
                 int themeId;
-                if (Themes[themeName] == null)
+                if (!Themes.ContainsKey(themeName))
                 {
                     Themes[themeName] = new Theme
                     {
@@ -144,9 +147,9 @@ namespace QuoteApp.Backend.BusinessLogic.Manager
 
         private void InsertLists()
         {
-            _sqliteDbManager.InsertList(Quotes);
-            _sqliteDbManager.InsertList(Autors);
-            _sqliteDbManager.InsertList(Themes);
+            _sqliteDbManager.InsertList(Quotes.Values);
+            _sqliteDbManager.InsertList(Autors.Values);
+            _sqliteDbManager.InsertList(Themes.Values);
             _sqliteDbManager.InsertList(AutorQuoteThemes);
         }
 

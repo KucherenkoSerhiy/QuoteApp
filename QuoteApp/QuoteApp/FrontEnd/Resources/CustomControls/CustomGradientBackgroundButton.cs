@@ -1,4 +1,6 @@
-﻿using Xamarin.Forms;
+﻿using QuoteApp.Backend.BusinessLogic.Subsystem.PersistentProperties;
+using QuoteApp.Globals;
+using Xamarin.Forms;
 
 namespace QuoteApp.FrontEnd.Resources.CustomControls
 {
@@ -25,5 +27,27 @@ namespace QuoteApp.FrontEnd.Resources.CustomControls
         }
 
         public bool IsPressed { get; set; }
+
+        public CustomGradientBackgroundButton()
+        {
+            PersistentProperties.Instance.NightModeSwitched += (sender, e) => { SetColors(); };
+
+            SetColors();
+        }
+
+        private void SetColors()
+        {
+            BackgroundColor = Color.Transparent;
+
+            var isNightMode = PersistentProperties.Instance.NightModeActivated;
+
+            StartColor = Color.FromHex(isNightMode
+                ? QuoteAppConstants.DefaultNightButtonBackgroundStartColor
+                : QuoteAppConstants.DefaultDayButtonBackgroundStartColor);
+
+            EndColor = Color.FromHex(isNightMode
+                ? QuoteAppConstants.DefaultNightButtonBackgroundEndColor
+                : QuoteAppConstants.DefaultDayButtonBackgroundEndColor);
+        }
     }
 }

@@ -27,24 +27,23 @@
             <StackLayout Grid.Row="1" Orientation="Vertical">
                 <customControls:CustomGradientBackgroundButton x:Name="ViewRandomQuoteButton" Text="Random Quote"
                         Style="{StaticResource ButtonDefaultStyle}"
-                        StartColor="Blue" EndColor="Aqua"
                         BorderColor="{Binding LineColor}" TextColor="{Binding TextColor}"
                         Margin="0,0,0,15" FontSize="{Binding ButtonTextSize}"
                         Clicked="ViewRandomQuoteButton_OnClicked"/>
 
-                <Button x:Name="ViewThemesButton" Text="Themes"
+                <customControls:CustomGradientBackgroundButton x:Name="ViewThemesButton" Text="Themes"
                         Style="{StaticResource ButtonDefaultStyle}"
                         BorderColor="{Binding LineColor}" TextColor="{Binding TextColor}"
                         Margin="0,0,0,15" FontSize="{Binding ButtonTextSize}"
                         Clicked="ViewThemesButton_OnClicked"/>
 
-                <Button x:Name="ViewAutorsButton" Text="Autors"
+                <customControls:CustomGradientBackgroundButton x:Name="ViewAutorsButton" Text="Autors"
                         Style="{StaticResource ButtonDefaultStyle}"
                         BorderColor="{Binding LineColor}" TextColor="{Binding TextColor}"
                         Margin="0,0,0,15" FontSize="{Binding ButtonTextSize}"
                         Clicked="ViewAutorsButton_OnClicked"/>
 
-                <Button x:Name="ViewSettingsButton" Text="Settings"
+                <customControls:CustomGradientBackgroundButton x:Name="ViewSettingsButton" Text="Settings"
                         Style="{StaticResource ButtonDefaultStyle}"
                         BorderColor="{Binding LineColor}" TextColor="{Binding TextColor}"
                         Margin="0,0,0,15" FontSize="{Binding ButtonTextSize}"

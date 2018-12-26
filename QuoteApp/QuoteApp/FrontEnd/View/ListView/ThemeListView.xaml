@@ -1,6 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:customControls="clr-namespace:QuoteApp.FrontEnd.Resources.CustomControls;assembly=QuoteApp"
              x:Class="QuoteApp.FrontEnd.View.ListView.ThemeListView"
              x:Name="this">
     <Grid x:Name="ContentRoot" BindingContext="{x:Reference this}">
@@ -109,7 +110,7 @@
         </Grid>
 
         <!--Back Button-->
-        <Button Grid.Row="4" x:Name="ButtonBack" Text="Back" FontSize="{Binding ButtonTextSize}"
+        <customControls:CustomGradientBackgroundButton Grid.Row="4" x:Name="ButtonBack" Text="Back" FontSize="{Binding ButtonTextSize}"
                 Style="{StaticResource ButtonDefaultStyle}"
                 BorderColor="{Binding LineColor}" TextColor="{Binding TextColor}"
                 Clicked="ButtonBack_OnClicked" Margin="10,0,10,10"/>

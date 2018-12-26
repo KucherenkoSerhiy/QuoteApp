@@ -51,8 +51,18 @@ namespace QuoteApp.Backend.BusinessLogic.Subsystem.PersistentProperties
 
         #endregion
 
+        private bool _nightModeActivated;
+
         public bool DatabaseIsInitialized { get; set; }
-        public bool NightModeActivated { get; set; }
+        public bool NightModeActivated
+        {
+            get => _nightModeActivated;
+            set
+            {
+                _nightModeActivated = value; 
+                OnNightModeSwitched();
+            }
+        }
         public bool OnlyUnreadQuotes { get; set; }
         public bool FirstTimeEnteredMainMenu { get; set; } = true;
 
@@ -60,5 +70,16 @@ namespace QuoteApp.Backend.BusinessLogic.Subsystem.PersistentProperties
         {
             QuoteAppUtils.SerializeToXml(this, FilePath);
         }
+
+        #region Events
+
+        public event EventHandler NightModeSwitched;
+
+        protected virtual void OnNightModeSwitched()
+        {
+            NightModeSwitched?.Invoke(this, EventArgs.Empty);
+        }
+
+        #endregion
     }
 }

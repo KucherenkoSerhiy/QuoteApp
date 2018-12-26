@@ -20,13 +20,13 @@
                         <ColumnDefinition Width="*" />
                     </Grid.ColumnDefinitions>
 
-                    <Button Grid.Column="0" x:Name="SetDayModeButton" Text="Day Mode"
+                    <customControls:CustomGradientBackgroundButton Grid.Column="0" x:Name="SetDayModeButton" Text="Day Mode"
                             Style="{StaticResource ButtonDefaultStyle}"
                             BorderColor="{Binding LineColor}" TextColor="{Binding TextColor}"
                             FontSize="{Binding ToggleButtonTextSize}"
                             Clicked="SetDayModeButton_OnClicked" />
 
-                    <Button Grid.Column="2" x:Name="SetNightModeButton" Text="Night Mode"
+                    <customControls:CustomGradientBackgroundButton Grid.Column="2" x:Name="SetNightModeButton" Text="Night Mode"
                             Style="{StaticResource ButtonDefaultStyle}"
                             BorderColor="{Binding LineColor}" TextColor="{Binding TextColor}"
                             FontSize="{Binding ToggleButtonTextSize}"
@@ -56,13 +56,13 @@
             </StackLayout>
 
             <StackLayout Orientation="Vertical" VerticalOptions="End">
-                <Button x:Name="ViewAboutButton" Text="About"
+                <customControls:CustomGradientBackgroundButton x:Name="ViewAboutButton" Text="About"
                         Style="{StaticResource ButtonDefaultStyle}"
                         BorderColor="{Binding LineColor}" TextColor="{Binding TextColor}"
                         Margin="0,0,0,15" FontSize="{Binding ButtonTextSize}"
                         Clicked="ViewAboutButton_OnClicked"/>
 
-                <Button x:Name="ButtonBack" Text="Back"
+                <customControls:CustomGradientBackgroundButton x:Name="ButtonBack" Text="Back"
                         Style="{StaticResource ButtonDefaultStyle}"
                         BorderColor="{Binding LineColor}" TextColor="{Binding TextColor}"
                         Margin="0,0,0,15" FontSize="{Binding ButtonTextSize}"
