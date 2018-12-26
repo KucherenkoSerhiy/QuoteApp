@@ -28,6 +28,9 @@
     <AppxPackagedFile Include="C:\Users\skucherenko\source\repos\QuoteApp\QuoteApp\QuoteApp.UWP\bin\x86\Debug\QuoteApp.UWP.exe">
       <PackagePath>entrypoint\QuoteApp.UWP.exe</PackagePath>
     </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\skucherenko\.nuget\packages\ansuria.xfgloss\1.1.3\lib\netstandard2.0\XFGloss.dll">
+      <PackagePath>XFGloss.dll</PackagePath>
+    </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\skucherenko\.nuget\packages\runtime.win10-x86.microsoft.netcore.universalwindowsplatform\6.1.5\runtimes\win10-x86\nativeassets\uap10.0.15138\clrcompression.dll">
       <PackagePath>clrcompression.dll</PackagePath>
     </AppxPackagedFile>

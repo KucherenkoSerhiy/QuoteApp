@@ -19,6 +19,12 @@ namespace QuoteApp.FrontEnd.View
         public List<ThemeColor> ThemeDayBackgroundColorItems { get; set; }
         public List<ThemeColor> ThemeNightBackgroundColorItems { get; set; }
 
+        public bool FirstTimeEnteredMainMenu
+        {
+            get => PersistentProperties.Instance.FirstTimeEnteredMainMenu;
+            set => PersistentProperties.Instance.FirstTimeEnteredMainMenu = value;
+        }
+
         #region Getter Properties
 
         public int GreetingTextSize => QuoteAppUtils.PxToPt(App.ScreenHeight / 25);
@@ -32,6 +38,8 @@ namespace QuoteApp.FrontEnd.View
             ? Color.FromHex(QuoteAppConstants.DefaultNightTextColor)
             : Color.FromHex(QuoteAppConstants.DefaultDayTextColor);
 
+        public string MainMenuTitle => FirstTimeEnteredMainMenu ? "Welcome" : "Main Menu";
+
         #endregion
 
         public MainPage()
@@ -40,7 +48,6 @@ namespace QuoteApp.FrontEnd.View
             RetrieveDependencies();
 
             InitializeComponent();
-
         }
 
         #region Initialization
@@ -90,6 +97,12 @@ namespace QuoteApp.FrontEnd.View
         {
             SetPageContent();
             OnPropertyChanged("");
+        }
+
+        protected override void OnDisappearing()
+        {
+            if (FirstTimeEnteredMainMenu)
+                FirstTimeEnteredMainMenu = false;
         }
 
         private async void ViewThemesButton_OnClicked(object sender, EventArgs e)

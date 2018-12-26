@@ -16,7 +16,7 @@ namespace QuoteApp.Droid.CustomRenderers
 {
     public class CustomSwitchRenderer : SwitchRenderer
     {
-        private CustomSwitch view;
+        private CustomSwitch _view;
 
         public CustomSwitchRenderer(Context context) : base(context)
         {
@@ -27,16 +27,16 @@ namespace QuoteApp.Droid.CustomRenderers
             base.OnElementChanged(e);
             if (e.OldElement != null || e.NewElement == null)
                 return;
-            view = (CustomSwitch)Element;
+            _view = (CustomSwitch)Element;
             if (Android.OS.Build.VERSION.SdkInt < Android.OS.BuildVersionCodes.JellyBean) return;
             if (this.Control == null) return;
 
             this.Control.TrackDrawable.SetColorFilter(this.Control.Checked 
-                ? view.SwitchOnColor.ToAndroid() 
-                : view.SwitchOffColor.ToAndroid(), PorterDuff.Mode.SrcAtop);
+                ? _view.SwitchOnColor.ToAndroid() 
+                : _view.SwitchOffColor.ToAndroid(), PorterDuff.Mode.SrcAtop);
 
             this.Control.CheckedChange += this.OnCheckedChange;
-            UpdateSwitchThumbImage(view);
+            UpdateSwitchThumbImage(_view);
             //Control.TrackDrawable.SetColorFilter(view.SwitchBGColor.ToAndroid(), PorterDuff.Mode.Multiply);  
         }
 
@@ -58,7 +58,7 @@ namespace QuoteApp.Droid.CustomRenderers
         private void OnCheckedChange(object sender, CompoundButton.CheckedChangeEventArgs e)
         {
             this.Control.TrackDrawable.SetColorFilter(
-                this.Control.Checked ? view.SwitchOnColor.ToAndroid() : view.SwitchOffColor.ToAndroid(),
+                this.Control.Checked ? _view.SwitchOnColor.ToAndroid() : _view.SwitchOffColor.ToAndroid(),
                 PorterDuff.Mode.SrcAtop);
         }
         protected override void Dispose(bool disposing)

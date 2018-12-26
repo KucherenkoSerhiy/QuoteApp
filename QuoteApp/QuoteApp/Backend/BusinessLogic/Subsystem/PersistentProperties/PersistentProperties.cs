@@ -54,6 +54,7 @@ namespace QuoteApp.Backend.BusinessLogic.Subsystem.PersistentProperties
         public bool DatabaseIsInitialized { get; set; }
         public bool NightModeActivated { get; set; }
         public bool OnlyUnreadQuotes { get; set; }
+        public bool FirstTimeEnteredMainMenu { get; set; } = true;
 
         public void SerializeToXml()
         {
