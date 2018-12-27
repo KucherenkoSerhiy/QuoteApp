@@ -30,6 +30,8 @@ namespace QuoteApp.Droid.CustomRenderers
             _view = (CustomSwitch)Element;
             if (Android.OS.Build.VERSION.SdkInt < Android.OS.BuildVersionCodes.JellyBean) return;
             if (this.Control == null) return;
+            
+            Control.Checked = _view.IsToggled;
 
             this.Control.TrackDrawable.SetColorFilter(this.Control.Checked 
                 ? _view.SwitchOnColor.ToAndroid() 
@@ -37,7 +39,6 @@ namespace QuoteApp.Droid.CustomRenderers
 
             this.Control.CheckedChange += this.OnCheckedChange;
             UpdateSwitchThumbImage(_view);
-            //Control.TrackDrawable.SetColorFilter(view.SwitchBGColor.ToAndroid(), PorterDuff.Mode.Multiply);  
         }
 
         private void UpdateSwitchThumbImage(CustomSwitch view)  
@@ -57,6 +58,7 @@ namespace QuoteApp.Droid.CustomRenderers
 
         private void OnCheckedChange(object sender, CompoundButton.CheckedChangeEventArgs e)
         {
+            _view.IsToggled = Control.Checked;
             this.Control.TrackDrawable.SetColorFilter(
                 this.Control.Checked ? _view.SwitchOnColor.ToAndroid() : _view.SwitchOffColor.ToAndroid(),
                 PorterDuff.Mode.SrcAtop);

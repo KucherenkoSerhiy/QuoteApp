@@ -40,16 +40,36 @@ namespace QuoteApp.FrontEnd.Resources.CustomControls
             set => SetValue(SwitchThumbColorProperty, value);
         }
 
-        public static readonly BindableProperty SwitchThumbImageProperty =
-            BindableProperty.Create(nameof(SwitchThumbImage),
-                typeof(string),
-                typeof(CustomSwitch),
-                string.Empty);
+        public static readonly BindableProperty SwitchThumbImageProperty = BindableProperty.Create(
+            nameof(SwitchThumbImage),
+            typeof(string),
+            typeof(CustomSwitch),
+            string.Empty);
 
         public string SwitchThumbImage
         {
             get => (string)GetValue(SwitchThumbImageProperty);
             set => SetValue(SwitchThumbImageProperty, value);
+        }
+
+
+        public static BindableProperty IsToggledProperty = BindableProperty.Create(
+            propertyName: nameof(IsToggled),
+            returnType: typeof(bool),
+            declaringType: typeof(Switch),
+            defaultValue: false,
+            defaultBindingMode: BindingMode.TwoWay,
+            propertyChanged: HandleIsToggledChanged);
+
+        public bool IsToggled
+        {
+            get { return (bool)GetValue(IsToggledProperty); }
+            set { SetValue(IsToggledProperty, value); }
+        }
+
+        private static void HandleIsToggledChanged(BindableObject bindable, object oldValue, object newValue)
+        {
+            ((CustomSwitch)bindable).IsToggled = (bool)newValue;
         }
     }
 }

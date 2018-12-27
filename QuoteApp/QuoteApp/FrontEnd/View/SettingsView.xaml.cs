@@ -26,6 +26,9 @@ namespace QuoteApp.FrontEnd.View
 
 	    #region Getter Properties
 
+	    public bool NightModeOn => PersistentProperties.Instance.NightModeActivated;
+	    public bool DayModeOn => !NightModeOn;
+
 	    public int TitleTextSize => QuoteAppUtils.PxToPt(App.ScreenHeight / 25);
 	    public int ButtonTextSize => QuoteAppUtils.PxToPt(App.ScreenHeight / 40);
 	    public int ToggleButtonTextSize => QuoteAppUtils.PxToPt(App.ScreenHeight / 50);
@@ -49,6 +52,12 @@ namespace QuoteApp.FrontEnd.View
 		    RetrieveDependencies();
 
 		    InitializeComponent();
+
+		    PersistentProperties.Instance.NightModeSwitched += (sender, e) =>
+		    {
+                OnPropertyChanged(nameof(NightModeOn));
+                OnPropertyChanged(nameof(DayModeOn));
+		    };
 		}
 
 	    #region Initialization

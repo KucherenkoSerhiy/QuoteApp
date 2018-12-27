@@ -23,13 +23,13 @@
                     <customControls:CustomGradientBackgroundButton Grid.Column="0" x:Name="SetDayModeButton" Text="Day Mode"
                             Style="{StaticResource ButtonDefaultStyle}"
                             BorderColor="{Binding LineColor}" TextColor="{Binding TextColor}"
-                            FontSize="{Binding ToggleButtonTextSize}"
-                            Clicked="SetDayModeButton_OnClicked" />
+                            FontSize="{Binding ToggleButtonTextSize}" IsEnabled="{Binding NightModeOn}"
+                            Clicked="SetDayModeButton_OnClicked"/>
 
                     <customControls:CustomGradientBackgroundButton Grid.Column="2" x:Name="SetNightModeButton" Text="Night Mode"
                             Style="{StaticResource ButtonDefaultStyle}"
                             BorderColor="{Binding LineColor}" TextColor="{Binding TextColor}"
-                            FontSize="{Binding ToggleButtonTextSize}"
+                            FontSize="{Binding ToggleButtonTextSize}" IsEnabled="{Binding DayModeOn}"
                             Clicked="SetNightModeButton_OnClicked"/>
                 </Grid>
 
@@ -41,8 +41,7 @@
                     </Grid.ColumnDefinitions>
 
                     <customControls:CustomSwitch Grid.Column="0" x:Name="OnlyUnreadQuotesSwitch"
-                                                 IsToggled="{Binding OnlyUnreadQuotes}"
-                                                 OnColor="{Binding OnSwitchColor}"
+                                                 IsToggled="{Binding Path=OnlyUnreadQuotes, Mode=TwoWay, Source={x:Reference this}}"
                                                  SwitchThumbImage="icon_switch_thumb"
                                                  SwitchOnColor="{Binding OnSwitchColor}"
                                                  HorizontalOptions="Start" VerticalOptions="Center"/>

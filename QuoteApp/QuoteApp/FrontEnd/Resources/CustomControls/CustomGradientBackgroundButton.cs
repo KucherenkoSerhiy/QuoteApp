@@ -26,7 +26,7 @@ namespace QuoteApp.FrontEnd.Resources.CustomControls
             set => SetValue(EndColorProperty, value);
         }
 
-        public bool IsPressed { get; set; }
+        public new bool IsPressed { get; set; }
 
         public CustomGradientBackgroundButton()
         {

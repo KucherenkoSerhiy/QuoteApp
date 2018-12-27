@@ -24,6 +24,7 @@ namespace QuoteApp
         {
             // Handle when your app starts
             var databaseManager =  DatabaseManager.Instance;
+            var persistentProperties = PersistentProperties.Instance;
         }
 
         protected override void OnSleep()
