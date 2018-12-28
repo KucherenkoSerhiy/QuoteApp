@@ -12,6 +12,6 @@ namespace QuoteApp.Backend.Model
         public string Text { get; set; }
         public string Context { get; set; }
         public DateTime Date { get; set; }
-        public bool HasBeenRead { get; set; }
+        public bool HasBeenFullyRead { get; set; }
     }
 }

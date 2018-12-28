@@ -21,6 +21,7 @@ namespace QuoteApp.Globals
         };
         public const string DefaultDayLineColor = "9a9b95";
         public const string DefaultDayTextColor = "000000";
+        public const string DefaultDayGrayedOutTextColor = "5e5e5e";
         public const string DefaultDayListItemSelectionBackgroundColor = "ebe8e8";
         public const string DefaultDayButtonBackgroundStartColor = "fffefc";
         public const string DefaultDayButtonBackgroundEndColor = "666666";
@@ -34,6 +35,7 @@ namespace QuoteApp.Globals
         };
         public const string DefaultNightLineColor = "666666";
         public const string DefaultNightTextColor = "ffffff";
+        public const string DefaultNightGrayedOutTextColor = "a1a1a1";
         public const string DefaultNightListItemSelectionBackgroundColor = "211d1d";
         public const string DefaultNightButtonBackgroundStartColor = "141414";
         public const string DefaultNightButtonBackgroundEndColor = "7fbca2a1";

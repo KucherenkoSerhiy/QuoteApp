@@ -17,7 +17,7 @@
         <Label Text="Themes" TextColor="{Binding TextColor}"
                Style="{StaticResource LabelDefaultStyle}"
                Grid.Row="0" FontSize="{Binding HeaderTextSize}"
-               HorizontalOptions="Fill" VerticalOptions="Fill" Margin="0,10,0,0"/>
+               HorizontalOptions="Center" VerticalOptions="Fill" Margin="0,10,0,0"/>
 
         <!--Search Bar-->
         <Grid Grid.Row="1" Margin="10,10,100,10">
@@ -57,7 +57,13 @@
                                        FontSize="{Binding ThemeItemTextSize, Source={x:Reference this}}"
                                        Style="{StaticResource LabelDefaultStyle}"
                                        LineBreakMode="TailTruncation"
-                                       VerticalOptions="Center"/>
+                                       VerticalOptions="Center">
+                                    <Label.Triggers>
+                                        <DataTrigger TargetType="{x:Type Label}" Binding="{Binding HasBeenFullyRead}" Value="True">
+                                            <Setter Property="TextColor" Value="{Binding GrayedOutTextColor, Source={x:Reference this}}"/>
+                                        </DataTrigger>
+                                    </Label.Triggers>
+                                </Label>
                                 <Grid.GestureRecognizers>
                                     <TapGestureRecognizer Tapped="TapGestureRecognizer_OnTapped"/>
                                 </Grid.GestureRecognizers>
@@ -85,11 +91,11 @@
                 </Image.GestureRecognizers>
             </Image>
             
-            <StackLayout Grid.Column="1" Orientation="Vertical">
+            <StackLayout Grid.Column="1" Orientation="Vertical" HorizontalOptions="Center">
                 <Label Text="{Binding ListAlphabetIndex, Mode=OneWay}" TextColor="{Binding TextColor}"
                        Style="{StaticResource LabelDefaultStyle}"
                        FontSize="{Binding AlphabetNavigationTextSize}"
-                       HorizontalOptions="Fill" VerticalOptions="Start"
+                       HorizontalOptions="Fill" VerticalOptions="CenterAndExpand"
                        LineBreakMode="TailTruncation"/>
                 
                 <Label Text="{Binding ListNumberIndex, Mode=OneWay}" TextColor="{Binding TextColor}"

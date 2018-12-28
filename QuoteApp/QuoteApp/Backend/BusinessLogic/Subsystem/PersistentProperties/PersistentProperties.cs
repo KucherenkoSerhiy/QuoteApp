@@ -63,7 +63,8 @@ namespace QuoteApp.Backend.BusinessLogic.Subsystem.PersistentProperties
                 OnNightModeSwitched();
             }
         }
-        public bool OnlyUnreadQuotes { get; set; }
+
+        public bool OnlyUnreadQuotes { get; set; } = true;
         public bool FirstTimeEnteredMainMenu { get; set; } = true;
 
         public void SerializeToXml()

@@ -23,10 +23,10 @@ namespace QuoteApp.Backend.BusinessLogic.Manager
 
             if (PersistentProperties.Instance.DatabaseIsInitialized)
             {
-                Quotes = _sqliteDbManager.GetList<Quote>().ToDictionary(x => x.Id, x => x);
-                Autors = new SortedDictionary<string, Autor>(_sqliteDbManager.GetList<Autor>().ToDictionary(x => x.FullName, x => x)); // Todo: suspiciously many autors
-                Themes = new SortedDictionary<string, Theme>(_sqliteDbManager.GetList<Theme>().ToDictionary(x => x.Name, x => x));
-                AutorQuoteThemes = _sqliteDbManager.GetList<AutorQuoteTheme>();
+                _quotes = _sqliteDbManager.GetList<Quote>().ToDictionary(x => x.Id, x => x);
+                _autors = new SortedDictionary<string, Autor>(_sqliteDbManager.GetList<Autor>().ToDictionary(x => x.FullName, x => x));
+                _themes = new SortedDictionary<string, Theme>(_sqliteDbManager.GetList<Theme>().ToDictionary(x => x.Name, x => x));
+                _autorQuoteThemes = _sqliteDbManager.GetList<AutorQuoteTheme>();
                 //Todo: theme colors
             }
             else
@@ -37,21 +37,40 @@ namespace QuoteApp.Backend.BusinessLogic.Manager
 
         #endregion
 
-        private SqliteDbManager _sqliteDbManager;
+        private readonly SqliteDbManager _sqliteDbManager;
+        private Dictionary<int, Quote> _quotes;
+        private SortedDictionary<string, Autor> _autors;
+        private SortedDictionary<string, Theme> _themes;
+        private List<AutorQuoteTheme> _autorQuoteThemes;
 
-        public Dictionary<int, Quote> Quotes { get; set; }
-        public SortedDictionary<string, Autor> Autors { get; set; }
-        public SortedDictionary<string,Theme> Themes { get; set; }
-        public List<AutorQuoteTheme> AutorQuoteThemes { get; set; }
-        
+        public Dictionary<int, Quote> Quotes => PersistentProperties.Instance.OnlyUnreadQuotes
+            ? _quotes.Where(q => !q.Value.HasBeenFullyRead).ToDictionary(q => q.Key, q => q.Value) 
+            : _quotes;
+
+        public SortedDictionary<string, Autor> Autors => PersistentProperties.Instance.OnlyUnreadQuotes
+            ? new SortedDictionary<string, Autor>(_autors
+                .Where(a => !a.Value.HasBeenFullyRead)
+                .ToDictionary(x => x.Key, x => x.Value))
+            : _autors;
+
+        public SortedDictionary<string, Theme> Themes
+        {
+            get => PersistentProperties.Instance.OnlyUnreadQuotes
+                ? new SortedDictionary<string, Theme>(_themes
+                    .Where(a => a.Value.NumberOfQuotes > a.Value.NumberOfReadQuotes)
+                    .ToDictionary(x => x.Key, x => x.Value))
+                : _themes;
+            set => _themes = value;
+        }
+
         private void InitializeDatabase()
         {
             string[] lines = QuoteAppUtils.ReadLocalFile("QuoteApp.Resources.QuotesDatabaseLite.csv").Skip(2).ToArray();
 
-            Quotes = new Dictionary<int, Quote>();
-            Autors = new SortedDictionary<string, Autor>();
-            Themes = new SortedDictionary<string, Theme>();
-            AutorQuoteThemes = new List<AutorQuoteTheme>();
+            _quotes = new Dictionary<int, Quote>();
+            _autors = new SortedDictionary<string, Autor>();
+            _themes = new SortedDictionary<string, Theme>();
+            _autorQuoteThemes = new List<AutorQuoteTheme>();
 
             Stopwatch watch = Stopwatch.StartNew();
 
@@ -62,7 +81,7 @@ namespace QuoteApp.Backend.BusinessLogic.Manager
 
             string watchTime = $"Elapsed: {watch.ElapsedMilliseconds / 1000}";
 
-            string summary = $"Total: Quotes={Quotes.Count}, Autors={Autors.Count}, Themes={Themes.Count}, Links={AutorQuoteThemes.Count}";
+            string summary = $"Total: Quotes={_quotes.Count}, Autors={_autors.Count}, Themes={_themes.Count}, Links={_autorQuoteThemes.Count}";
 
             PersistentProperties.Instance.DatabaseIsInitialized = true;
         }
@@ -86,28 +105,36 @@ namespace QuoteApp.Backend.BusinessLogic.Manager
                 string themeName = new string(a).Trim();
 
                 // add quote and get its id
-                Quotes.Add(quoteCount, new Quote { Id = quoteCount, Text = quoteText });
+                var quote = new Quote { Id = quoteCount, Text = quoteText };
+                _quotes.Add(quoteCount, quote);
                 int quoteId = quoteCount;
                 quoteCount++;
 
                 // add autor if not exists and get his/her id (or find id of existent one)
                 int autorId;
-                if (!Autors.ContainsKey(autorFullName))
+                if (!_autors.ContainsKey(autorFullName))
                 {
-                    Autors[autorFullName] = new Autor {Id = autorCount, FullName = autorFullName};
+                    var autor = new Autor {Id = autorCount, FullName = autorFullName};
+                    autor.NumberOfQuotes++;
+                    if (quote.HasBeenFullyRead) autor.NumberOfReadQuotes++;
+
+                    _autors.Add(autorFullName, autor);
                     autorId = autorCount;
                     autorCount++;
                 }
                 else
                 {
-                    autorId = Autors[autorFullName].Id;
+                    var autor = _autors[autorFullName];
+                    autor.NumberOfQuotes++;
+                    if (quote.HasBeenFullyRead) autor.NumberOfReadQuotes++;
+                    autorId = autor.Id;
                 }
 
                 // add theme if not exists and get its id (or find id of existent one)
                 int themeId;
-                if (!Themes.ContainsKey(themeName))
+                if (!_themes.ContainsKey(themeName))
                 {
-                    Themes[themeName] = new Theme
+                    var theme = new Theme
                     {
                         Id = themeCount,
                         Name = themeName,
@@ -116,17 +143,24 @@ namespace QuoteApp.Backend.BusinessLogic.Manager
                         NightLineColor = QuoteAppConstants.DefaultNightLineColor,
                         NightTextColor = QuoteAppConstants.DefaultNightTextColor
                     };
+                    theme.NumberOfQuotes++;
+                    if (quote.HasBeenFullyRead) theme.NumberOfReadQuotes++;
+
+                    _themes.Add(themeName, theme);
 
                     themeId = themeCount;
                     themeCount++;
                 }
                 else
                 {
-                    themeId = Themes[themeName].Id;
+                    var theme = _themes[themeName];
+                    theme.NumberOfQuotes++;
+                    if (quote.HasBeenFullyRead) theme.NumberOfReadQuotes++;
+                    themeId = theme.Id;
                 }
 
                 // add link
-                AutorQuoteThemes.Add(new AutorQuoteTheme(autorId, quoteId, themeId));
+                _autorQuoteThemes.Add(new AutorQuoteTheme(autorId, quoteId, themeId));
             }
         }
 
@@ -147,10 +181,10 @@ namespace QuoteApp.Backend.BusinessLogic.Manager
 
         private void InsertLists()
         {
-            _sqliteDbManager.InsertList(Quotes.Values);
-            _sqliteDbManager.InsertList(Autors.Values);
-            _sqliteDbManager.InsertList(Themes.Values);
-            _sqliteDbManager.InsertList(AutorQuoteThemes);
+            _sqliteDbManager.InsertList(_quotes.Values);
+            _sqliteDbManager.InsertList(_autors.Values);
+            _sqliteDbManager.InsertList(_themes.Values);
+            _sqliteDbManager.InsertList(_autorQuoteThemes);
         }
 
         public Autor GetNextAutor(Autor autor)
@@ -187,42 +221,54 @@ namespace QuoteApp.Backend.BusinessLogic.Manager
         
         public IEnumerable<Quote> GetQuotesByAutor(Autor autor)
         {
-            var selectedAutorQuoteThemes = AutorQuoteThemes.Where(aqt => aqt.AutorId == autor.Id);
+            var selectedAutorQuoteThemes = _autorQuoteThemes.Where(aqt => aqt.AutorId == autor.Id);
 
             return selectedAutorQuoteThemes.Select(selectedAutorQuoteTheme => Quotes[selectedAutorQuoteTheme.QuoteId]);
         }
         
         public IEnumerable<Quote> GetQuotesByTheme(Theme theme)
         {
-            var selectedAutorQuoteThemes = AutorQuoteThemes.Where(aqt => aqt.AutorId == theme.Id);
+            var selectedAutorQuoteThemes = _autorQuoteThemes.Where(aqt => aqt.AutorId == theme.Id);
 
             return selectedAutorQuoteThemes.Select(selectedAutorQuoteTheme => Quotes[selectedAutorQuoteTheme.QuoteId]);
         }
 
         public Theme GetThemeByAutor(Autor autor)
         {
-            var selectedAutorQuoteThemes = AutorQuoteThemes.Where(aqt => aqt.AutorId == autor.Id);
+            var selectedAutorQuoteThemes = _autorQuoteThemes.Where(aqt => aqt.AutorId == autor.Id);
 
             return Themes.Single(x => x.Value.Id == selectedAutorQuoteThemes.First().ThemeId).Value;
         }
 
         public Autor GetAutorByTheme(Theme theme)
         {
-            var selectedAutorQuoteThemes = AutorQuoteThemes.Where(aqt => aqt.AutorId == theme.Id);
+            var selectedAutorQuoteThemes = _autorQuoteThemes.Where(aqt => aqt.AutorId == theme.Id);
 
             return Autors.Single(x => x.Value.Id == selectedAutorQuoteThemes.First().AutorId).Value;
         }
 
         public Autor GetAutorByQuote(Quote quote)
         {
-            var selectedAutorQuoteTheme = AutorQuoteThemes.First(aqt => aqt.QuoteId == quote.Id);
+            var selectedAutorQuoteTheme = _autorQuoteThemes.First(aqt => aqt.QuoteId == quote.Id);
             return Autors.Single(x => x.Value.Id == selectedAutorQuoteTheme.AutorId).Value;
         }
 
         public Theme GetThemeByQuote(Quote quote)
         {
-            var selectedThemeQuoteTheme = AutorQuoteThemes.First(aqt => aqt.QuoteId == quote.Id);
+            var selectedThemeQuoteTheme = _autorQuoteThemes.First(aqt => aqt.QuoteId == quote.Id);
             return Themes.Single(x => x.Value.Id == selectedThemeQuoteTheme.ThemeId).Value;
+        }
+
+        public void SetQuoteRead(Quote quote)
+        {
+            if (quote.HasBeenFullyRead) return;
+
+            var autor = GetAutorByQuote(quote);
+            var theme = GetThemeByQuote(quote);
+
+            quote.HasBeenFullyRead = true;
+            autor.NumberOfReadQuotes++;
+            theme.NumberOfReadQuotes++;
         }
     }
 }

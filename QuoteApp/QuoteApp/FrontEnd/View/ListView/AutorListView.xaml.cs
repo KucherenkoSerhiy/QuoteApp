@@ -89,6 +89,9 @@ namespace QuoteApp.FrontEnd.View.ListView
         public Color TextColor => PersistentProperties.Instance.NightModeActivated
             ? Color.FromHex(QuoteAppConstants.DefaultNightTextColor)
             : Color.FromHex(QuoteAppConstants.DefaultDayTextColor);
+        public Color GrayedOutTextColor => PersistentProperties.Instance.NightModeActivated
+            ? Color.FromHex(QuoteAppConstants.DefaultNightGrayedOutTextColor)
+            : Color.FromHex(QuoteAppConstants.DefaultDayGrayedOutTextColor);
 
         #endregion
 

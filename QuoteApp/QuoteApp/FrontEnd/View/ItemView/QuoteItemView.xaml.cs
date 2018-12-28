@@ -19,19 +19,29 @@ namespace QuoteApp.FrontEnd.View.ItemView
     {
         private DatabaseManager _databaseManager;
 
-        private int _quoteIndex;
         private EnQuoteSource _quoteSource;
+        private int _quoteIndex;
 
         public Autor AutorItem { get; set; }
         public ObservableCollection<Quote> QuoteItems { get; set; }
         public Theme ThemeItem { get; set; }
+
+        private int QuoteIndex
+        {
+            get => _quoteIndex;
+            set
+            {
+                _quoteIndex = value;
+                _databaseManager.SetQuoteRead(QuoteItem);
+            }
+        }
 
         public List<ThemeColor> ThemeDayBackgroundColorItems { get; set; }
         public List<ThemeColor> ThemeNightBackgroundColorItems { get; set; }
         
         #region Getter Properties
 
-        public Quote QuoteItem => QuoteItems.ElementAt(_quoteIndex);
+        public Quote QuoteItem => QuoteItems.ElementAt(QuoteIndex);
 
         public int QuoteTextSize => QuoteAppUtils.PxToPt(App.ScreenHeight/50);
         public int ThemeTextSize => QuoteAppUtils.PxToPt(App.ScreenHeight/25);
@@ -57,7 +67,7 @@ namespace QuoteApp.FrontEnd.View.ItemView
         
         public void SetAutor(Autor autor)
         {
-            _quoteIndex = 0;
+            QuoteIndex = 0;
             _quoteSource = EnQuoteSource.Autor;
             AutorItem = autor;
             QuoteItems = new ObservableCollection<Quote>(_databaseManager.GetQuotesByAutor(autor));
@@ -68,7 +78,7 @@ namespace QuoteApp.FrontEnd.View.ItemView
 
         public void SetTheme(Theme theme)
         {
-            _quoteIndex = 0;
+            QuoteIndex = 0;
             _quoteSource = EnQuoteSource.Theme;
             AutorItem = _databaseManager.GetAutorByTheme(theme);
             QuoteItems = new ObservableCollection<Quote>(_databaseManager.GetQuotesByTheme(theme));
@@ -79,7 +89,7 @@ namespace QuoteApp.FrontEnd.View.ItemView
         
         public void SetQuote(Quote quote)
         {
-            _quoteIndex = 0;
+            QuoteIndex = 0;
             _quoteSource = EnQuoteSource.Random;
             QuoteItems = new ObservableCollection<Quote>{ quote };
             AutorItem = _databaseManager.GetAutorByQuote(quote);
@@ -177,9 +187,9 @@ namespace QuoteApp.FrontEnd.View.ItemView
         /// <param name="e"></param>
         private void ButtonNextQuote_OnClicked(object sender, EventArgs e)
         {
-            if (_quoteIndex < QuoteItems.Count - 1)
+            if (QuoteIndex < QuoteItems.Count - 1)
             {
-                _quoteIndex++;
+                QuoteIndex++;
                 OnPropertyChanged(string.Empty);
             }
             else
