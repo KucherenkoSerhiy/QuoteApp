@@ -143,6 +143,7 @@ namespace QuoteApp.FrontEnd.View.ListView
         
         protected override void OnAppearing()
         {
+            RetrieveDependencies();
             SetPageContent();
             OnPropertyChanged("");
         }

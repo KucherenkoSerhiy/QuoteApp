@@ -4,6 +4,7 @@ using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using QuoteApp.Backend.BusinessLogic.Subsystem.PersistentProperties;
 using QuoteApp.Backend.Model;
 using QuoteApp.Globals;
@@ -62,6 +63,104 @@ namespace QuoteApp.Backend.BusinessLogic.Manager
                 : _themes;
             set => _themes = value;
         }
+
+        #region Public API
+
+        public Autor GetNextAutor(Autor autor)
+        {
+            try
+            {
+                return Autors.First(x => string.Compare(x.Key, autor.FullName, StringComparison.Ordinal) > 0).Value;
+            }
+            catch
+            {
+                return Autors.First().Value;
+            }
+        }
+
+        public Theme GetNextTheme(Theme theme)
+        {
+            try
+            {
+                return Themes.First(x => string.Compare(x.Key, theme.Name, StringComparison.Ordinal) > 0).Value;
+            }
+            catch
+            {
+                return Themes.First().Value;
+            }
+        }
+
+        public Quote GetRandomQuote()
+        {
+            Random rnd = new Random();
+            int randomQuoteId = rnd.Next(0, Quotes.Count);
+            return Quotes[randomQuoteId];
+        }
+
+        public IEnumerable<Quote> GetQuotesByAutor(Autor autor)
+        {
+            var selectedAutorQuoteThemes = _autorQuoteThemes.Where(aqt => aqt.AutorId == autor.Id);
+
+            return selectedAutorQuoteThemes.Select(selectedAutorQuoteTheme => Quotes[selectedAutorQuoteTheme.QuoteId]);
+        }
+        
+        public IEnumerable<Quote> GetQuotesByTheme(Theme theme)
+        {
+            var selectedAutorQuoteThemes = _autorQuoteThemes.Where(aqt => aqt.AutorId == theme.Id);
+
+            return selectedAutorQuoteThemes.Select(selectedAutorQuoteTheme => Quotes[selectedAutorQuoteTheme.QuoteId]);
+        }
+
+        public Theme GetThemeByAutor(Autor autor)
+        {
+            var selectedAutorQuoteThemes = _autorQuoteThemes.Where(aqt => aqt.AutorId == autor.Id);
+
+            return _themes.Single(x => x.Value.Id == selectedAutorQuoteThemes.First().ThemeId).Value;
+        }
+
+        public Autor GetAutorByTheme(Theme theme)
+        {
+            var selectedAutorQuoteThemes = _autorQuoteThemes.Where(aqt => aqt.AutorId == theme.Id);
+
+            return _autors.Single(x => x.Value.Id == selectedAutorQuoteThemes.First().AutorId).Value;
+        }
+
+        public Autor GetAutorByQuote(Quote quote)
+        {
+            var selectedAutorQuoteTheme = _autorQuoteThemes.First(aqt => aqt.QuoteId == quote.Id);
+            return _autors.Single(x => x.Value.Id == selectedAutorQuoteTheme.AutorId).Value;
+        }
+
+        public Theme GetThemeByQuote(Quote quote)
+        {
+            var selectedThemeQuoteTheme = _autorQuoteThemes.First(aqt => aqt.QuoteId == quote.Id);
+            return _themes.Single(x => x.Value.Id == selectedThemeQuoteTheme.ThemeId).Value;
+        }
+
+        public void SetQuoteRead(Quote quote)
+        {
+            if (quote.HasBeenFullyRead) return;
+
+            var autor = GetAutorByQuote(quote);
+            var theme = GetThemeByQuote(quote);
+
+            quote.HasBeenFullyRead = true;
+            autor.NumberOfReadQuotes++;
+            theme.NumberOfReadQuotes++;
+
+            new Thread(() => 
+            {
+                Thread.CurrentThread.IsBackground = true; 
+
+                _sqliteDbManager.Update(quote);
+                _sqliteDbManager.Update(autor);
+                _sqliteDbManager.Update(theme);
+            }).Start();
+        }
+        
+        #endregion
+
+        #region Private Helper Methods
 
         private void InitializeDatabase()
         {
@@ -187,88 +286,7 @@ namespace QuoteApp.Backend.BusinessLogic.Manager
             _sqliteDbManager.InsertList(_autorQuoteThemes);
         }
 
-        public Autor GetNextAutor(Autor autor)
-        {
-            try
-            {
-                return Autors.First(x => string.Compare(x.Key, autor.FullName, StringComparison.Ordinal) > 0).Value;
-            }
-            catch
-            {
-                return Autors.First().Value;
-            }
-        }
+        #endregion
 
-        public Theme GetNextTheme(Theme theme)
-        {
-            try
-            {
-                return Themes.First(x => string.Compare(x.Key, theme.Name, StringComparison.Ordinal) > 0).Value;
-            }
-            catch
-            {
-                return Themes.First().Value;
-            }
-        }
-
-        public Quote GetRandomQuote()
-        {
-            Random rnd = new Random();
-            int randomQuoteId = rnd.Next(0, Quotes.Count);
-            return Quotes[randomQuoteId];
-        }
-
-        
-        public IEnumerable<Quote> GetQuotesByAutor(Autor autor)
-        {
-            var selectedAutorQuoteThemes = _autorQuoteThemes.Where(aqt => aqt.AutorId == autor.Id);
-
-            return selectedAutorQuoteThemes.Select(selectedAutorQuoteTheme => Quotes[selectedAutorQuoteTheme.QuoteId]);
-        }
-        
-        public IEnumerable<Quote> GetQuotesByTheme(Theme theme)
-        {
-            var selectedAutorQuoteThemes = _autorQuoteThemes.Where(aqt => aqt.AutorId == theme.Id);
-
-            return selectedAutorQuoteThemes.Select(selectedAutorQuoteTheme => Quotes[selectedAutorQuoteTheme.QuoteId]);
-        }
-
-        public Theme GetThemeByAutor(Autor autor)
-        {
-            var selectedAutorQuoteThemes = _autorQuoteThemes.Where(aqt => aqt.AutorId == autor.Id);
-
-            return Themes.Single(x => x.Value.Id == selectedAutorQuoteThemes.First().ThemeId).Value;
-        }
-
-        public Autor GetAutorByTheme(Theme theme)
-        {
-            var selectedAutorQuoteThemes = _autorQuoteThemes.Where(aqt => aqt.AutorId == theme.Id);
-
-            return Autors.Single(x => x.Value.Id == selectedAutorQuoteThemes.First().AutorId).Value;
-        }
-
-        public Autor GetAutorByQuote(Quote quote)
-        {
-            var selectedAutorQuoteTheme = _autorQuoteThemes.First(aqt => aqt.QuoteId == quote.Id);
-            return Autors.Single(x => x.Value.Id == selectedAutorQuoteTheme.AutorId).Value;
-        }
-
-        public Theme GetThemeByQuote(Quote quote)
-        {
-            var selectedThemeQuoteTheme = _autorQuoteThemes.First(aqt => aqt.QuoteId == quote.Id);
-            return Themes.Single(x => x.Value.Id == selectedThemeQuoteTheme.ThemeId).Value;
-        }
-
-        public void SetQuoteRead(Quote quote)
-        {
-            if (quote.HasBeenFullyRead) return;
-
-            var autor = GetAutorByQuote(quote);
-            var theme = GetThemeByQuote(quote);
-
-            quote.HasBeenFullyRead = true;
-            autor.NumberOfReadQuotes++;
-            theme.NumberOfReadQuotes++;
-        }
     }
 }
