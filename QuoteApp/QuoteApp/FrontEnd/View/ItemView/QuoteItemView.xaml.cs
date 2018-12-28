@@ -71,7 +71,7 @@ namespace QuoteApp.FrontEnd.View.ItemView
             _quoteSource = EnQuoteSource.Autor;
             AutorItem = autor;
             QuoteItems = new ObservableCollection<Quote>(_databaseManager.GetQuotesByAutor(autor));
-            ThemeItem = _databaseManager.GetThemeByAutor(autor);
+            ThemeItem = _databaseManager.GetThemeByQuote(QuoteItem);
 
             OnPropertyChanged("");
         }
@@ -80,9 +80,9 @@ namespace QuoteApp.FrontEnd.View.ItemView
         {
             QuoteIndex = 0;
             _quoteSource = EnQuoteSource.Theme;
-            AutorItem = _databaseManager.GetAutorByTheme(theme);
-            QuoteItems = new ObservableCollection<Quote>(_databaseManager.GetQuotesByTheme(theme));
             ThemeItem = theme;
+            QuoteItems = new ObservableCollection<Quote>(_databaseManager.GetQuotesByTheme(theme));
+            AutorItem = _databaseManager.GetAutorByQuote(QuoteItem);
 
             OnPropertyChanged("");
         }
@@ -190,6 +190,20 @@ namespace QuoteApp.FrontEnd.View.ItemView
             if (QuoteIndex < QuoteItems.Count - 1)
             {
                 QuoteIndex++;
+                switch (_quoteSource)
+                {
+                    case EnQuoteSource.Autor:
+                        ThemeItem = _databaseManager.GetThemeByQuote(QuoteItem);
+                        break;
+                    case EnQuoteSource.Theme:
+                        AutorItem = _databaseManager.GetAutorByQuote(QuoteItem);
+                        break;
+                    case EnQuoteSource.Random:
+                        ThemeItem = _databaseManager.GetThemeByQuote(QuoteItem);
+                        AutorItem = _databaseManager.GetAutorByQuote(QuoteItem);
+                        break;
+                }
+
                 OnPropertyChanged(string.Empty);
             }
             else

@@ -156,7 +156,7 @@ namespace QuoteApp.FrontEnd.View.ListView
                 ? QuoteAppConstants.DefaultNightListItemSelectionBackgroundColor
                 : QuoteAppConstants.DefaultDayListItemSelectionBackgroundColor);
 
-            var entity =((Grid)sender);
+            var entity =(Grid)sender;
             entity.BackgroundColor = itemBackgroundColor;
             var item = (Autor) entity.BindingContext;
             var view = new QuoteItemView();

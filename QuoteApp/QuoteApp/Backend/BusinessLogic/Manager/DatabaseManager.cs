@@ -106,25 +106,11 @@ namespace QuoteApp.Backend.BusinessLogic.Manager
         
         public IEnumerable<Quote> GetQuotesByTheme(Theme theme)
         {
-            var selectedAutorQuoteThemes = _autorQuoteThemes.Where(aqt => aqt.AutorId == theme.Id);
+            var selectedAutorQuoteThemes = _autorQuoteThemes.Where(aqt => aqt.ThemeId == theme.Id);
 
             return selectedAutorQuoteThemes.Select(selectedAutorQuoteTheme => Quotes[selectedAutorQuoteTheme.QuoteId]);
         }
-
-        public Theme GetThemeByAutor(Autor autor)
-        {
-            var selectedAutorQuoteThemes = _autorQuoteThemes.Where(aqt => aqt.AutorId == autor.Id);
-
-            return _themes.Single(x => x.Value.Id == selectedAutorQuoteThemes.First().ThemeId).Value;
-        }
-
-        public Autor GetAutorByTheme(Theme theme)
-        {
-            var selectedAutorQuoteThemes = _autorQuoteThemes.Where(aqt => aqt.AutorId == theme.Id);
-
-            return _autors.Single(x => x.Value.Id == selectedAutorQuoteThemes.First().AutorId).Value;
-        }
-
+        
         public Autor GetAutorByQuote(Quote quote)
         {
             var selectedAutorQuoteTheme = _autorQuoteThemes.First(aqt => aqt.QuoteId == quote.Id);
