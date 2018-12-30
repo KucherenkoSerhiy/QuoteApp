@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
+using System.Threading;
 using QuoteApp.Backend.BusinessLogic.Manager;
 using QuoteApp.Backend.BusinessLogic.Subsystem.PersistentProperties;
 using QuoteApp.Backend.Model;
@@ -20,28 +21,33 @@ namespace QuoteApp.FrontEnd.View.ItemView
         private DatabaseManager _databaseManager;
 
         private EnQuoteSource _quoteSource;
-        private int _quoteIndex;
+        private Quote _quoteItem = new Quote();
 
-        public Autor AutorItem { get; set; }
-        public ObservableCollection<Quote> QuoteItems { get; set; }
-        public Theme ThemeItem { get; set; }
-
-        private int QuoteIndex
+        public Autor AutorItem { get; set; } = new Autor();
+        public Theme ThemeItem { get; set; } = new Theme
         {
-            get => _quoteIndex;
-            set
-            {
-                _quoteIndex = value;
-                _databaseManager.SetQuoteRead(QuoteItem);
-            }
-        }
-
+            Name = "Life",
+            Id = 9000,
+            DayLineColor = QuoteAppConstants.DefaultDayLineColor,
+            DayTextColor = QuoteAppConstants.DefaultDayTextColor,
+            NightLineColor = QuoteAppConstants.DefaultNightLineColor,
+            NightTextColor = QuoteAppConstants.DefaultNightTextColor
+        };
+        
         public List<ThemeColor> ThemeDayBackgroundColorItems { get; set; }
         public List<ThemeColor> ThemeNightBackgroundColorItems { get; set; }
         
         #region Getter Properties
 
-        public Quote QuoteItem => QuoteItems.ElementAt(QuoteIndex);
+        public Quote QuoteItem
+        {
+            get => _quoteItem;
+            set
+            {
+                _quoteItem = value; 
+                _databaseManager.SetQuoteRead(QuoteItem);
+            }
+        }
 
         public int QuoteTextSize => QuoteAppUtils.PxToPt(App.ScreenHeight/50);
         public int ThemeTextSize => QuoteAppUtils.PxToPt(App.ScreenHeight/25);
@@ -67,31 +73,24 @@ namespace QuoteApp.FrontEnd.View.ItemView
         
         public void SetAutor(Autor autor)
         {
-            QuoteIndex = 0;
             _quoteSource = EnQuoteSource.Autor;
             AutorItem = autor;
-            QuoteItems = new ObservableCollection<Quote>(_databaseManager.GetQuotesByAutor(autor));
-            ThemeItem = _databaseManager.GetThemeByQuote(QuoteItem);
-
-            OnPropertyChanged("");
+            
+            GetNextQuote();
         }
 
         public void SetTheme(Theme theme)
         {
-            QuoteIndex = 0;
             _quoteSource = EnQuoteSource.Theme;
             ThemeItem = theme;
-            QuoteItems = new ObservableCollection<Quote>(_databaseManager.GetQuotesByTheme(theme));
-            AutorItem = _databaseManager.GetAutorByQuote(QuoteItem);
 
-            OnPropertyChanged("");
+            GetNextQuote();
         }
         
         public void SetQuote(Quote quote)
         {
-            QuoteIndex = 0;
             _quoteSource = EnQuoteSource.Random;
-            QuoteItems = new ObservableCollection<Quote>{ quote };
+            QuoteItem = quote;
             AutorItem = _databaseManager.GetAutorByQuote(quote);
             ThemeItem = _databaseManager.GetThemeByQuote(quote);
 
@@ -105,23 +104,6 @@ namespace QuoteApp.FrontEnd.View.ItemView
             _databaseManager = DatabaseManager.Instance;
             ThemeDayBackgroundColorItems = QuoteAppConstants.DefaultDayBackgroundColorGradientItems;
             ThemeNightBackgroundColorItems = QuoteAppConstants.DefaultNightBackgroundColorGradientItems;
-        
-            AutorItem = new Autor { FullName = "Indecisive anonymous" };
-            QuoteItems = new ObservableCollection<Quote>
-            {
-                new Quote { Text = "This is the first dummy quote." },
-                new Quote { Text = "I used to think I was indecisive, but now I'm not too sure." },
-                new Quote { Text = "A dummy quote again." }
-            };
-            ThemeItem = new Theme
-            {
-                Name = "Life",
-                Id = 9000,
-                DayLineColor = QuoteAppConstants.DefaultDayLineColor,
-                DayTextColor = QuoteAppConstants.DefaultDayTextColor,
-                NightLineColor = QuoteAppConstants.DefaultNightLineColor,
-                NightTextColor = QuoteAppConstants.DefaultNightTextColor
-            };
         }
 
         private void SetPageContent()
@@ -187,42 +169,29 @@ namespace QuoteApp.FrontEnd.View.ItemView
         /// <param name="e"></param>
         private void ButtonNextQuote_OnClicked(object sender, EventArgs e)
         {
-            if (QuoteIndex < QuoteItems.Count - 1)
-            {
-                QuoteIndex++;
-                switch (_quoteSource)
-                {
-                    case EnQuoteSource.Autor:
-                        ThemeItem = _databaseManager.GetThemeByQuote(QuoteItem);
-                        break;
-                    case EnQuoteSource.Theme:
-                        AutorItem = _databaseManager.GetAutorByQuote(QuoteItem);
-                        break;
-                    case EnQuoteSource.Random:
-                        ThemeItem = _databaseManager.GetThemeByQuote(QuoteItem);
-                        AutorItem = _databaseManager.GetAutorByQuote(QuoteItem);
-                        break;
-                }
-
-                OnPropertyChanged(string.Empty);
-            }
-            else
-            {
-                switch (_quoteSource)
-                {
-                    case EnQuoteSource.Autor:
-                        SetAutor(_databaseManager.GetNextAutor(AutorItem));
-                        break;
-                    case EnQuoteSource.Theme:
-                        SetTheme(_databaseManager.GetNextTheme(ThemeItem));
-                        break;
-                    case EnQuoteSource.Random:
-                        SetQuote(_databaseManager.GetRandomQuote());
-                        break;
-                }
-            }
+            GetNextQuote();
         }
 
         #endregion
+
+        private void GetNextQuote()
+        {
+            switch (_quoteSource)
+            {
+                case EnQuoteSource.Autor:
+                    QuoteItem = _databaseManager.GetNextQuoteByAutor(AutorItem);
+                    break;
+                case EnQuoteSource.Theme:
+                    QuoteItem = _databaseManager.GetNextQuoteByTheme(ThemeItem);
+                    break;
+                case EnQuoteSource.Random:
+                    QuoteItem = _databaseManager.GetRandomQuote();
+                    break;
+            }
+
+            AutorItem = _databaseManager.GetAutorByQuote(QuoteItem);
+            ThemeItem = _databaseManager.GetThemeByQuote(QuoteItem);
+            OnPropertyChanged("");
+        }
     }
 }

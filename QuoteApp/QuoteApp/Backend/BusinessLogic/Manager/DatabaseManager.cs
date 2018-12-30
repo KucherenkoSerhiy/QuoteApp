@@ -45,7 +45,7 @@ namespace QuoteApp.Backend.BusinessLogic.Manager
         private List<AutorQuoteTheme> _autorQuoteThemes;
 
         public Dictionary<int, Quote> Quotes => PersistentProperties.Instance.OnlyUnreadQuotes
-            ? _quotes.Where(q => !q.Value.HasBeenFullyRead).ToDictionary(q => q.Key, q => q.Value) 
+            ? _quotes.Where(q => !q.Value.HasBeenRead).ToDictionary(q => q.Key, q => q.Value) 
             : _quotes;
 
         public SortedDictionary<string, Autor> Autors => PersistentProperties.Instance.OnlyUnreadQuotes
@@ -66,28 +66,24 @@ namespace QuoteApp.Backend.BusinessLogic.Manager
 
         #region Public API
 
-        public Autor GetNextAutor(Autor autor)
+        public Quote GetNextQuoteByAutor(Autor autor)
         {
-            try
-            {
-                return Autors.First(x => string.Compare(x.Key, autor.FullName, StringComparison.Ordinal) > 0).Value;
-            }
-            catch
-            {
-                return Autors.First().Value;
-            }
+            var notFullyReadAutor = autor.HasBeenFullyRead ? GetNextAutor(autor) : autor;
+
+            var selectedAutorQuoteAutor = _autorQuoteThemes.First(aqt => 
+                aqt.AutorId == notFullyReadAutor.Id && Quotes.ContainsKey(aqt.QuoteId));
+
+            return Quotes[selectedAutorQuoteAutor.QuoteId];
         }
 
-        public Theme GetNextTheme(Theme theme)
+        public Quote GetNextQuoteByTheme(Theme theme)
         {
-            try
-            {
-                return Themes.First(x => string.Compare(x.Key, theme.Name, StringComparison.Ordinal) > 0).Value;
-            }
-            catch
-            {
-                return Themes.First().Value;
-            }
+            var notFullyReadTheme = theme.HasBeenFullyRead ? GetNextTheme(theme) : theme;
+
+            var selectedAutorQuoteTheme = _autorQuoteThemes.First(aqt => 
+                aqt.ThemeId == notFullyReadTheme.Id && Quotes.ContainsKey(aqt.QuoteId));
+
+            return Quotes[selectedAutorQuoteTheme.QuoteId];
         }
 
         public Quote GetRandomQuote()
@@ -97,20 +93,6 @@ namespace QuoteApp.Backend.BusinessLogic.Manager
             return Quotes[randomQuoteId];
         }
 
-        public IEnumerable<Quote> GetQuotesByAutor(Autor autor)
-        {
-            var selectedAutorQuoteThemes = _autorQuoteThemes.Where(aqt => aqt.AutorId == autor.Id);
-
-            return selectedAutorQuoteThemes.Select(selectedAutorQuoteTheme => Quotes[selectedAutorQuoteTheme.QuoteId]);
-        }
-        
-        public IEnumerable<Quote> GetQuotesByTheme(Theme theme)
-        {
-            var selectedAutorQuoteThemes = _autorQuoteThemes.Where(aqt => aqt.ThemeId == theme.Id);
-
-            return selectedAutorQuoteThemes.Select(selectedAutorQuoteTheme => Quotes[selectedAutorQuoteTheme.QuoteId]);
-        }
-        
         public Autor GetAutorByQuote(Quote quote)
         {
             var selectedAutorQuoteTheme = _autorQuoteThemes.First(aqt => aqt.QuoteId == quote.Id);
@@ -125,12 +107,12 @@ namespace QuoteApp.Backend.BusinessLogic.Manager
 
         public void SetQuoteRead(Quote quote)
         {
-            if (quote.HasBeenFullyRead) return;
+            if (quote.HasBeenRead) return;
 
             var autor = GetAutorByQuote(quote);
             var theme = GetThemeByQuote(quote);
 
-            quote.HasBeenFullyRead = true;
+            quote.HasBeenRead = true;
             autor.NumberOfReadQuotes++;
             theme.NumberOfReadQuotes++;
 
@@ -147,6 +129,8 @@ namespace QuoteApp.Backend.BusinessLogic.Manager
         #endregion
 
         #region Private Helper Methods
+
+        #region Initialization
 
         private void InitializeDatabase()
         {
@@ -201,7 +185,7 @@ namespace QuoteApp.Backend.BusinessLogic.Manager
                 {
                     var autor = new Autor {Id = autorCount, FullName = autorFullName};
                     autor.NumberOfQuotes++;
-                    if (quote.HasBeenFullyRead) autor.NumberOfReadQuotes++;
+                    if (quote.HasBeenRead) autor.NumberOfReadQuotes++;
 
                     _autors.Add(autorFullName, autor);
                     autorId = autorCount;
@@ -211,7 +195,7 @@ namespace QuoteApp.Backend.BusinessLogic.Manager
                 {
                     var autor = _autors[autorFullName];
                     autor.NumberOfQuotes++;
-                    if (quote.HasBeenFullyRead) autor.NumberOfReadQuotes++;
+                    if (quote.HasBeenRead) autor.NumberOfReadQuotes++;
                     autorId = autor.Id;
                 }
 
@@ -229,7 +213,7 @@ namespace QuoteApp.Backend.BusinessLogic.Manager
                         NightTextColor = QuoteAppConstants.DefaultNightTextColor
                     };
                     theme.NumberOfQuotes++;
-                    if (quote.HasBeenFullyRead) theme.NumberOfReadQuotes++;
+                    if (quote.HasBeenRead) theme.NumberOfReadQuotes++;
 
                     _themes.Add(themeName, theme);
 
@@ -240,7 +224,7 @@ namespace QuoteApp.Backend.BusinessLogic.Manager
                 {
                     var theme = _themes[themeName];
                     theme.NumberOfQuotes++;
-                    if (quote.HasBeenFullyRead) theme.NumberOfReadQuotes++;
+                    if (quote.HasBeenRead) theme.NumberOfReadQuotes++;
                     themeId = theme.Id;
                 }
 
@@ -271,8 +255,34 @@ namespace QuoteApp.Backend.BusinessLogic.Manager
             _sqliteDbManager.InsertList(_themes.Values);
             _sqliteDbManager.InsertList(_autorQuoteThemes);
         }
+        
 
         #endregion
+        
+        private Autor GetNextAutor(Autor autor)
+        {
+            try
+            {
+                return Autors.First(x => string.Compare(x.Key, autor.FullName, StringComparison.Ordinal) > 0).Value;
+            }
+            catch
+            {
+                return Autors.First().Value;
+            }
+        }
 
+        private Theme GetNextTheme(Theme theme)
+        {
+            try
+            {
+                return Themes.First(x => string.Compare(x.Key, theme.Name, StringComparison.Ordinal) > 0).Value;
+            }
+            catch
+            {
+                return Themes.First().Value;
+            }
+        }
+        
+        #endregion
     }
 }
