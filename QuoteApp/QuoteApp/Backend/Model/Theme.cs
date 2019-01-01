@@ -15,6 +15,7 @@ namespace QuoteApp.Backend.Model
         [PrimaryKey]
         public int Id { get; set; }
         public string Name { get; set; }
+        public EnEvaluation Evaluation { get; set; }
 
         // Specifies color by its hex code. Format example: a1b2c3
         public string DayLineColor { get; set; }

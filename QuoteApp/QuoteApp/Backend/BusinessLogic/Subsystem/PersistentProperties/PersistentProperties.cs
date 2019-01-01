@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Text;
 using System.Xml.Serialization;
+using QuoteApp.Backend.Model;
 using QuoteApp.Globals;
 
 namespace QuoteApp.Backend.BusinessLogic.Subsystem.PersistentProperties
@@ -11,7 +12,7 @@ namespace QuoteApp.Backend.BusinessLogic.Subsystem.PersistentProperties
     public class PersistentProperties
     {
         private static readonly string FilePath = Path
-            .Combine(System.Environment.GetFolderPath(System.Environment.SpecialFolder.Personal),
+            .Combine(Environment.GetFolderPath(System.Environment.SpecialFolder.Personal),
                 QuoteAppConstants.PropertiesFilePath).Substring(1);
 
         #region Singleton
@@ -65,6 +66,7 @@ namespace QuoteApp.Backend.BusinessLogic.Subsystem.PersistentProperties
         }
 
         public bool OnlyUnreadQuotes { get; set; } = true;
+        public EnEvaluation SelectedThemeRange { get; set; } = EnEvaluation.Recommended;
         public bool FirstTimeEnteredMainMenu { get; set; } = true;
 
         public void SerializeToXml()

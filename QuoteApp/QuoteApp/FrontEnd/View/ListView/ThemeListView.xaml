@@ -39,7 +39,7 @@
         </Grid>
 
         <!--Themes List-->
-        <ScrollView Grid.Row="2" Margin="0,0,0,10" VerticalOptions="Center">
+        <ScrollView Grid.Row="2" Margin="0,0,0,10" VerticalOptions="Center" x:Name="ScrollView">
             <ListView x:Name="ThemesView" 
                       ItemsSource="{Binding ShownThemes, Mode=OneWay}"
                       CachingStrategy="RecycleElement"
@@ -76,14 +76,15 @@
         </ScrollView>
 
         <!--Navigation Panel-->
-        <Grid Grid.Row="3" Margin="10">
+        <Grid Grid.Row="3" Margin="10" IsVisible="{Binding CanNavigate}">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="Auto"/>
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="Auto"/>
             </Grid.ColumnDefinitions>
 
-            <Image x:Name="SelectPreviousItems" Source="icon_arrow_left.png"
+            <Image x:Name="SelectPreviousItems" Source="icon_arrow_left.png" 
+                   IsEnabled="{Binding CanSelectPreviousItems}"
                    Grid.Column="0" Aspect="AspectFit"
                    WidthRequest="80" HeightRequest="80">
                 <Image.GestureRecognizers>
@@ -106,6 +107,7 @@
             </StackLayout>
 
             <Image x:Name="SelectNextItems" Source="icon_arrow_right.png"
+                   IsEnabled="{Binding CanSelectNextItems}"
                    Grid.Column="2" Aspect="AspectFit"
                    WidthRequest="80" HeightRequest="80">
                 <Image.GestureRecognizers>

@@ -11,47 +11,52 @@
                    Style="{StaticResource LabelDefaultStyle}"
                    TextColor="{Binding TextColor}" FontSize="{Binding TitleTextSize}"
                    HorizontalOptions="Center" VerticalOptions="Fill" Margin="0,0,0,40"/>
+            
+            <Grid Margin="0,0,0,15">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="20" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
 
-            <StackLayout VerticalOptions="CenterAndExpand">
-                <Grid Margin="0,0,0,25">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="*" />
-                        <ColumnDefinition Width="20" />
-                        <ColumnDefinition Width="*" />
-                    </Grid.ColumnDefinitions>
+                <customControls:CustomGradientBackgroundButton Grid.Column="0" x:Name="SetDayModeButton" Text="Day Mode"
+                                                               Style="{StaticResource ButtonDefaultStyle}"
+                                                               BorderColor="{Binding LineColor}" TextColor="{Binding TextColor}"
+                                                               FontSize="{Binding ToggleButtonTextSize}" IsEnabled="{Binding NightModeOn}"
+                                                               Clicked="SetDayModeButton_OnClicked"/>
 
-                    <customControls:CustomGradientBackgroundButton Grid.Column="0" x:Name="SetDayModeButton" Text="Day Mode"
-                            Style="{StaticResource ButtonDefaultStyle}"
-                            BorderColor="{Binding LineColor}" TextColor="{Binding TextColor}"
-                            FontSize="{Binding ToggleButtonTextSize}" IsEnabled="{Binding NightModeOn}"
-                            Clicked="SetDayModeButton_OnClicked"/>
+                <customControls:CustomGradientBackgroundButton Grid.Column="2" x:Name="SetNightModeButton" Text="Night Mode"
+                                                               Style="{StaticResource ButtonDefaultStyle}"
+                                                               BorderColor="{Binding LineColor}" TextColor="{Binding TextColor}"
+                                                               FontSize="{Binding ToggleButtonTextSize}" IsEnabled="{Binding DayModeOn}"
+                                                               Clicked="SetNightModeButton_OnClicked"/>
+            </Grid>
 
-                    <customControls:CustomGradientBackgroundButton Grid.Column="2" x:Name="SetNightModeButton" Text="Night Mode"
-                            Style="{StaticResource ButtonDefaultStyle}"
-                            BorderColor="{Binding LineColor}" TextColor="{Binding TextColor}"
-                            FontSize="{Binding ToggleButtonTextSize}" IsEnabled="{Binding DayModeOn}"
-                            Clicked="SetNightModeButton_OnClicked"/>
-                </Grid>
-
-                <Grid HorizontalOptions="Fill" Margin="0,0,0,15">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="Auto" />
-                        <ColumnDefinition Width="20" />
-                        <ColumnDefinition Width="*" />
-                    </Grid.ColumnDefinitions>
-
-                    <customControls:CustomSwitch Grid.Column="0" x:Name="OnlyUnreadQuotesSwitch"
+            <StackLayout VerticalOptions="Center">
+                <StackLayout HorizontalOptions="Center" Orientation="Horizontal" Margin="0,0,0,15">
+                    <customControls:CustomSwitch x:Name="OnlyUnreadQuotesSwitch" Margin="0,0,20,0"
                                                  IsToggled="{Binding Path=OnlyUnreadQuotes, Mode=TwoWay, Source={x:Reference this}}"
                                                  SwitchThumbImage="icon_switch_thumb"
-                                                 SwitchOnColor="{Binding OnSwitchColor}"
-                                                 HorizontalOptions="Start" VerticalOptions="Center"/>
+                                                 SwitchOnColor="{Binding OnSwitchColor}"/>
 
-                    <Label Grid.Column="2"
-                           Text="Show only unread quotes"
+                    <Label Text="Show only unread quotes"
                            Style="{StaticResource LabelDefaultStyle}" TextColor="{Binding TextColor}"
-                           FontSize="{Binding LabelTextSize}"
-                           HorizontalOptions="End" VerticalOptions="Center" />
-                </Grid>
+                           FontSize="{Binding LabelTextSize}"/>
+                </StackLayout>
+                
+                <StackLayout HorizontalOptions="Center" Orientation="Horizontal" Margin="0,0,0,15">
+                    <Label Text="Show" Margin="0,0,7,0"
+                           Style="{StaticResource LabelDefaultStyle}"
+                           TextColor="{Binding TextColor}" FontSize="{Binding LabelTextSize}"/>
+
+                    <Picker x:Name="ThemeRangePicker" Margin="0,0,7,0"
+                            ItemsSource="{Binding ThemeEvaluationVariations}"
+                            SelectedItem="{Binding SelectedThemeRange}"/>
+
+                    <Label Text="themes"
+                           Style="{StaticResource LabelDefaultStyle}"
+                           TextColor="{Binding TextColor}" FontSize="{Binding LabelTextSize}"/>
+                </StackLayout>
             </StackLayout>
 
             <StackLayout Orientation="Vertical" VerticalOptions="End">

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Reflection;
 using System.Text;
 using System.Xml;
@@ -115,6 +116,10 @@ namespace QuoteApp.Globals
                 _themeColors,
                 _gradientPositions,
                 SKShaderTileMode.Repeat);
+        }
+
+        public static IEnumerable<T> GetEnumValues<T>() {
+            return Enum.GetValues(typeof(T)).Cast<T>();
         }
 
         #endregion

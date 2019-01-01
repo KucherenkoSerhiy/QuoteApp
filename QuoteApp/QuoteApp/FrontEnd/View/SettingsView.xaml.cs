@@ -29,6 +29,14 @@ namespace QuoteApp.FrontEnd.View
 	    public bool NightModeOn => PersistentProperties.Instance.NightModeActivated;
 	    public bool DayModeOn => !NightModeOn;
 
+	    public IEnumerable<EnEvaluation> ThemeEvaluationVariations => QuoteAppUtils.GetEnumValues<EnEvaluation>();
+
+	    public EnEvaluation SelectedThemeRange
+	    {
+	        get => PersistentProperties.Instance.SelectedThemeRange;
+	        set => PersistentProperties.Instance.SelectedThemeRange = value;
+	    }
+
 	    public int TitleTextSize => QuoteAppUtils.PxToPt(App.ScreenHeight / 25);
 	    public int ButtonTextSize => QuoteAppUtils.PxToPt(App.ScreenHeight / 40);
 	    public int ToggleButtonTextSize => QuoteAppUtils.PxToPt(App.ScreenHeight / 50);

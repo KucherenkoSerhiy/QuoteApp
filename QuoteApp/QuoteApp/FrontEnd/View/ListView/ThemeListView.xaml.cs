@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 using QuoteApp.Backend.BusinessLogic.Manager;
 using QuoteApp.Backend.BusinessLogic.Subsystem.PersistentProperties;
@@ -24,6 +25,8 @@ namespace QuoteApp.FrontEnd.View.ListView
         private string _searchText;
 
         public Dictionary<string, Theme> Themes { get; set; }
+
+        public Dictionary<string, Theme> FilteredThemes {get; private set; }
 
         public string SearchText
         {
@@ -66,12 +69,14 @@ namespace QuoteApp.FrontEnd.View.ListView
 
         #region Getter Properties
 
-        public Dictionary<string, Theme> FilteredThemes {get; private set; }
-
         public ObservableCollection<Theme> ShownThemes => FilteredThemes.Count == 0
             ? new ObservableCollection<Theme>()
             : new ObservableCollection<Theme>(FilteredThemes.Values.Skip(_selectionIndex * _numberOfSelectedItems)
                 .Take(_numberOfSelectedItems));
+
+        public bool CanSelectPreviousItems => _selectionIndex > 0;
+        public bool CanSelectNextItems => (_selectionIndex + 1) * _numberOfSelectedItems < FilteredThemes.Count;
+        public bool CanNavigate => CanSelectNextItems || CanSelectPreviousItems;
 
         public int HeaderTextSize => QuoteAppUtils.PxToPt(App.ScreenHeight/25);
         public int ThemeItemTextSize => QuoteAppUtils.PxToPt(App.ScreenHeight/50);
@@ -108,7 +113,7 @@ namespace QuoteApp.FrontEnd.View.ListView
 
         private void RetrieveDependencies()
         {
-            Themes = DatabaseManager.Themes.ToDictionary(x => x.Key, x => x.Value);
+            Themes = DatabaseManager.GetThemesList().ToDictionary(x => x.Key, x => x.Value);
             FilteredThemes = Themes;
         }
 
@@ -145,7 +150,7 @@ namespace QuoteApp.FrontEnd.View.ListView
         {
             RetrieveDependencies();
             SetPageContent();
-            OnPropertyChanged("");
+            UpdatePage();
         }
 
         private async void TapGestureRecognizer_OnTapped(object sender, EventArgs e)
@@ -173,11 +178,24 @@ namespace QuoteApp.FrontEnd.View.ListView
         
         private void SelectPreviousItems_OnTapped(object sender, EventArgs e)
         {
-            if (_selectionIndex <= 0) return;
+            if (!CanSelectPreviousItems) return;
 
             _selectionIndex--;
+
+            ScrollView.ScrollToAsync(0, 0, true);
+            new Thread(() => 
+            {
+                Thread.CurrentThread.IsBackground = true;
+
+                SelectNextItems.Opacity = CanSelectNextItems? 1 : 0;
+                SelectPreviousItems.Opacity = 0.4;
+                Thread.Sleep(250);
+                SelectPreviousItems.Opacity = CanSelectPreviousItems? 1 : 0;
+            }).Start();
             
             OnPropertyChanged(nameof(ShownThemes));
+            OnPropertyChanged(nameof(CanSelectNextItems));
+            OnPropertyChanged(nameof(CanSelectPreviousItems));
             OnPropertyChanged(nameof(ListAlphabetIndex));
             OnPropertyChanged(nameof(ListNumberIndex));
             OnPropertyChanged(nameof(ListNumberIndexIsVisible));
@@ -185,11 +203,24 @@ namespace QuoteApp.FrontEnd.View.ListView
 
         private void SelectNextItems_OnTapped(object sender, EventArgs e)
         {
-            if ((_selectionIndex + 1) * _numberOfSelectedItems >= FilteredThemes.Count) return;
+            if (!CanSelectNextItems) return;
 
             _selectionIndex++;
+
+            ScrollView.ScrollToAsync(0, 0, true);
+            new Thread(() => 
+            {
+                Thread.CurrentThread.IsBackground = true;
+
+                SelectPreviousItems.Opacity = CanSelectPreviousItems? 1 : 0;
+                SelectNextItems.Opacity = 0.4;
+                Thread.Sleep(250);
+                SelectNextItems.Opacity = CanSelectNextItems? 1 : 0;
+            }).Start();
             
             OnPropertyChanged(nameof(ShownThemes));
+            OnPropertyChanged(nameof(CanSelectNextItems));
+            OnPropertyChanged(nameof(CanSelectPreviousItems));
             OnPropertyChanged(nameof(ListAlphabetIndex));
             OnPropertyChanged(nameof(ListNumberIndex));
             OnPropertyChanged(nameof(ListNumberIndexIsVisible));
@@ -202,6 +233,13 @@ namespace QuoteApp.FrontEnd.View.ListView
             string[] nameParts = fullName.Key.Split(' ');
 
             return nameParts.Any(x => x.ToUpper().StartsWith(SearchText == null ? "" : SearchText.ToUpper()));
+        }
+        
+        private void UpdatePage()
+        {
+            SelectPreviousItems.Opacity = CanSelectPreviousItems ? 1 : 0;
+            SelectNextItems.Opacity = CanSelectNextItems ? 1 : 0;
+            OnPropertyChanged(string.Empty);
         }
     }
 }

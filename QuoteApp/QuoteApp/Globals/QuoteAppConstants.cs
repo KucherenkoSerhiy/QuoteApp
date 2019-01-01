@@ -8,7 +8,7 @@ namespace QuoteApp.Globals
         public const string DatabaseFilePath = "QuoteApp/Database.db3";
         public const string PropertiesFilePath = "QuoteApp/Properties";
 
-        #region Style Colors
+        #region UI Colors
 
         public const string OnSwitchColor = "009956";
 
@@ -41,5 +41,110 @@ namespace QuoteApp.Globals
         public const string DefaultNightButtonBackgroundEndColor = "7fbca2a1";
 
         #endregion
+
+        
+        public static readonly string[] AutorsToDiscard = {"Adolf Hitler"};
+        public static readonly Dictionary<string, string> AutorsToRename =
+            new Dictionary<string, string> {{"e.e. cummings", "E.E. Cummings"}};
+
+
+        public static readonly string[] ThemesToDiscard =
+        {
+            "Christmas", "Cool", "Dad", "Design", "Food", "Gardening", "Hope", "Mom", "Anniversary", "Diet", "Freedom",
+            "Graduation", "Humor", "Marriage", "Medical", "Poetry", "Romantic", "Sad", "Science", "Sports", "War",
+            "Wedding", "Architecture", "Art", "Car", "Computers", "Memorialday", "Mothersday", "Movies", "Teen",
+            "Thanksgiving", "Valentinesday", "Newyears", "Saintpatricksday", "God"
+        };
+
+        public static readonly Dictionary<string, string> ThemesToRename =
+            new Dictionary<string, string> {{"Movingon", "Moving On"}};
+
+        public static readonly Dictionary<string, EnEvaluation> ThemeEvaluations =
+            new Dictionary<string, EnEvaluation>
+            {
+                {"Courage", EnEvaluation.Recommended},
+                {"Experience", EnEvaluation.Recommended},
+                {"Failure", EnEvaluation.Recommended},
+                {"Faith", EnEvaluation.Recommended},
+                {"Family", EnEvaluation.Recommended},
+                {"Forgiveness", EnEvaluation.Recommended},
+                {"Funny", EnEvaluation.Recommended},
+                {"Happiness", EnEvaluation.Recommended},
+                {"Inspirational", EnEvaluation.Recommended},
+                {"Knowledge", EnEvaluation.Recommended},
+                {"Leadership", EnEvaluation.Recommended},
+                {"Love", EnEvaluation.Recommended},
+                {"Motivational", EnEvaluation.Recommended},
+                {"Moving On", EnEvaluation.Recommended},
+                {"Strength", EnEvaluation.Recommended},
+                {"Success", EnEvaluation.Recommended},
+                {"Time", EnEvaluation.Recommended},
+                {"Anger", EnEvaluation.Useful},
+                {"Best", EnEvaluation.Useful},
+                {"Change", EnEvaluation.Useful},
+                {"Dreams", EnEvaluation.Useful},
+                {"Learning", EnEvaluation.Useful},
+                {"Life", EnEvaluation.Useful},
+                {"Patience", EnEvaluation.Useful},
+                {"Smile", EnEvaluation.Useful},
+                {"Travel", EnEvaluation.Useful},
+                {"Truth", EnEvaluation.Useful},
+                {"Beauty", EnEvaluation.Useful},
+                {"Business", EnEvaluation.Useful},
+                {"Easter", EnEvaluation.Useful},
+                {"Environmental", EnEvaluation.Useful},
+                {"Equality", EnEvaluation.Useful},
+                {"Famous", EnEvaluation.Useful},
+                {"Fitness", EnEvaluation.Useful},
+                {"Future", EnEvaluation.Useful},
+                {"Good", EnEvaluation.Useful},
+                {"Music", EnEvaluation.Useful},
+                {"Nature", EnEvaluation.Useful},
+                {"Society", EnEvaluation.Useful},
+                {"Thankful", EnEvaluation.Useful},
+                {"Trust", EnEvaluation.Useful},
+                {"Wisdom", EnEvaluation.Useful},
+                {"Age", EnEvaluation.Extension},
+                {"Birthday", EnEvaluation.Extension},
+                {"Communication", EnEvaluation.Extension},
+                {"Education", EnEvaluation.Extension},
+                {"Fathersday", EnEvaluation.Extension},
+                {"Fear", EnEvaluation.Extension},
+                {"Finance", EnEvaluation.Extension},
+                {"Government", EnEvaluation.Extension},
+                {"Great", EnEvaluation.Extension},
+                {"Health", EnEvaluation.Extension},
+                {"History", EnEvaluation.Extension},
+                {"Imagination", EnEvaluation.Extension},
+                {"Intelligence", EnEvaluation.Extension},
+                {"Men", EnEvaluation.Extension},
+                {"Money", EnEvaluation.Extension},
+                {"Morning", EnEvaluation.Extension},
+                {"Parenting", EnEvaluation.Extension},
+                {"Patriotism", EnEvaluation.Extension},
+                {"Women", EnEvaluation.Extension},
+                {"Amazing", EnEvaluation.Extension},
+                {"Attitude", EnEvaluation.Extension},
+                {"Death", EnEvaluation.Extension},
+                {"Friendship", EnEvaluation.Extension},
+                {"Jealousy", EnEvaluation.Extension},
+                {"Legal", EnEvaluation.Extension},
+                {"Peace", EnEvaluation.Extension},
+                {"Pet", EnEvaluation.Extension},
+                {"Positive", EnEvaluation.Extension},
+                {"Relationship", EnEvaluation.Extension},
+                {"Religion", EnEvaluation.Extension},
+                {"Respect", EnEvaluation.Extension},
+                {"Sympathy", EnEvaluation.Extension},
+                {"Alone", EnEvaluation.Extension},
+                {"Home", EnEvaluation.Extension},
+                {"Politics", EnEvaluation.Extension},
+                {"Power", EnEvaluation.Extension},
+                {"Teacher", EnEvaluation.Extension},
+                {"Work", EnEvaluation.Extension},
+                {"Dating", EnEvaluation.Extension},
+                {"Technology", EnEvaluation.Extension}
+            };
+
     }
 }
