@@ -138,7 +138,7 @@ namespace QuoteApp.Backend.BusinessLogic.Manager
 
         private void InitializeDatabase()
         {
-            string[] lines = QuoteAppUtils.ReadLocalFile("QuoteApp.Resources.QuotesDatabaseLite.csv").Skip(2).ToArray();
+            string[] lines = QuoteAppUtils.ReadLocalFile("QuoteApp.Resources.QuotesDatabaseLite.csv").Skip(1).ToArray();
             var csvDataReader = new CsvDataReader(lines);
 
             _quotes = csvDataReader.Quotes;

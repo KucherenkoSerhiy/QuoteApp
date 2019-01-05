@@ -1,0 +1,7 @@
+C:\Users\skucherenko\source\repos\QuoteApp\DataFormatter\bin\Debug\DataFormatter.exe.config
+C:\Users\skucherenko\source\repos\QuoteApp\DataFormatter\bin\Debug\DataFormatter.exe
+C:\Users\skucherenko\source\repos\QuoteApp\DataFormatter\bin\Debug\DataFormatter.pdb
+C:\Users\skucherenko\source\repos\QuoteApp\DataFormatter\obj\Debug\QuoteApp.DataFormatter.csprojAssemblyReference.cache
+C:\Users\skucherenko\source\repos\QuoteApp\DataFormatter\obj\Debug\QuoteApp.DataFormatter.csproj.CoreCompileInputs.cache
+C:\Users\skucherenko\source\repos\QuoteApp\DataFormatter\obj\Debug\DataFormatter.exe
+C:\Users\skucherenko\source\repos\QuoteApp\DataFormatter\obj\Debug\DataFormatter.pdb
