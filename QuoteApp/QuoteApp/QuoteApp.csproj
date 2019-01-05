@@ -30,6 +30,9 @@
     <Compile Update="FrontEnd\View\ListView\ThemeListView.xaml.cs">
       <DependentUpon>ThemeListView.xaml</DependentUpon>
     </Compile>
+    <Compile Update="FrontEnd\View\AboutView.xaml.cs">
+      <DependentUpon>AboutView.xaml</DependentUpon>
+    </Compile>
   </ItemGroup>
 
   <ItemGroup>

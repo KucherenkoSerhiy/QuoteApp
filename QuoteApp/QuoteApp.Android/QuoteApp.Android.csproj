@@ -66,6 +66,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CustomRenderers\CustomGradientBackgroundButtonRenderer.cs" />
+    <Compile Include="CustomRenderers\CustomPickerRenderer.cs" />
     <Compile Include="CustomRenderers\CustomSwitchRenderer.cs" />
     <Compile Include="CustomRenderers\OverriddenEntryRenderer.cs" />
     <Compile Include="MainActivity.cs" />
@@ -131,6 +132,9 @@
   </ItemGroup>
   <ItemGroup>
     <AndroidResource Include="Resources\drawable\icon_magnifier_day.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable\image_placeholder.png" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\Android\Xamarin.Android.CSharp.targets" />
 </Project>

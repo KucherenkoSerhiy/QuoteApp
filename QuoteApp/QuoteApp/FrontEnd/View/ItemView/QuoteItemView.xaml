@@ -16,12 +16,10 @@
                 <RowDefinition Height="Auto"/>
             </Grid.RowDefinitions>
             
-            <customControls:CustomGradientBackgroundButton x:Name="ThemeItemNameButton" Text="{Binding ThemeItem.Name}" TextColor="{Binding TextColor}"
-                    Style="{StaticResource ButtonDefaultStyle}"
-                    BorderColor="{Binding LineColor}"
+            <Label x:Name="ThemeItemNameButton" Text="{Binding ThemeItem.Name}" TextColor="{Binding TextColor}"
+                    Style="{StaticResource LabelDefaultStyle}"
                     Grid.Row="0" FontSize="{Binding ThemeTextSize}"
-                    HorizontalOptions="Fill" VerticalOptions="Fill"
-                    Clicked="ThemeItemNameButton_OnClicked"/>
+                    HorizontalOptions="CenterAndExpand" VerticalOptions="Fill"/>
 
             <Label x:Name="QuoteItemTextView" Text="{Binding QuoteItem.Text}" TextColor="{Binding TextColor}"
                    Grid.Row="2" FontSize="{Binding QuoteTextSize}" 

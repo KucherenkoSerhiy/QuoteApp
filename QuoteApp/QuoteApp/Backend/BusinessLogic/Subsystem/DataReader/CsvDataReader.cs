@@ -29,7 +29,6 @@ namespace QuoteApp.Backend.BusinessLogic.Subsystem.DataReader
             ExtractData(lines);
         }
         
-        //TODO: theme colors
         private void ExtractData(string[] lines)
         {
             int autorCount = 0, quoteCount = 0, themeCount = 0;

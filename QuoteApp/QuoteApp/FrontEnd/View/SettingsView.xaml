@@ -10,7 +10,7 @@
             <Label x:Name="SettingsText" Text="Settings"
                    Style="{StaticResource LabelDefaultStyle}"
                    TextColor="{Binding TextColor}" FontSize="{Binding TitleTextSize}"
-                   HorizontalOptions="Center" VerticalOptions="Fill" Margin="0,0,0,40"/>
+                   HorizontalOptions="CenterAndExpand" VerticalOptions="Fill" Margin="0,0,0,40"/>
             
             <Grid Margin="0,0,0,15">
                 <Grid.ColumnDefinitions>
@@ -47,15 +47,18 @@
                 <StackLayout HorizontalOptions="Center" Orientation="Horizontal" Margin="0,0,0,15">
                     <Label Text="Show" Margin="0,0,7,0"
                            Style="{StaticResource LabelDefaultStyle}"
-                           TextColor="{Binding TextColor}" FontSize="{Binding LabelTextSize}"/>
+                           TextColor="{Binding TextColor}" FontSize="{Binding LabelTextSize}"
+                           VerticalOptions="Center"/>
 
                     <Picker x:Name="ThemeRangePicker" Margin="0,0,7,0"
-                            ItemsSource="{Binding ThemeEvaluationVariations}"
-                            SelectedItem="{Binding SelectedThemeRange}"/>
+                            VerticalOptions="Center"
+                            WidthRequest="150"
+                            ItemsSource="{Binding ThemeEvaluationVariations}"/>
 
                     <Label Text="themes"
                            Style="{StaticResource LabelDefaultStyle}"
-                           TextColor="{Binding TextColor}" FontSize="{Binding LabelTextSize}"/>
+                           TextColor="{Binding TextColor}" FontSize="{Binding LabelTextSize}"
+                           VerticalOptions="Center"/>
                 </StackLayout>
             </StackLayout>
 

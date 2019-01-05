@@ -1,32 +1,25 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using QuoteApp.Backend.BusinessLogic.Manager;
 using QuoteApp.Backend.BusinessLogic.Subsystem.PersistentProperties;
 using QuoteApp.Backend.Model;
-using QuoteApp.FrontEnd.View.ItemView;
-using QuoteApp.FrontEnd.View.ListView;
 using QuoteApp.Globals;
 using SkiaSharp;
 using Xamarin.Forms;
+using Xamarin.Forms.Xaml;
 
 namespace QuoteApp.FrontEnd.View
 {
-    public partial class MainPage : ContentPage
+    [XamlCompilation(XamlCompilationOptions.Compile)]
+    public partial class AboutView : ContentPage
     {
         public List<ThemeColor> ThemeDayBackgroundColorItems { get; set; }
         public List<ThemeColor> ThemeNightBackgroundColorItems { get; set; }
-
-        public bool FirstTimeEnteredMainMenu
-        {
-            get => PersistentProperties.Instance.FirstTimeEnteredMainMenu;
-            set => PersistentProperties.Instance.FirstTimeEnteredMainMenu = value;
-        }
-
+        
         #region Getter Properties
 
         public int TitleTextSize => QuoteAppUtils.PxToPt(App.ScreenHeight / 25);
-        public int BriefTextSize => QuoteAppUtils.PxToPt(App.ScreenHeight / 50);
+        public int ContentTextSize => QuoteAppUtils.PxToPt(App.ScreenHeight / 50);
         public int ButtonTextSize => QuoteAppUtils.PxToPt(App.ScreenHeight / 40);
         
         public Color LineColor => PersistentProperties.Instance.NightModeActivated
@@ -36,30 +29,21 @@ namespace QuoteApp.FrontEnd.View
             ? Color.FromHex(QuoteAppConstants.DefaultNightTextColor)
             : Color.FromHex(QuoteAppConstants.DefaultDayTextColor);
 
-        public string MainMenuTitle => FirstTimeEnteredMainMenu ? "Welcome" : "Main Menu";
-
         #endregion
 
-        public MainPage()
+        public AboutView()
         {
             InitializeDefaultValues();
-            RetrieveDependencies();
 
             InitializeComponent();
         }
-
+        
         #region Initialization
 
-        
         private void InitializeDefaultValues()
         {
             ThemeDayBackgroundColorItems = QuoteAppConstants.DefaultDayBackgroundColorGradientItems;
             ThemeNightBackgroundColorItems = QuoteAppConstants.DefaultNightBackgroundColorGradientItems;
-        }
-
-        private void RetrieveDependencies()
-        {
-
         }
 
         private void SetPageContent()
@@ -70,7 +54,7 @@ namespace QuoteApp.FrontEnd.View
                 ? ThemeNightBackgroundColorItems.Select(x => SKColor.Parse(x.ColorCode)).ToArray()
                 : ThemeDayBackgroundColorItems.Select(x => SKColor.Parse(x.ColorCode)).ToArray();
 
-            float[] gradientPositions = PersistentProperties.Instance.NightModeActivated
+            float[] gradientPositions =  PersistentProperties.Instance.NightModeActivated
                 ? ThemeNightBackgroundColorItems.Select(x => x.GradientPosition).ToArray()
                 : ThemeDayBackgroundColorItems.Select(x => x.GradientPosition).ToArray();
 
@@ -86,7 +70,6 @@ namespace QuoteApp.FrontEnd.View
             };
         }
 
-
         #endregion
 
         #region UI Event Handling
@@ -96,36 +79,13 @@ namespace QuoteApp.FrontEnd.View
             SetPageContent();
             OnPropertyChanged("");
         }
-
-        protected override void OnDisappearing()
+        
+        private async void ButtonBack_OnClicked(object sender, EventArgs e)
         {
-            if (FirstTimeEnteredMainMenu)
-                FirstTimeEnteredMainMenu = false;
+            await Navigation.PopAsync();
         }
-
-        private async void ViewThemesButton_OnClicked(object sender, EventArgs e)
-        {
-            await Navigation.PushAsync(new ThemeListView());
-        }
-
-        private async void ViewAutorsButton_OnClicked(object sender, EventArgs e)
-        {
-            await Navigation.PushAsync(new AutorListView());
-        }
-
-        private async void ViewRandomQuoteButton_OnClicked(object sender, EventArgs e)
-        {
-            var view = new QuoteItemView();
-            view.SetQuote(DatabaseManager.Instance.GetRandomQuote());
-
-            await Navigation.PushAsync(view);
-        }
-
-        private async void ViewSettingsButton_OnClicked(object sender, EventArgs e)
-        {
-            await Navigation.PushAsync(new SettingsView());
-        }
-
+        
         #endregion
+        
     }
 }

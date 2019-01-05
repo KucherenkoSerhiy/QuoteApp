@@ -23,6 +23,20 @@ namespace QuoteApp.FrontEnd.View.ItemView
         private EnQuoteSource _quoteSource;
         private Quote _quoteItem = new Quote();
 
+        public Quote QuoteItem
+        {
+            get => _quoteItem;
+            set
+            {
+                if (!string.IsNullOrWhiteSpace(_quoteItem.Text)) BackupQuote = _quoteItem;
+
+                _quoteItem = value; 
+                _databaseManager.SetQuoteRead(QuoteItem);
+            }
+        }
+
+        public Quote BackupQuote { get; set; }
+
         public Autor AutorItem { get; set; } = new Autor();
         public Theme ThemeItem { get; set; } = new Theme
         {
@@ -38,16 +52,6 @@ namespace QuoteApp.FrontEnd.View.ItemView
         public List<ThemeColor> ThemeNightBackgroundColorItems { get; set; }
         
         #region Getter Properties
-
-        public Quote QuoteItem
-        {
-            get => _quoteItem;
-            set
-            {
-                _quoteItem = value; 
-                _databaseManager.SetQuoteRead(QuoteItem);
-            }
-        }
 
         public int QuoteTextSize => QuoteAppUtils.PxToPt(App.ScreenHeight/50);
         public int ThemeTextSize => QuoteAppUtils.PxToPt(App.ScreenHeight/25);
@@ -139,34 +143,27 @@ namespace QuoteApp.FrontEnd.View.ItemView
             SetPageContent();
             OnPropertyChanged("");
         }
-
-        // clicking autor label should go to autor list
-
+        
         /// <summary>
-        /// TODO: goes to theme list
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void ThemeItemNameButton_OnClicked(object sender, EventArgs e)
-        {
-            
-        }
-
-        /// <summary>
-        /// TODO: Previous quote until the first one viewed here or if no more pops back in the navigation
+        /// Shows previous viewed quote or if there is no such the one, pops back in the navigation
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
         private async void ButtonBack_OnClicked(object sender, EventArgs e)
         {
+            if (BackupQuote != null)
+            {
+                QuoteItem = BackupQuote;
+                BackupQuote = null;
+                AutorItem = _databaseManager.GetAutorByQuote(QuoteItem);
+                ThemeItem = _databaseManager.GetThemeByQuote(QuoteItem);
+                OnPropertyChanged("");
+                return;
+            }
+
             await Navigation.PopAsync();
         }
-
-        /// <summary>
-        /// TODO: maybe replace buttons from view by sliding to like/dislike (like in tinder) 
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
+        
         private void ButtonNextQuote_OnClicked(object sender, EventArgs e)
         {
             GetNextQuote();

@@ -8,6 +8,7 @@ using QuoteApp.Backend.Model;
 using QuoteApp.Globals;
 using SkiaSharp;
 using Xamarin.Forms;
+using Xamarin.Forms.Internals;
 using Xamarin.Forms.Xaml;
 
 namespace QuoteApp.FrontEnd.View
@@ -29,13 +30,7 @@ namespace QuoteApp.FrontEnd.View
 	    public bool NightModeOn => PersistentProperties.Instance.NightModeActivated;
 	    public bool DayModeOn => !NightModeOn;
 
-	    public IEnumerable<EnEvaluation> ThemeEvaluationVariations => QuoteAppUtils.GetEnumValues<EnEvaluation>();
-
-	    public EnEvaluation SelectedThemeRange
-	    {
-	        get => PersistentProperties.Instance.SelectedThemeRange;
-	        set => PersistentProperties.Instance.SelectedThemeRange = value;
-	    }
+	    public IEnumerable<EnEvaluation> ThemeEvaluationVariations { get; set; }
 
 	    public int TitleTextSize => QuoteAppUtils.PxToPt(App.ScreenHeight / 25);
 	    public int ButtonTextSize => QuoteAppUtils.PxToPt(App.ScreenHeight / 40);
@@ -78,7 +73,7 @@ namespace QuoteApp.FrontEnd.View
 
 	    private void RetrieveDependencies()
 	    {
-            
+	        ThemeEvaluationVariations = QuoteAppUtils.GetEnumValues<EnEvaluation>();
 	    }
 
 	    private void SetPageContent()
@@ -112,7 +107,13 @@ namespace QuoteApp.FrontEnd.View
 	    protected override void OnAppearing()
 	    {
 	        SetPageContent();
+            ThemeRangePicker.SelectedIndex = ThemeEvaluationVariations.IndexOf(PersistentProperties.Instance.SelectedThemeRange);
 	        OnPropertyChanged("");
+	    }
+
+	    protected override void OnDisappearing()
+	    {
+	        PersistentProperties.Instance.SelectedThemeRange = (EnEvaluation)ThemeRangePicker.SelectedItem;
 	    }
 
 	    private void SetDayModeButton_OnClicked(object sender, EventArgs e)
@@ -133,9 +134,9 @@ namespace QuoteApp.FrontEnd.View
 	        OnPropertyChanged("");
 	    }
 
-	    private void ViewAboutButton_OnClicked(object sender, EventArgs e)
+	    private async void ViewAboutButton_OnClicked(object sender, EventArgs e)
 	    {
-	        // TODO: about view
+	        await Navigation.PushAsync(new AboutView());
 	    }
 
 	    private async void ButtonBack_OnClicked(object sender, EventArgs e)

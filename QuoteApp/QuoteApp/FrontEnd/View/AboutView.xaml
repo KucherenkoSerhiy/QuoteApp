@@ -1,0 +1,56 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:customControls="clr-namespace:QuoteApp.FrontEnd.Resources.CustomControls;assembly=QuoteApp"
+             x:Class="QuoteApp.FrontEnd.View.AboutView"
+             x:Name="this">
+    <ContentPage.Content>
+        <Grid x:Name="ContentRoot" BindingContext="{x:Reference this}" Margin="10">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+            
+            <!--Title-->
+            <Label Text="About" TextColor="{Binding TextColor}"
+                   Style="{StaticResource LabelDefaultStyle}"
+                   Grid.Row="0" FontSize="{Binding TitleTextSize}"
+                   HorizontalOptions="CenterAndExpand" Margin="0,0,0,30"/>
+
+            <!--Curiosity quote-->
+            <StackLayout Grid.Row="1">
+                <Label Text="I have no special talents, I am just passionately curious." 
+                       TextColor="{Binding TextColor}" Style="{StaticResource LabelDefaultStyle}"
+                       FontSize="{Binding ContentTextSize}"
+                       HorizontalOptions="CenterAndExpand" Margin="0,0,0,10"/>
+
+                <Label Text="― Albert Einstein" 
+                       TextColor="{Binding TextColor}" Style="{StaticResource LabelDefaultStyle}"
+                       FontSize="{Binding ContentTextSize}"
+                       HorizontalOptions="EndAndExpand"/>
+            </StackLayout>
+            
+            <!--"Developed by" section-->
+            <StackLayout Grid.Row="2" VerticalOptions="Center">
+                <Label Text="Programmed by: Serhiy Kucherenko"
+                       TextColor="{Binding TextColor}" Style="{StaticResource LabelDefaultStyle}"
+                       FontSize="{Binding ContentTextSize}"
+                       HorizontalOptions="CenterAndExpand" Margin="0,0,0,10"/>
+
+                <Label Text="Managed by: Vasyl Kucherenko" 
+                       TextColor="{Binding TextColor}" Style="{StaticResource LabelDefaultStyle}"
+                       FontSize="{Binding ContentTextSize}"
+                       HorizontalOptions="CenterAndExpand"/>
+            </StackLayout>
+            
+            <!--"Back" Button-->
+            <customControls:CustomGradientBackgroundButton 
+                x:Name="ButtonBack" Text="Back" FontSize="{Binding ButtonTextSize}"
+                Style="{StaticResource ButtonDefaultStyle}" Grid.Row="3"
+                BorderColor="{Binding LineColor}" TextColor="{Binding TextColor}"
+                Clicked="ButtonBack_OnClicked"/>
+        </Grid>
+    </ContentPage.Content>
+</ContentPage> 

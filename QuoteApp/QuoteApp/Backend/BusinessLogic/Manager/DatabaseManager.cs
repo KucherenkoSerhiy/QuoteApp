@@ -29,7 +29,6 @@ namespace QuoteApp.Backend.BusinessLogic.Manager
                 _autors = new SortedDictionary<string, Autor>(_sqliteDbManager.GetList<Autor>().ToDictionary(x => x.FullName, x => x));
                 _themes = new SortedDictionary<string, Theme>(_sqliteDbManager.GetList<Theme>().ToDictionary(x => x.Name, x => x));
                 _autorQuoteThemes = _sqliteDbManager.GetList<AutorQuoteTheme>();
-                //Todo: theme colors
             }
             else
             {

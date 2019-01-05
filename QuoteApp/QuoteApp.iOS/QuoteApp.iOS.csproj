@@ -91,6 +91,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="CustomRenderers\CustomGradientBackgroundButtonRenderer.cs" />
+    <Compile Include="CustomRenderers\CustomPickerRenderer.cs" />
     <Compile Include="CustomRenderers\CustomSwitchRenderer.cs" />
     <Compile Include="CustomRenderers\OverriddenEntryRenderer.cs" />
     <Compile Include="Main.cs" />

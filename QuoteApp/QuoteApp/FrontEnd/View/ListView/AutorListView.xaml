@@ -17,7 +17,7 @@
         <Label Text="Autors" TextColor="{Binding TextColor}"
                Style="{StaticResource LabelDefaultStyle}"
                Grid.Row="0" FontSize="{Binding HeaderTextSize}"
-               HorizontalOptions="Center" VerticalOptions="Fill" Margin="0,10,0,0"/>
+               HorizontalOptions="CenterAndExpand" VerticalOptions="Fill" Margin="0,10,0,0"/>
 
         <!--Search Bar-->
         <Grid Grid.Row="1" Margin="10,10,100,10">
