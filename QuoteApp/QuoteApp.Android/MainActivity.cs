@@ -2,6 +2,7 @@
 
 using Android.App;
 using Android.Content.PM;
+using Android.Content.Res;
 using Android.Runtime;
 using Android.Views;
 using Android.Widget;
@@ -14,8 +15,12 @@ namespace QuoteApp.Droid
     {
         protected override void OnCreate(Bundle savedInstanceState)
         {
+            TypedArray styledAttributes = this.Theme.ObtainStyledAttributes(
+                new int[] { Android.Resource.Attribute.ActionBarSize });
+            var actionbarHeight = (int) styledAttributes.GetDimension(0, 0);
+
             App.ScreenWidth = (int)Resources.DisplayMetrics.WidthPixels; // real pixels
-            App.ScreenHeight = (int)Resources.DisplayMetrics.HeightPixels; // real pixels
+            App.ScreenHeight = (int)Resources.DisplayMetrics.HeightPixels + actionbarHeight; // real pixels
 
             TabLayoutResource = Resource.Layout.Tabbar;
             ToolbarResource = Resource.Layout.Toolbar;

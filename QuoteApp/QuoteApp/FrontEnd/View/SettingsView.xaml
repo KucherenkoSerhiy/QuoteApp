@@ -5,78 +5,91 @@
              x:Class="QuoteApp.FrontEnd.View.SettingsView"
              x:Name="this">
     <ContentPage.Content>
-        <StackLayout x:Name="ContentRoot" Margin="10" BindingContext="{x:Reference this}">
+        <Grid x:Name="ContentRoot" Margin="10" BindingContext="{x:Reference this}">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
 
-            <Label x:Name="SettingsText" Text="Settings"
+            <StackLayout Grid.Row="0">
+
+                <Label x:Name="SettingsText" Text="Settings"
                    Style="{StaticResource LabelDefaultStyle}"
                    TextColor="{Binding TextColor}" FontSize="{Binding TitleTextSize}"
                    HorizontalOptions="CenterAndExpand" VerticalOptions="Fill" Margin="0,0,0,40"/>
-            
-            <Grid Margin="0,0,0,15">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="*" />
-                    <ColumnDefinition Width="20" />
-                    <ColumnDefinition Width="*" />
-                </Grid.ColumnDefinitions>
 
-                <customControls:CustomGradientBackgroundButton Grid.Column="0" x:Name="SetDayModeButton" Text="Day Mode"
+                <Grid Margin="0,0,0,15">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="20" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+
+                    <customControls:CustomGradientBackgroundButton Grid.Column="0" x:Name="SetDayModeButton" Text="Day Mode"
                                                                Style="{StaticResource ButtonDefaultStyle}"
                                                                BorderColor="{Binding LineColor}" TextColor="{Binding TextColor}"
                                                                FontSize="{Binding ToggleButtonTextSize}" IsEnabled="{Binding NightModeOn}"
                                                                Clicked="SetDayModeButton_OnClicked"/>
 
-                <customControls:CustomGradientBackgroundButton Grid.Column="2" x:Name="SetNightModeButton" Text="Night Mode"
+                    <customControls:CustomGradientBackgroundButton Grid.Column="2" x:Name="SetNightModeButton" Text="Night Mode"
                                                                Style="{StaticResource ButtonDefaultStyle}"
                                                                BorderColor="{Binding LineColor}" TextColor="{Binding TextColor}"
                                                                FontSize="{Binding ToggleButtonTextSize}" IsEnabled="{Binding DayModeOn}"
                                                                Clicked="SetNightModeButton_OnClicked"/>
-            </Grid>
+                </Grid>
 
-            <StackLayout VerticalOptions="Center">
-                <StackLayout HorizontalOptions="Center" Orientation="Horizontal" Margin="0,0,0,15">
-                    <customControls:CustomSwitch x:Name="OnlyUnreadQuotesSwitch" Margin="0,0,20,0"
+                <StackLayout VerticalOptions="Center">
+                    <StackLayout HorizontalOptions="Center" Orientation="Horizontal" Margin="0,0,0,15">
+                        <customControls:CustomSwitch x:Name="OnlyUnreadQuotesSwitch" Margin="0,0,20,0"
                                                  IsToggled="{Binding Path=OnlyUnreadQuotes, Mode=TwoWay, Source={x:Reference this}}"
                                                  SwitchThumbImage="icon_switch_thumb"
                                                  SwitchOnColor="{Binding OnSwitchColor}"/>
 
-                    <Label Text="Hide already read quotes"
+                        <Label Text="Hide already read quotes"
                            Style="{StaticResource LabelDefaultStyle}" TextColor="{Binding TextColor}"
                            FontSize="{Binding LabelTextSize}"/>
-                </StackLayout>
-                
-                <StackLayout HorizontalOptions="Center" Orientation="Horizontal" Margin="0,0,0,15">
-                    <Label Text="Show" Margin="0,0,7,0"
+                    </StackLayout>
+
+                    <StackLayout HorizontalOptions="Center" Orientation="Horizontal" Margin="0,0,0,15">
+                        <Label Text="Show" Margin="0,0,7,0"
                            Style="{StaticResource LabelDefaultStyle}"
                            TextColor="{Binding TextColor}" FontSize="{Binding LabelTextSize}"
                            VerticalOptions="Center"/>
 
-                    <Picker x:Name="ThemeRangePicker" Margin="0,0,7,0"
-                            VerticalOptions="Center" TextColor="{Binding TextColor}"
-                            WidthRequest="225" BackgroundColor="{Binding PickerBackgroundColor}"
+                        <Picker x:Name="ThemeRangePicker" Margin="0,0,7,0"
+                            VerticalOptions="Center" TextColor="{Binding TextColor}" FontSize="13"
+                            WidthRequest="165" BackgroundColor="{Binding PickerBackgroundColor}"
                             ItemsSource="{Binding ThemeEvaluationVariationKeys}"
                             SelectedItem="{Binding SelectedThemeEvaluationVariation}"/>
 
-                    <Label Text="themes"
+                        <Label Text="themes"
                            Style="{StaticResource LabelDefaultStyle}"
                            TextColor="{Binding TextColor}" FontSize="{Binding LabelTextSize}"
                            VerticalOptions="Center"/>
+                    </StackLayout>
                 </StackLayout>
+
             </StackLayout>
 
-            <StackLayout Orientation="Vertical" VerticalOptions="End">
-                <customControls:CustomGradientBackgroundButton x:Name="ViewAboutButton" Text="About"
-                        Style="{StaticResource ButtonDefaultStyle}"
-                        BorderColor="{Binding LineColor}" TextColor="{Binding TextColor}"
-                        Margin="0,0,0,15" FontSize="{Binding ButtonTextSize}"
-                        Clicked="ViewAboutButton_OnClicked"/>
+            <StackLayout Grid.Row="2">
 
-                <customControls:CustomGradientBackgroundButton x:Name="ButtonBack" Text="Back"
-                        Style="{StaticResource ButtonDefaultStyle}"
-                        BorderColor="{Binding LineColor}" TextColor="{Binding TextColor}"
-                        Margin="0,0,0,15" FontSize="{Binding ButtonTextSize}"
-                        Clicked="ButtonBack_OnClicked"/>
+                <StackLayout Orientation="Vertical" VerticalOptions="End">
+                    <customControls:CustomGradientBackgroundButton x:Name="ViewAboutButton" Text="About"
+                                                                   Style="{StaticResource ButtonDefaultStyle}"
+                                                                   BorderColor="{Binding LineColor}" TextColor="{Binding TextColor}"
+                                                                   Margin="0,0,0,15" FontSize="{Binding ButtonTextSize}"
+                                                                   Clicked="ViewAboutButton_OnClicked"/>
+
+                    <customControls:CustomGradientBackgroundButton x:Name="ButtonBack" Text="Back"
+                                                                   Style="{StaticResource ButtonDefaultStyle}"
+                                                                   BorderColor="{Binding LineColor}" TextColor="{Binding TextColor}"
+                                                                   Margin="0,0,0,15" FontSize="{Binding ButtonTextSize}"
+                                                                   Clicked="ButtonBack_OnClicked"/>
+                </StackLayout>
+
             </StackLayout>
+        </Grid>
 
-        </StackLayout>
     </ContentPage.Content>
 </ContentPage>
