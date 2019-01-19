@@ -22,8 +22,8 @@
                        HorizontalOptions="CenterAndExpand" VerticalOptions="Start"/>
 
                 <Grid>
-                    <Image Source="image_placeholder.png"
-                           IsVisible="{Binding FirstTimeEnteredMainMenu, Converter={StaticResource InvertBoolenConverter}}"/>
+                    <!--<Image Source="image_placeholder.png"
+                           IsVisible="{Binding FirstTimeEnteredMainMenu, Converter={StaticResource InvertBoolenConverter}}"/>-->
 
                     <Label x:Name="BriefText" IsVisible="{Binding FirstTimeEnteredMainMenu}"
                            Text="You are curious and that's what makes you amazing!" 
@@ -57,6 +57,12 @@
                         BorderColor="{Binding LineColor}" TextColor="{Binding TextColor}"
                         Margin="0,0,0,15" FontSize="{Binding ButtonTextSize}"
                         Clicked="ViewSettingsButton_OnClicked"/>
+
+                <customControls:CustomGradientBackgroundButton x:Name="ExitButton" Text="Exit"
+                        Style="{StaticResource ButtonDefaultStyle}"
+                        BorderColor="{Binding LineColor}" TextColor="{Binding TextColor}"
+                        Margin="0,0,0,15" FontSize="{Binding ButtonTextSize}"
+                        Clicked="ExitButton_OnClicked"/>
             </StackLayout>
 
         </Grid>

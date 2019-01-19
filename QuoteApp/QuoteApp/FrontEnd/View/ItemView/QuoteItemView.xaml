@@ -38,7 +38,7 @@
                     <ColumnDefinition Width="*"/>
                 </Grid.ColumnDefinitions>
 
-                <customControls:CustomGradientBackgroundButton x:Name="ButtonBack" Text="Back" FontSize="{Binding ButtonTextSize}"
+                <customControls:CustomGradientBackgroundButton x:Name="ButtonBack" Text="{Binding ButtonBackText}" FontSize="{Binding ButtonTextSize}"
                         Style="{StaticResource ButtonDefaultStyle}" Grid.Column="0"
                         BorderColor="{Binding LineColor}" TextColor="{Binding TextColor}"
                         Clicked="ButtonBack_OnClicked"/>

@@ -26,6 +26,17 @@ namespace QuoteApp.FrontEnd.Resources.CustomControls
             set => SetValue(EndColorProperty, value);
         }
 
+        public static readonly BindableProperty NominalBorderWidthProperty =
+            BindableProperty.Create(nameof(NominalBorderWidth),
+                typeof(int), typeof(CustomGradientBackgroundButton), 0);
+
+        public int NominalBorderWidth
+        {
+            get => (int)GetValue(NominalBorderWidthProperty);
+            set => SetValue(NominalBorderWidthProperty, value);
+        }
+
+
         public new bool IsPressed { get; set; }
 
         public CustomGradientBackgroundButton()

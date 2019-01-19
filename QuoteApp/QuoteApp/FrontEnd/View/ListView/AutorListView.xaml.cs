@@ -34,7 +34,7 @@ namespace QuoteApp.FrontEnd.View.ListView
             {
                 _searchText = value;
                 _selectionIndex = 0;
-                FilteredAutors = Autors.Where(FilterCondition).ToDictionary(x => x.Key, x => x.Value);
+                FilteredAutors = string.IsNullOrWhiteSpace(_searchText)? Autors : Autors.Where(FilterCondition).ToDictionary(x => x.Key, x => x.Value);
                 OnPropertyChanged(nameof(ShownAutors));
                 OnPropertyChanged(nameof(ListAlphabetIndex));
                 OnPropertyChanged(nameof(ListNumberIndex));
@@ -229,9 +229,7 @@ namespace QuoteApp.FrontEnd.View.ListView
 
         private bool FilterCondition(KeyValuePair<string, Autor> fullName)
         {
-            string[] nameParts = fullName.Key.Split(' ');
-
-            return nameParts.Any(x => x.ToUpper().StartsWith(SearchText == null ? "" : SearchText.ToUpper()));
+            return fullName.Key.ToUpper().Contains(SearchText.ToUpper());
         }
         
         private void UpdatePage()

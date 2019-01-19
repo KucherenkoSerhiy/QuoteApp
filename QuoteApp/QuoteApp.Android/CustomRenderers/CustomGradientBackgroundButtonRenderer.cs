@@ -30,6 +30,7 @@ namespace QuoteApp.Droid.CustomRenderers
             };
             paint.SetShader(gradient);
             canvas.DrawRoundRect(new RectF(0, 0, Width, Height), Button.CornerRadius*2.9f, Button.CornerRadius*2.9f, paint);
+            Button.BorderWidth = Button.IsPressed ? Button.NominalBorderWidth : 0;
             base.DispatchDraw(canvas);
         }
 

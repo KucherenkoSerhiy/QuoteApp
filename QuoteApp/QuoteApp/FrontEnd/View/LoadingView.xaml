@@ -1,0 +1,39 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<ContentView xmlns="http://xamarin.com/schemas/2014/forms" 
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="QuoteApp.FrontEnd.View.LoadingView"
+             x:Name="this">
+  <ContentView.Content>
+      <Grid x:Name="ContentRoot" BindingContext="{x:Reference this}" Margin="10">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+            
+            <!--Title-->
+            <Label Text="Loading..." TextColor="{Binding TextColor}"
+                   Style="{StaticResource LabelDefaultStyle}"
+                   Grid.Row="0" FontSize="{Binding TitleTextSize}"
+                   HorizontalOptions="CenterAndExpand" Margin="0,0,0,30"/>
+
+            <!--Quote and Autor-->
+            <StackLayout Grid.Row="1">
+                <Label Text="{Binding SelectedQuoteText}" 
+                       TextColor="{Binding TextColor}" Style="{StaticResource LabelDefaultStyle}"
+                       FontSize="{Binding ContentTextSize}"
+                       HorizontalOptions="CenterAndExpand" Margin="0,0,0,10"/>
+
+                <Label Text="{Binding SelectedQuoteAutor}" 
+                       TextColor="{Binding TextColor}" Style="{StaticResource LabelDefaultStyle}"
+                       FontSize="{Binding ContentTextSize}"
+                       HorizontalOptions="EndAndExpand"/>
+            </StackLayout>
+            
+            <!--Icon-->
+            <StackLayout Grid.Row="2" VerticalOptions="Center" HorizontalOptions="Center">
+                <Image Source="icon_loading.png" WidthRequest="40" HeightRequest="40"/>
+            </StackLayout>
+        </Grid>
+  </ContentView.Content>
+</ContentView>

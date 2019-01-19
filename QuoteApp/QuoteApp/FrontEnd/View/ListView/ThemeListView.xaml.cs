@@ -35,7 +35,7 @@ namespace QuoteApp.FrontEnd.View.ListView
             {
                 _searchText = value;
                 _selectionIndex = 0;
-                FilteredThemes = Themes.Where(FilterCondition).ToDictionary(x => x.Key, x => x.Value);
+                FilteredThemes = string.IsNullOrWhiteSpace(_searchText)? Themes : Themes.Where(FilterCondition).ToDictionary(x => x.Key, x => x.Value);
                 OnPropertyChanged(nameof(ShownThemes));
                 OnPropertyChanged(nameof(ListAlphabetIndex));
                 OnPropertyChanged(nameof(ListNumberIndex));
@@ -230,9 +230,7 @@ namespace QuoteApp.FrontEnd.View.ListView
 
         private bool FilterCondition(KeyValuePair<string, Theme> fullName)
         {
-            string[] nameParts = fullName.Key.Split(' ');
-
-            return nameParts.Any(x => x.ToUpper().StartsWith(SearchText == null ? "" : SearchText.ToUpper()));
+            return fullName.Key.ToUpper().Contains(SearchText.ToUpper());
         }
         
         private void UpdatePage()

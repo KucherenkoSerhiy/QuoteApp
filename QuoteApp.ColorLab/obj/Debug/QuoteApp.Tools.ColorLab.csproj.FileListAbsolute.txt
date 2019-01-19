@@ -1,0 +1,15 @@
+C:\Users\skucherenko\source\repos\QuoteApp\QuoteApp.ColorLab\bin\Debug\QuoteApp.ColorLab.exe.config
+C:\Users\skucherenko\source\repos\QuoteApp\QuoteApp.ColorLab\bin\Debug\QuoteApp.ColorLab.exe
+C:\Users\skucherenko\source\repos\QuoteApp\QuoteApp.ColorLab\bin\Debug\QuoteApp.ColorLab.pdb
+C:\Users\skucherenko\source\repos\QuoteApp\QuoteApp.ColorLab\obj\Debug\QuoteApp.Tools.ColorLab.csprojAssemblyReference.cache
+C:\Users\skucherenko\source\repos\QuoteApp\QuoteApp.ColorLab\obj\Debug\MainWindow.g.cs
+C:\Users\skucherenko\source\repos\QuoteApp\QuoteApp.ColorLab\obj\Debug\App.g.cs
+C:\Users\skucherenko\source\repos\QuoteApp\QuoteApp.ColorLab\obj\Debug\QuoteApp.ColorLab_MarkupCompile.cache
+C:\Users\skucherenko\source\repos\QuoteApp\QuoteApp.ColorLab\obj\Debug\QuoteApp.ColorLab_MarkupCompile.lref
+C:\Users\skucherenko\source\repos\QuoteApp\QuoteApp.ColorLab\obj\Debug\MainWindow.baml
+C:\Users\skucherenko\source\repos\QuoteApp\QuoteApp.ColorLab\obj\Debug\QuoteApp.ColorLab.g.resources
+C:\Users\skucherenko\source\repos\QuoteApp\QuoteApp.ColorLab\obj\Debug\QuoteApp.ColorLab.Properties.Resources.resources
+C:\Users\skucherenko\source\repos\QuoteApp\QuoteApp.ColorLab\obj\Debug\QuoteApp.Tools.ColorLab.csproj.GenerateResource.cache
+C:\Users\skucherenko\source\repos\QuoteApp\QuoteApp.ColorLab\obj\Debug\QuoteApp.Tools.ColorLab.csproj.CoreCompileInputs.cache
+C:\Users\skucherenko\source\repos\QuoteApp\QuoteApp.ColorLab\obj\Debug\QuoteApp.ColorLab.exe
+C:\Users\skucherenko\source\repos\QuoteApp\QuoteApp.ColorLab\obj\Debug\QuoteApp.ColorLab.pdb

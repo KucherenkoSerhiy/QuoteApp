@@ -30,7 +30,14 @@ namespace QuoteApp.FrontEnd.View
 	    public bool NightModeOn => PersistentProperties.Instance.NightModeActivated;
 	    public bool DayModeOn => !NightModeOn;
 
-	    public IEnumerable<EnEvaluation> ThemeEvaluationVariations { get; set; }
+	    static Dictionary<string, EnEvaluation> ThemeEvaluationVariations { get; } = new Dictionary<string, EnEvaluation>
+	    {
+	        { "Only recommended", EnEvaluation.Recommended },
+	        { "Recommended and useful", EnEvaluation.Useful },
+	        { "All", EnEvaluation.Extension }
+	    };
+	    public List<string> ThemeEvaluationVariationKeys { get; } = ThemeEvaluationVariations.Keys.ToList();
+        public string SelectedThemeEvaluationVariation { get; set; }
 
 	    public int TitleTextSize => QuoteAppUtils.PxToPt(App.ScreenHeight / 25);
 	    public int ButtonTextSize => QuoteAppUtils.PxToPt(App.ScreenHeight / 40);
@@ -45,6 +52,7 @@ namespace QuoteApp.FrontEnd.View
 	        : Color.FromHex(QuoteAppConstants.DefaultDayTextColor);
 
 	    public Color OnSwitchColor => Color.FromHex(QuoteAppConstants.OnSwitchColor);
+	    public Color PickerBackgroundColor => Color.FromRgba(192, 192, 192, 0.15);
 
 	    #endregion
 
@@ -73,7 +81,7 @@ namespace QuoteApp.FrontEnd.View
 
 	    private void RetrieveDependencies()
 	    {
-	        ThemeEvaluationVariations = QuoteAppUtils.GetEnumValues<EnEvaluation>();
+
 	    }
 
 	    private void SetPageContent()
@@ -107,13 +115,13 @@ namespace QuoteApp.FrontEnd.View
 	    protected override void OnAppearing()
 	    {
 	        SetPageContent();
-            ThemeRangePicker.SelectedIndex = ThemeEvaluationVariations.IndexOf(PersistentProperties.Instance.SelectedThemeRange);
+	        SelectedThemeEvaluationVariation = ThemeEvaluationVariations.First(x => x.Value == PersistentProperties.Instance.SelectedThemeRange).Key;
 	        OnPropertyChanged("");
 	    }
 
 	    protected override void OnDisappearing()
 	    {
-	        PersistentProperties.Instance.SelectedThemeRange = (EnEvaluation)ThemeRangePicker.SelectedItem;
+	        PersistentProperties.Instance.SelectedThemeRange = ThemeEvaluationVariations[SelectedThemeEvaluationVariation];
 	    }
 
 	    private void SetDayModeButton_OnClicked(object sender, EventArgs e)

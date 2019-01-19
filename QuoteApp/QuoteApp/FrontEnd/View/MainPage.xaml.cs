@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using QuoteApp.Backend.BusinessLogic.Manager;
+using QuoteApp.Backend.BusinessLogic.Subsystem.CloseApplication;
 using QuoteApp.Backend.BusinessLogic.Subsystem.PersistentProperties;
 using QuoteApp.Backend.Model;
 using QuoteApp.FrontEnd.View.ItemView;
@@ -124,6 +125,12 @@ namespace QuoteApp.FrontEnd.View
         private async void ViewSettingsButton_OnClicked(object sender, EventArgs e)
         {
             await Navigation.PushAsync(new SettingsView());
+        }
+
+        private void ExitButton_OnClicked(object sender, EventArgs e)
+        {
+            var closer = DependencyService.Get<ICloseApplication>();
+            closer?.Close();
         }
 
         #endregion

@@ -56,6 +56,7 @@ namespace QuoteApp.FrontEnd.View.ItemView
         public int QuoteTextSize => QuoteAppUtils.PxToPt(App.ScreenHeight/50);
         public int ThemeTextSize => QuoteAppUtils.PxToPt(App.ScreenHeight/25);
         public int ButtonTextSize => QuoteAppUtils.PxToPt(App.ScreenHeight/40);
+        public string ButtonBackText => BackupQuote == null? "Back" : "Prev Quote";
 
         public Color LineColor => PersistentProperties.Instance.NightModeActivated
             ? Color.FromHex(ThemeItem.NightLineColor)

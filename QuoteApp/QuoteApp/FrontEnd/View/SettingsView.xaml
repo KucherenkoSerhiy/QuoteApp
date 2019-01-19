@@ -39,7 +39,7 @@
                                                  SwitchThumbImage="icon_switch_thumb"
                                                  SwitchOnColor="{Binding OnSwitchColor}"/>
 
-                    <Label Text="Show only unread quotes"
+                    <Label Text="Hide already read quotes"
                            Style="{StaticResource LabelDefaultStyle}" TextColor="{Binding TextColor}"
                            FontSize="{Binding LabelTextSize}"/>
                 </StackLayout>
@@ -51,9 +51,10 @@
                            VerticalOptions="Center"/>
 
                     <Picker x:Name="ThemeRangePicker" Margin="0,0,7,0"
-                            VerticalOptions="Center"
-                            WidthRequest="150"
-                            ItemsSource="{Binding ThemeEvaluationVariations}"/>
+                            VerticalOptions="Center" TextColor="{Binding TextColor}"
+                            WidthRequest="225" BackgroundColor="{Binding PickerBackgroundColor}"
+                            ItemsSource="{Binding ThemeEvaluationVariationKeys}"
+                            SelectedItem="{Binding SelectedThemeEvaluationVariation}"/>
 
                     <Label Text="themes"
                            Style="{StaticResource LabelDefaultStyle}"

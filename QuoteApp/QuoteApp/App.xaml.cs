@@ -1,6 +1,7 @@
 ﻿using System;
 using QuoteApp.Backend.BusinessLogic.Manager;
 using QuoteApp.Backend.BusinessLogic.Subsystem.PersistentProperties;
+using QuoteApp.Backend.BusinessLogic.Subsystem.SubsystemInitializer;
 using QuoteApp.FrontEnd.View;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
@@ -22,20 +23,17 @@ namespace QuoteApp
 
         protected override void OnStart()
         {
-            // Handle when your app starts
-            var databaseManager =  DatabaseManager.Instance;
-            var persistentProperties = PersistentProperties.Instance;
+
         }
 
         protected override void OnSleep()
         {
-            // Handle when your app sleeps
             PersistentProperties.Instance.SerializeToXml();
         }
 
         protected override void OnResume()
         {
-            // Handle when your app resumes
+
         }
     }
 }
