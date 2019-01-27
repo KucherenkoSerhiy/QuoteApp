@@ -58,7 +58,7 @@
                            VerticalOptions="Center"/>
 
                         <Picker x:Name="ThemeRangePicker" Margin="0,0,7,0"
-                            VerticalOptions="Center" TextColor="{Binding TextColor}" FontSize="13"
+                            VerticalOptions="Center" TextColor="{Binding TextColor}" FontSize="{Binding PickerTextSize}"
                             WidthRequest="165" BackgroundColor="{Binding PickerBackgroundColor}"
                             ItemsSource="{Binding ThemeEvaluationVariationKeys}"
                             SelectedItem="{Binding SelectedThemeEvaluationVariation}"/>

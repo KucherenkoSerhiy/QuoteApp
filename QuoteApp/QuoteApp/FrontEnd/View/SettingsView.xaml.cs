@@ -43,6 +43,7 @@ namespace QuoteApp.FrontEnd.View
 	    public int ButtonTextSize => QuoteAppUtils.PxToPt(App.ScreenHeight / 40);
 	    public int ToggleButtonTextSize => QuoteAppUtils.PxToPt(App.ScreenHeight / 50);
 	    public int LabelTextSize => QuoteAppUtils.PxToPt(App.ScreenHeight / 60);
+	    public int PickerTextSize => QuoteAppUtils.PxToPt(App.ScreenHeight / 90);
         
 	    public Color LineColor => PersistentProperties.Instance.NightModeActivated
 	        ? Color.FromHex(QuoteAppConstants.DefaultNightLineColor)

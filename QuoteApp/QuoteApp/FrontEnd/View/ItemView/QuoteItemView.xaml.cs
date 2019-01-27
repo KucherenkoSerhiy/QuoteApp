@@ -115,6 +115,9 @@ namespace QuoteApp.FrontEnd.View.ItemView
         {
             NavigationPage.SetHasNavigationBar(this, false);
 
+            ShareButtonImage.Source = PersistentProperties.Instance.NightModeActivated
+                ? "icon_link_night.png" : "icon_link_day.png";
+
             SKColor[] themeColors = PersistentProperties.Instance.NightModeActivated
                 ? ThemeNightBackgroundColorItems.Select(x => SKColor.Parse(x.ColorCode)).ToArray()
                 : ThemeDayBackgroundColorItems.Select(x => SKColor.Parse(x.ColorCode)).ToArray();
@@ -168,6 +171,41 @@ namespace QuoteApp.FrontEnd.View.ItemView
         private void ButtonNextQuote_OnClicked(object sender, EventArgs e)
         {
             GetNextQuote();
+        }
+
+        
+        private void ShareButton_OnTapped(object sender, EventArgs e)
+        {
+            new Thread(() =>
+            {
+                ShareButtonImage.Source = PersistentProperties.Instance.NightModeActivated
+                    ? "icon_link_day.png" : "icon_link_night.png";
+                Thread.Sleep(250);
+                ShareButtonImage.Source = PersistentProperties.Instance.NightModeActivated
+                    ? "icon_link_night.png" : "icon_link_day.png";
+            }).Start();
+            
+            PopupView.IsVisible = true;
+        }
+
+        private void ContentRoot_OnTapped(object sender, EventArgs e)
+        {
+            PopupView.IsVisible = false;
+        }
+        
+        private void ShareToFacebook_OnTapped(object sender, EventArgs e)
+        {
+            
+        }
+
+        private void ShareToTwitter_OnTapped(object sender, EventArgs e)
+        {
+            
+        }
+
+        private void ShareToInstagram_OnTapped(object sender, EventArgs e)
+        {
+            
         }
 
         #endregion

@@ -1,0 +1,15 @@
+C:\Users\skucherenko\source\repos\QuoteApp\QuoteApp.ExportImageGenerator\bin\Debug\QuoteApp.ExportImageGenerator.exe.config
+C:\Users\skucherenko\source\repos\QuoteApp\QuoteApp.ExportImageGenerator\bin\Debug\QuoteApp.ExportImageGenerator.exe
+C:\Users\skucherenko\source\repos\QuoteApp\QuoteApp.ExportImageGenerator\bin\Debug\QuoteApp.ExportImageGenerator.pdb
+C:\Users\skucherenko\source\repos\QuoteApp\QuoteApp.ExportImageGenerator\obj\Debug\QuoteApp.ExportImageGenerator.csprojAssemblyReference.cache
+C:\Users\skucherenko\source\repos\QuoteApp\QuoteApp.ExportImageGenerator\obj\Debug\MainWindow.g.cs
+C:\Users\skucherenko\source\repos\QuoteApp\QuoteApp.ExportImageGenerator\obj\Debug\App.g.cs
+C:\Users\skucherenko\source\repos\QuoteApp\QuoteApp.ExportImageGenerator\obj\Debug\QuoteApp.ExportImageGenerator_MarkupCompile.cache
+C:\Users\skucherenko\source\repos\QuoteApp\QuoteApp.ExportImageGenerator\obj\Debug\QuoteApp.ExportImageGenerator_MarkupCompile.lref
+C:\Users\skucherenko\source\repos\QuoteApp\QuoteApp.ExportImageGenerator\obj\Debug\MainWindow.baml
+C:\Users\skucherenko\source\repos\QuoteApp\QuoteApp.ExportImageGenerator\obj\Debug\QuoteApp.ExportImageGenerator.g.resources
+C:\Users\skucherenko\source\repos\QuoteApp\QuoteApp.ExportImageGenerator\obj\Debug\QuoteApp.ExportImageGenerator.Properties.Resources.resources
+C:\Users\skucherenko\source\repos\QuoteApp\QuoteApp.ExportImageGenerator\obj\Debug\QuoteApp.ExportImageGenerator.csproj.GenerateResource.cache
+C:\Users\skucherenko\source\repos\QuoteApp\QuoteApp.ExportImageGenerator\obj\Debug\QuoteApp.ExportImageGenerator.csproj.CoreCompileInputs.cache
+C:\Users\skucherenko\source\repos\QuoteApp\QuoteApp.ExportImageGenerator\obj\Debug\QuoteApp.ExportImageGenerator.exe
+C:\Users\skucherenko\source\repos\QuoteApp\QuoteApp.ExportImageGenerator\obj\Debug\QuoteApp.ExportImageGenerator.pdb
