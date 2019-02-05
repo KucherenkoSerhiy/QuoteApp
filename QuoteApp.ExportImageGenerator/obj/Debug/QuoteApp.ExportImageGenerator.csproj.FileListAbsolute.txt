@@ -13,3 +13,6 @@ C:\Users\skucherenko\source\repos\QuoteApp\QuoteApp.ExportImageGenerator\obj\Deb
 C:\Users\skucherenko\source\repos\QuoteApp\QuoteApp.ExportImageGenerator\obj\Debug\QuoteApp.ExportImageGenerator.csproj.CoreCompileInputs.cache
 C:\Users\skucherenko\source\repos\QuoteApp\QuoteApp.ExportImageGenerator\obj\Debug\QuoteApp.ExportImageGenerator.exe
 C:\Users\skucherenko\source\repos\QuoteApp\QuoteApp.ExportImageGenerator\obj\Debug\QuoteApp.ExportImageGenerator.pdb
+C:\Users\skucherenko\source\repos\QuoteApp\QuoteApp.ExportImageGenerator\bin\Debug\SkiaSharp.dll
+C:\Users\skucherenko\source\repos\QuoteApp\QuoteApp.ExportImageGenerator\bin\Debug\SkiaSharp.xml
+C:\Users\skucherenko\source\repos\QuoteApp\QuoteApp.ExportImageGenerator\obj\Debug\QuoteApp.ExportImageGenerator.csproj.CopyComplete

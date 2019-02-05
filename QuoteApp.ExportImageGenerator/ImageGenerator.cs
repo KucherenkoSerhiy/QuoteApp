@@ -19,7 +19,7 @@ namespace QuoteApp.ExportImageGenerator
         /// <param name="autor"></param>
         /// <param name="theme"></param>
         /// <returns></returns>
-        public ImageSource GenerateImageWithQuote(BitmapImage background, string quoteText, string autor, string theme, Color textColor)
+        public ImageSource GenerateImageWithQuote(BitmapImage background, string quoteText, string autor, Color textColor)
         {
             var visual = new DrawingVisual();
             using (DrawingContext drawingContext = visual.RenderOpen())

@@ -227,5 +227,11 @@
   <ItemGroup>
     <AndroidResource Include="Resources\drawable\icon_twitter.png" />
   </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\drawable\BackgroundImageDay.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\drawable\BackgroundImageNight.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\Android\Xamarin.Android.CSharp.targets" />
 </Project>

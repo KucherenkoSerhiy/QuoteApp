@@ -2,11 +2,15 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Threading;
 using QuoteApp.Backend.BusinessLogic.Manager;
 using QuoteApp.Backend.BusinessLogic.Subsystem.PersistentProperties;
+using QuoteApp.Backend.BusinessLogic.Subsystem.StaticExtensions;
 using QuoteApp.Backend.Model;
+using QuoteApp.ExportImageGenerator;
 using QuoteApp.Globals;
 using SkiaSharp;
 using SkiaSharp.Views.Forms;
@@ -195,17 +199,21 @@ namespace QuoteApp.FrontEnd.View.ItemView
         
         private void ShareToFacebook_OnTapped(object sender, EventArgs e)
         {
+            SKBitmap toExport = GetImageToExport();
+
             
         }
 
         private void ShareToTwitter_OnTapped(object sender, EventArgs e)
         {
-            
+            SKBitmap toExport = GetImageToExport();
+
         }
 
         private void ShareToInstagram_OnTapped(object sender, EventArgs e)
         {
-            
+            SKBitmap toExport = GetImageToExport();
+
         }
 
         #endregion
@@ -228,6 +236,24 @@ namespace QuoteApp.FrontEnd.View.ItemView
             AutorItem = _databaseManager.GetAutorByQuote(QuoteItem);
             ThemeItem = _databaseManager.GetThemeByQuote(QuoteItem);
             OnPropertyChanged("");
+        }
+
+        private SKBitmap GetImageToExport()
+        {
+            string colorHex = PersistentProperties.Instance.NightModeActivated ? ThemeItem.NightTextColor : ThemeItem.DayTextColor;
+
+            string imageName = PersistentProperties.Instance.NightModeActivated
+                ? "BackgroundImageNight.png" : "BackgroundImageDay.png";
+            string folderSpace = "FrontEnd.Resources.ResourcesRaw.Icons";
+            SKBitmap bitmap = BitmapExtensions.LoadBitmapResource(this.GetType(),
+                $"QuoteApp.{folderSpace}.{imageName}");
+
+            return ImageGenerator.GenerateImageWithQuote(
+                bitmap,
+                QuoteItem.Text,
+                AutorItem.FullName,
+                colorHex
+            );
         }
     }
 }
