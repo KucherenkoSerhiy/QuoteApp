@@ -5,3 +5,5 @@ QuoteApp/QuoteApp.Android/obj/
 QuoteApp/QuoteApp.iOS/obj/
 QuoteApp/QuoteApp.UWP/obj/
 .vs/
+/packages
+/QuoteApp.ExportImageGenerator/bin/Debug/System.Numerics.Vectors.xml

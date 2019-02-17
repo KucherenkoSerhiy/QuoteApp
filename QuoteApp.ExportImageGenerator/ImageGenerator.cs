@@ -35,7 +35,7 @@ namespace QuoteApp.ExportImageGenerator
                 var formattedQuoteText = new FormattedText(quoteText, CultureInfo.InvariantCulture, FlowDirection.LeftToRight,
                     new Typeface("Arial"), quoteTextSize, new SolidColorBrush(textColor));
                 formattedQuoteText.MaxTextWidth = background.Width * 3 / 4;
-                formattedQuoteText.TextAlignment = TextAlignment.Center;
+                formattedQuoteText.TextAlignment = TextAlignment.Left;
 
                 var formattedAutor = new FormattedText(autor, CultureInfo.InvariantCulture, FlowDirection.LeftToRight,
                     new Typeface("Arial"), autorSize, new SolidColorBrush(textColor));

@@ -1,11 +1,7 @@
-﻿
-
-using System;
-using System.Globalization;
+﻿using System;
 using SkiaSharp;
-using Xamarin.Forms;
 
-namespace QuoteApp.ExportImageGenerator
+namespace QuoteApp.Backend.BusinessLogic.Subsystem.QuoteExport
 {
     public static class ImageGenerator
     {
@@ -31,10 +27,11 @@ namespace QuoteApp.ExportImageGenerator
             {
                 TextSize = quoteTextSize,
                 Typeface = SKTypeface.FromFamilyName("Arial"),
-                Color = SKColor.Parse(textColor),
+                Color = new SKColor(255, 255, 0, 0),
+                TextAlign = SKTextAlign.Center,
                 IsStroke = true,
-                StrokeWidth = background.Width * 3 / 4, // max width
-                TextAlign = SKTextAlign.Center
+                StrokeWidth = background.Width * 3 / 4,
+                IsAntialias = true
             };
             SKPaint autorPaint = new SKPaint
             {
@@ -42,9 +39,10 @@ namespace QuoteApp.ExportImageGenerator
                 Typeface = SKTypeface.FromFamilyName("Arial", 
                     SKFontStyleWeight.Medium, SKFontStyleWidth.Normal, SKFontStyleSlant.Italic),
                 Color = SKColor.Parse(textColor),
+                TextAlign = SKTextAlign.Right,
                 IsStroke = true,
                 StrokeWidth = background.Width * 3 / 4, // max width
-                TextAlign = SKTextAlign.Right
+                IsAntialias = true
             };
 
             // set the positions
@@ -53,17 +51,23 @@ namespace QuoteApp.ExportImageGenerator
             float autorPositionX = background.Width - 50;
             float autorPositiony = background.Height - 300;
 
-            // draw
-            SKBitmap copy = background.Copy();
-            using (SKCanvas bitmapCanvas = new SKCanvas(copy))
+            using (SKCanvas bitmapCanvas = new SKCanvas(background))
             {
                 bitmapCanvas.DrawText(quoteText, quoteTextPositionX, quoteTextPositionY, textPaint);
                 bitmapCanvas.DrawText(autor, autorPositionX, autorPositiony, autorPaint);
 
+                SKPaint tPaint = new SKPaint
+                {
+                    TextSize = 64,
+                    Color = new SKColor(255, 255, 0, 0),
+                    TextAlign = SKTextAlign.Left,
+                    IsAntialias = true
+                };
+                bitmapCanvas.DrawText("Hello SkiaSharp!", 0, 0, tPaint);
                 bitmapCanvas.Save();
+            
+                return background;
             }
-
-            return copy;
         }
     }
 }

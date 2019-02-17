@@ -30,7 +30,6 @@
                 <Image x:Name="ShareButtonImage" WidthRequest="50" HeightRequest="50"/>
             </Frame>
             
-
             <Label x:Name="ThemeItemNameButton" Text="{Binding ThemeItem.Name}" TextColor="{Binding TextColor}"
                     Style="{StaticResource LabelDefaultStyle}"
                     Grid.Row="0" FontSize="{Binding ThemeTextSize}"

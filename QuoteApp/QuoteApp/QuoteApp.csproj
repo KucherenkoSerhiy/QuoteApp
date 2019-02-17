@@ -10,6 +10,13 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="FrontEnd\Resources\ResourcesRaw\Icons\BackgroundImageDay.png" />
+    <None Remove="FrontEnd\Resources\ResourcesRaw\Icons\BackgroundImageNight.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Include="FrontEnd\Resources\ResourcesRaw\Icons\BackgroundImageDay.png" />
+    <EmbeddedResource Include="FrontEnd\Resources\ResourcesRaw\Icons\BackgroundImageNight.png" />
     <EmbeddedResource Include="Resources\QuotesDatabaseLite.csv">
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </EmbeddedResource>
@@ -20,7 +27,7 @@
     <PackageReference Include="SkiaSharp" Version="1.68.0" />
     <PackageReference Include="SkiaSharp.Views.Forms" Version="1.68.0" />
     <PackageReference Include="sqlite-net-pcl" Version="1.5.231" />
-    <PackageReference Include="Xamarin.Forms" Version="3.4.0.1009999" />
+    <PackageReference Include="Xamarin.Forms" Version="3.5.0.129452" />
   </ItemGroup>
 
   <ItemGroup>

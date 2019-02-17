@@ -8,9 +8,10 @@ using System.Reflection;
 using System.Threading;
 using QuoteApp.Backend.BusinessLogic.Manager;
 using QuoteApp.Backend.BusinessLogic.Subsystem.PersistentProperties;
+using QuoteApp.Backend.BusinessLogic.Subsystem.QuoteExport;
 using QuoteApp.Backend.BusinessLogic.Subsystem.StaticExtensions;
 using QuoteApp.Backend.Model;
-using QuoteApp.ExportImageGenerator;
+using QuoteApp.Backend.Services;
 using QuoteApp.Globals;
 using SkiaSharp;
 using SkiaSharp.Views.Forms;
@@ -26,6 +27,8 @@ namespace QuoteApp.FrontEnd.View.ItemView
 
         private EnQuoteSource _quoteSource;
         private Quote _quoteItem = new Quote();
+
+        private SKCanvasView _background;
 
         public Quote QuoteItem
         {
@@ -130,13 +133,13 @@ namespace QuoteApp.FrontEnd.View.ItemView
                 ? ThemeNightBackgroundColorItems.Select(x => x.GradientPosition).ToArray()
                 : ThemeDayBackgroundColorItems.Select(x => x.GradientPosition).ToArray();
 
-            var background = QuoteAppUtils.CreateGradientBackground(themeColors, gradientPositions);
+            _background = QuoteAppUtils.CreateGradientBackground(themeColors, gradientPositions);
 
             Content = new AbsoluteLayout
             {
                 Children =
                 {
-                    {background, new Rectangle(0, 0, 1, 1), AbsoluteLayoutFlags.All},
+                    {_background, new Rectangle(0, 0, 1, 1), AbsoluteLayoutFlags.All},
                     {ContentRoot, new Rectangle(0, 0, 1, 1), AbsoluteLayoutFlags.All}
                 }
             };
@@ -199,20 +202,18 @@ namespace QuoteApp.FrontEnd.View.ItemView
         
         private void ShareToFacebook_OnTapped(object sender, EventArgs e)
         {
-            SKBitmap toExport = GetImageToExport();
+            DependencyService.Get<IShareService>()
+                .Share("First try", "Zero deaths. Bring it on.", GetImageToExport());
 
-            
         }
 
         private void ShareToTwitter_OnTapped(object sender, EventArgs e)
         {
-            SKBitmap toExport = GetImageToExport();
 
         }
 
         private void ShareToInstagram_OnTapped(object sender, EventArgs e)
         {
-            SKBitmap toExport = GetImageToExport();
 
         }
 
@@ -238,22 +239,24 @@ namespace QuoteApp.FrontEnd.View.ItemView
             OnPropertyChanged("");
         }
 
-        private SKBitmap GetImageToExport()
+        private ImageSource GetImageToExport()
         {
             string colorHex = PersistentProperties.Instance.NightModeActivated ? ThemeItem.NightTextColor : ThemeItem.DayTextColor;
 
-            string imageName = PersistentProperties.Instance.NightModeActivated
-                ? "BackgroundImageNight.png" : "BackgroundImageDay.png";
+            string imageName = PersistentProperties.Instance.NightModeActivated //TODO: Switch it back
+                ? "BackgroundImageDay.png" : "BackgroundImageNight.png";
             string folderSpace = "FrontEnd.Resources.ResourcesRaw.Icons";
-            SKBitmap bitmap = BitmapExtensions.LoadBitmapResource(this.GetType(),
+            SKBitmap background = BitmapExtensions.LoadBitmapResource(this.GetType(),
                 $"QuoteApp.{folderSpace}.{imageName}");
 
-            return ImageGenerator.GenerateImageWithQuote(
-                bitmap,
+            var image = ImageGenerator.GenerateImageWithQuote(
+                background,
                 QuoteItem.Text,
                 AutorItem.FullName,
                 colorHex
             );
+
+            return new SKBitmapImageSource{Bitmap = image};
         }
     }
 }
