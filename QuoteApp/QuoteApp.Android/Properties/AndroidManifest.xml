@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<manifest xmlns:android="http://schemas.android.com/apk/res/android" android:versionCode="1" android:versionName="1.0" package="com.companyname.QuoteApp" android:installLocation="auto">
-	<uses-sdk android:minSdkVersion="21" android:targetSdkVersion="19" />
+<manifest xmlns:android="http://schemas.android.com/apk/res/android" android:versionCode="1" android:versionName="1.0" package="com.skucherenko.PocketQuotes" android:installLocation="auto">
+	<uses-sdk android:minSdkVersion="21" android:targetSdkVersion="21" />
 	<uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-	<application android:label="QuoteApp.Android"></application>
+	<application android:label="Pocket Quotes" android:icon="@drawable/icon_magnifier_night"></application>
 </manifest>

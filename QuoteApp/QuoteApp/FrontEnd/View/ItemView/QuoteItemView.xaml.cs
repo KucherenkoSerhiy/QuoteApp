@@ -192,31 +192,10 @@ namespace QuoteApp.FrontEnd.View.ItemView
                     ? "icon_link_night.png" : "icon_link_day.png";
             }).Start();
             
-            PopupView.IsVisible = true;
-        }
-
-        private void ContentRoot_OnTapped(object sender, EventArgs e)
-        {
-            PopupView.IsVisible = false;
-        }
-        
-        private void ShareToFacebook_OnTapped(object sender, EventArgs e)
-        {
             DependencyService.Get<IShareService>()
                 .Share("First try", "Zero deaths. Bring it on.", GetImageToExport());
-
         }
-
-        private void ShareToTwitter_OnTapped(object sender, EventArgs e)
-        {
-
-        }
-
-        private void ShareToInstagram_OnTapped(object sender, EventArgs e)
-        {
-
-        }
-
+        
         #endregion
 
         private void GetNextQuote()

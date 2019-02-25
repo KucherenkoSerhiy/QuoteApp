@@ -16,12 +16,6 @@ namespace QuoteApp.FrontEnd.View
 	[XamlCompilation(XamlCompilationOptions.Compile)]
 	public partial class SettingsView : ContentPage
 	{
-	    public bool OnlyUnreadQuotes
-	    {
-	        get => PersistentProperties.Instance.OnlyUnreadQuotes;
-	        set => PersistentProperties.Instance.OnlyUnreadQuotes = value;
-	    }
-
 	    public List<ThemeColor> ThemeDayBackgroundColorItems { get; set; }
 	    public List<ThemeColor> ThemeNightBackgroundColorItems { get; set; }
 

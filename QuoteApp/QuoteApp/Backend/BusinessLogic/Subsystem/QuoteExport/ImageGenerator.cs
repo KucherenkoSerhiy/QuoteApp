@@ -22,50 +22,37 @@ namespace QuoteApp.Backend.BusinessLogic.Subsystem.QuoteExport
             int quoteTextSize = 48 * Math.Min(maxLines / lines, 4);
             int autorSize = 48;
 
-            // define brushes for text and autor
-            SKPaint textPaint = new SKPaint
-            {
-                TextSize = quoteTextSize,
-                Typeface = SKTypeface.FromFamilyName("Arial"),
-                Color = new SKColor(255, 255, 0, 0),
-                TextAlign = SKTextAlign.Center,
-                IsStroke = true,
-                StrokeWidth = background.Width * 3 / 4,
-                IsAntialias = true
-            };
-            SKPaint autorPaint = new SKPaint
-            {
-                TextSize = autorSize,
-                Typeface = SKTypeface.FromFamilyName("Arial", 
-                    SKFontStyleWeight.Medium, SKFontStyleWidth.Normal, SKFontStyleSlant.Italic),
-                Color = SKColor.Parse(textColor),
-                TextAlign = SKTextAlign.Right,
-                IsStroke = true,
-                StrokeWidth = background.Width * 3 / 4, // max width
-                IsAntialias = true
-            };
-
             // set the positions
             float quoteTextPositionX = background.Width / 8;
             float quoteTextPositionY = 200;
             float autorPositionX = background.Width - 50;
             float autorPositiony = background.Height - 300;
-
+            
+            using (var textPaint = new SKPaint())
+            using (var autorPaint = new SKPaint())
             using (SKCanvas bitmapCanvas = new SKCanvas(background))
             {
+                // define brushes for text and autor
+                textPaint.TextSize = quoteTextSize;
+                textPaint.Typeface = SKTypeface.FromFamilyName("Arial");
+                textPaint.Color = new SKColor(255, 255, 0, 0);
+                textPaint.TextAlign = SKTextAlign.Center;
+                textPaint.IsStroke = true;
+                textPaint.StrokeWidth = background.Width * 3 / 4;
+                textPaint.IsAntialias = true;
+
+                autorPaint.TextSize = autorSize;
+                autorPaint.Typeface = SKTypeface.FromFamilyName("Arial", SKFontStyleWeight.Medium,
+                    SKFontStyleWidth.Normal, SKFontStyleSlant.Italic);
+                autorPaint.Color = SKColor.Parse(textColor);
+                autorPaint.TextAlign = SKTextAlign.Right;
+                autorPaint.IsStroke = true;
+                autorPaint.StrokeWidth = background.Width * 3 / 4; // max width
+                autorPaint.IsAntialias = true;
+                
                 bitmapCanvas.DrawText(quoteText, quoteTextPositionX, quoteTextPositionY, textPaint);
                 bitmapCanvas.DrawText(autor, autorPositionX, autorPositiony, autorPaint);
-
-                SKPaint tPaint = new SKPaint
-                {
-                    TextSize = 64,
-                    Color = new SKColor(255, 255, 0, 0),
-                    TextAlign = SKTextAlign.Left,
-                    IsAntialias = true
-                };
-                bitmapCanvas.DrawText("Hello SkiaSharp!", 0, 0, tPaint);
-                bitmapCanvas.Save();
-            
+                
                 return background;
             }
         }

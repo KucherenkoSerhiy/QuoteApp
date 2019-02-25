@@ -6,9 +6,6 @@
              x:Name="this">
     <ContentPage.Content>
         <Grid x:Name="ContentRoot" BindingContext="{x:Reference this}" Margin="10">
-            <Grid.GestureRecognizers>
-                <TapGestureRecognizer Tapped="ContentRoot_OnTapped"/>
-            </Grid.GestureRecognizers>
 
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto"/>
@@ -22,7 +19,7 @@
 
             <Frame x:Name="ShareButtonFrame" HorizontalOptions="End" VerticalOptions="Start"
                    BackgroundColor="Transparent" BorderColor="{Binding LineColor}"
-                   Padding="5" CornerRadius="10">
+                   Padding="5" CornerRadius="10" IsVisible="False">
                 <Frame.GestureRecognizers>
                     <TapGestureRecognizer Tapped="ShareButton_OnTapped"/>
                 </Frame.GestureRecognizers>
@@ -61,37 +58,6 @@
                         BorderColor="{Binding LineColor}" TextColor="{Binding TextColor}"
                         Clicked="ButtonNextQuote_OnClicked"/>
             </Grid>
-
-            <Frame Grid.Row="0" Grid.RowSpan="7"
-                   x:Name="PopupView" IsVisible="false"
-                   BackgroundColor="CornflowerBlue" BorderColor="RoyalBlue" 
-                   CornerRadius="10" Margin="0,60,0,0"
-                   VerticalOptions="Start" HorizontalOptions="End">
-                <StackLayout Orientation="Vertical">
-                    <Image x:Name="ShareToFacebookImage" Source="icon_facebook.png"
-                           HorizontalOptions="Center"
-                           WidthRequest="50" HeightRequest="50" Margin="0,0,0,5">
-                        <Image.GestureRecognizers>
-                            <TapGestureRecognizer x:Name="ShareToFacebook" Tapped="ShareToFacebook_OnTapped"/>
-                        </Image.GestureRecognizers>
-                    </Image>
-                    <Image x:Name="ShareToTwitterImage" Source="icon_twitter.png"
-                           HorizontalOptions="Center"
-                           WidthRequest="50" HeightRequest="50" Margin="0,0,0,5">
-                        <Image.GestureRecognizers>
-                            <TapGestureRecognizer x:Name="ShareToTwitter" Tapped="ShareToTwitter_OnTapped"/>
-                        </Image.GestureRecognizers>
-                    </Image>
-                    <Image x:Name="ShareToInstagramImage" Source="icon_instagram.png"
-                           HorizontalOptions="Center"
-                           WidthRequest="50" HeightRequest="50">
-                        <Image.GestureRecognizers>
-                            <TapGestureRecognizer x:Name="ShareToInstagram" Tapped="ShareToInstagram_OnTapped"/>
-                        </Image.GestureRecognizers>
-                    </Image>
-                </StackLayout>
-            </Frame>
-
         </Grid>
     </ContentPage.Content>
 </ContentPage> 

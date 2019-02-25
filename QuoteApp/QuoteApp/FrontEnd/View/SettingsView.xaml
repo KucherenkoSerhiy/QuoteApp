@@ -40,17 +40,7 @@
                 </Grid>
 
                 <StackLayout VerticalOptions="Center">
-                    <StackLayout HorizontalOptions="Center" Orientation="Horizontal" Margin="0,0,0,15">
-                        <customControls:CustomSwitch x:Name="OnlyUnreadQuotesSwitch" Margin="0,0,20,0"
-                                                 IsToggled="{Binding Path=OnlyUnreadQuotes, Mode=TwoWay, Source={x:Reference this}}"
-                                                 SwitchThumbImage="icon_switch_thumb"
-                                                 SwitchOnColor="{Binding OnSwitchColor}"/>
-
-                        <Label Text="Hide already read quotes"
-                           Style="{StaticResource LabelDefaultStyle}" TextColor="{Binding TextColor}"
-                           FontSize="{Binding LabelTextSize}"/>
-                    </StackLayout>
-
+                    
                     <StackLayout HorizontalOptions="Center" Orientation="Horizontal" Margin="0,0,0,15">
                         <Label Text="Show" Margin="0,0,7,0"
                            Style="{StaticResource LabelDefaultStyle}"
