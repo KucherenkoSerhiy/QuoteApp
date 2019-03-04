@@ -64,9 +64,8 @@ namespace QuoteApp.Backend.BusinessLogic.Manager
         {
             SortedDictionary<string, Theme> themeList = _themes;
 
-            if (PersistentProperties.Instance.OnlyUnreadQuotes)
-                themeList = new SortedDictionary<string, Theme>(themeList
-                    .Where(ThemeEvaluationCondition).ToDictionary(x => x.Key, x => x.Value));
+            themeList = new SortedDictionary<string, Theme>(themeList
+                .Where(ThemeEvaluationCondition).ToDictionary(x => x.Key, x => x.Value));
             return themeList;
         }
 

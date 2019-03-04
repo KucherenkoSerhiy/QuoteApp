@@ -89,7 +89,8 @@ namespace QuoteApp.Globals
 
             return background;
         }
-        
+
+        public static SKBitmap SKBitmap;
         private static void OnCanvasViewPaintSurface(object sender, SKPaintSurfaceEventArgs args)
         {
             SKSurface surface = args.Surface;
@@ -97,15 +98,23 @@ namespace QuoteApp.Globals
 
             canvas.Clear();
 
-            using (SKPaint paint = new SKPaint())
+            if (SKBitmap == null)
             {
-                SKRect rect = new SKRect(0, 0, App.ScreenWidth, App.ScreenHeight);
+                using (SKPaint paint = new SKPaint())
+                {
+                    SKRect rect = new SKRect(0, 0, App.ScreenWidth, App.ScreenHeight);
 
-                paint.Shader = CreateGradientShader(ref rect);
+                    paint.Shader = CreateGradientShader(ref rect);
 
-                // Draw the gradient on the rectangle
-                canvas.DrawRect(rect, paint);
+                    // Draw the gradient on the rectangle
+                    canvas.DrawRect(rect, paint);
+                }
             }
+            else
+            {
+                canvas.DrawBitmap(SKBitmap, 0, 0);
+            }
+            
         }
 
         private static SKShader CreateGradientShader(ref SKRect rect)

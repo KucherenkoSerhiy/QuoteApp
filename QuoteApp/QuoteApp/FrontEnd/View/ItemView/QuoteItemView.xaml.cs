@@ -183,17 +183,20 @@ namespace QuoteApp.FrontEnd.View.ItemView
         
         private void ShareButton_OnTapped(object sender, EventArgs e)
         {
-            new Thread(() =>
-            {
-                ShareButtonImage.Source = PersistentProperties.Instance.NightModeActivated
-                    ? "icon_link_day.png" : "icon_link_night.png";
-                Thread.Sleep(250);
-                ShareButtonImage.Source = PersistentProperties.Instance.NightModeActivated
-                    ? "icon_link_night.png" : "icon_link_day.png";
-            }).Start();
-            
-            DependencyService.Get<IShareService>()
-                .Share("First try", "Zero deaths. Bring it on.", GetImageToExport());
+            //new Thread(() =>
+            //{
+            //    ShareButtonImage.Source = PersistentProperties.Instance.NightModeActivated
+            //        ? "icon_link_day.png" : "icon_link_night.png";
+            //    Thread.Sleep(250);
+            //    ShareButtonImage.Source = PersistentProperties.Instance.NightModeActivated
+            //        ? "icon_link_night.png" : "icon_link_day.png";
+            //}).Start();
+
+            SKBitmap imageSource = GetImageToExport();
+            QuoteAppUtils.SKBitmap = imageSource;
+            _background.InvalidateSurface();
+            //DependencyService.Get<IShareService>()
+            //    .Share("First try", "Zero deaths. Bring it on.", GetImageToExport());
         }
         
         #endregion
@@ -218,12 +221,12 @@ namespace QuoteApp.FrontEnd.View.ItemView
             OnPropertyChanged("");
         }
 
-        private ImageSource GetImageToExport()
+        private SKBitmap GetImageToExport()
         {
             string colorHex = PersistentProperties.Instance.NightModeActivated ? ThemeItem.NightTextColor : ThemeItem.DayTextColor;
 
-            string imageName = PersistentProperties.Instance.NightModeActivated //TODO: Switch it back
-                ? "BackgroundImageDay.png" : "BackgroundImageNight.png";
+            string imageName = PersistentProperties.Instance.NightModeActivated
+                ? "BackgroundImageNight.png" : "BackgroundImageDay.png";
             string folderSpace = "FrontEnd.Resources.ResourcesRaw.Icons";
             SKBitmap background = BitmapExtensions.LoadBitmapResource(this.GetType(),
                 $"QuoteApp.{folderSpace}.{imageName}");
@@ -235,7 +238,7 @@ namespace QuoteApp.FrontEnd.View.ItemView
                 colorHex
             );
 
-            return new SKBitmapImageSource{Bitmap = image};
+            return image;
         }
     }
 }

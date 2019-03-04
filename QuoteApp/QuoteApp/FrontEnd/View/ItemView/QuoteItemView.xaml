@@ -19,7 +19,7 @@
 
             <Frame x:Name="ShareButtonFrame" HorizontalOptions="End" VerticalOptions="Start"
                    BackgroundColor="Transparent" BorderColor="{Binding LineColor}"
-                   Padding="5" CornerRadius="10" IsVisible="False">
+                   Padding="5" CornerRadius="10">
                 <Frame.GestureRecognizers>
                     <TapGestureRecognizer Tapped="ShareButton_OnTapped"/>
                 </Frame.GestureRecognizers>
