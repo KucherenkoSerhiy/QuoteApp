@@ -6,7 +6,8 @@
     <Application.Resources>
         <ResourceDictionary>
             <Style x:Key="ButtonDefaultStyle" TargetType="customControls:CustomGradientBackgroundButton">
-                <Setter Property="HorizontalOptions" Value="Fill" />
+                <Setter Property="HorizontalOptions" Value="Center" />
+                <Setter Property="WidthRequest" Value="320" />
                 <Setter Property="HeightRequest" Value="80" />
                 <Setter Property="CornerRadius" Value="20"/>
                 <Setter Property="NominalBorderWidth" Value="1" />

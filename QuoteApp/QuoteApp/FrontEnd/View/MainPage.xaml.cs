@@ -28,7 +28,7 @@ namespace QuoteApp.FrontEnd.View
 
         public int TitleTextSize => QuoteAppUtils.PxToPt(App.ScreenHeight / 25);
         public int BriefTextSize => QuoteAppUtils.PxToPt(App.ScreenHeight / 50);
-        public int ButtonTextSize => QuoteAppUtils.PxToPt(App.ScreenHeight / 40);
+        public int ButtonTextSize => QuoteAppUtils.PxToPt(QuoteAppConstants.DefaultButtonTextSize);
         
         public Color LineColor => PersistentProperties.Instance.NightModeActivated
             ? Color.FromHex(QuoteAppConstants.DefaultNightLineColor)

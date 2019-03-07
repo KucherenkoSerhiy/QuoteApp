@@ -34,8 +34,8 @@ namespace QuoteApp.FrontEnd.View
         public string SelectedThemeEvaluationVariation { get; set; }
 
 	    public int TitleTextSize => QuoteAppUtils.PxToPt(App.ScreenHeight / 25);
-	    public int ButtonTextSize => QuoteAppUtils.PxToPt(App.ScreenHeight / 40);
-	    public int ToggleButtonTextSize => QuoteAppUtils.PxToPt(App.ScreenHeight / 50);
+	    public int ButtonTextSize => QuoteAppUtils.PxToPt(QuoteAppConstants.DefaultButtonTextSize);
+	    public int ToggleButtonTextSize => QuoteAppUtils.PxToPt(QuoteAppConstants.DefaultButtonTextSize);
 	    public int LabelTextSize => QuoteAppUtils.PxToPt(App.ScreenHeight / 60);
 	    public int PickerTextSize => QuoteAppUtils.PxToPt(App.ScreenHeight / 90);
         

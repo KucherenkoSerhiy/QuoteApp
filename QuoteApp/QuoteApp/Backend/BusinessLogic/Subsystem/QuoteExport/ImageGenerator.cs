@@ -22,12 +22,6 @@ namespace QuoteApp.Backend.BusinessLogic.Subsystem.QuoteExport
 
             int textSize = 64;
 
-            // set the positions
-            float quoteTextPositionX = background.Width / 8;
-            float quoteTextPositionY = 200;
-            float autorPositionX = background.Width - 50;
-            float autorPositiony = background.Height - 300;
-
             using (SKCanvas bitmapCanvas = new SKCanvas(background))
             {                
                 //bitmapCanvas.DrawText(quoteText, quoteTextPositionX, quoteTextPositionY, textPaint);
@@ -49,7 +43,7 @@ namespace QuoteApp.Backend.BusinessLogic.Subsystem.QuoteExport
                 var textPaint = new SKPaint
                 {
                     TextSize = textSize,
-                    Typeface = SKTypeface.FromFamilyName("Open Sans"),
+                    Typeface = SKTypeface.FromFamilyName("sans-serif-thin"),
                     Color = SKColor.Parse(textColor),
                     TextAlign = SKTextAlign.Center,
                     IsAntialias = true
@@ -58,21 +52,25 @@ namespace QuoteApp.Backend.BusinessLogic.Subsystem.QuoteExport
                 var autorPaint = new SKPaint
                 {
                     TextSize = textSize,
-                    Typeface = SKTypeface.FromFamilyName("Open Sans", SKFontStyleWeight.Medium,
+                    Typeface = SKTypeface.FromFamilyName("sans-serif-thin", SKFontStyleWeight.Black,
                         SKFontStyleWidth.Normal, SKFontStyleSlant.Italic),
                     Color = SKColor.Parse(textColor),
                     TextAlign = SKTextAlign.Right,
                     IsAntialias = true
                 };
 
+                // Draw Text
                 var multilineQuoteText = MakeMultiline(quoteText);
-                //bitmapCanvas.DrawText(quoteText, quoteTextPositionX, quoteTextPositionY, textPaint);
-                
                 for (var i = 0; i < multilineQuoteText.Length; i++)
                 {
                     string s = multilineQuoteText[i];
-                    bitmapCanvas.DrawText(s, background.Width/2, (background.Height * 0.5f + 100 * i) / 2.0f, textPaint);
+                    bitmapCanvas.DrawText(s, background.Width/2, (background.Height * 0.5f + 120 * i) / 2.0f, textPaint);
                 }
+
+                // Draw Author
+                float autorPositionX = background.Width - 50;
+                float autorPositiony = background.Height - 100;
+                bitmapCanvas.DrawText($"-{autor}", autorPositionX, autorPositiony, autorPaint);
 
                 return background;
             }

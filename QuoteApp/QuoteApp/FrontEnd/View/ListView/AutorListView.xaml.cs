@@ -80,7 +80,7 @@ namespace QuoteApp.FrontEnd.View.ListView
 
         public int HeaderTextSize => QuoteAppUtils.PxToPt(App.ScreenHeight/25);
         public int AutorItemTextSize => QuoteAppUtils.PxToPt(App.ScreenHeight/50);
-        public int ButtonTextSize => QuoteAppUtils.PxToPt(App.ScreenHeight/40);
+        public int ButtonTextSize => QuoteAppUtils.PxToPt(QuoteAppConstants.DefaultButtonTextSize);
         public int AlphabetNavigationTextSize => QuoteAppUtils.PxToPt(App.ScreenHeight/45);
         public int NumberNavigationTextSize => QuoteAppUtils.PxToPt(App.ScreenHeight/60);
 

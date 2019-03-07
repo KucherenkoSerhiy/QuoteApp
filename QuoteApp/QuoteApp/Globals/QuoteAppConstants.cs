@@ -11,6 +11,7 @@ namespace QuoteApp.Globals
         #region UI Colors
 
         public const string OnSwitchColor = "009956";
+        public const int DefaultButtonTextSize = 45;
 
         // Day mode
         public static readonly List<ThemeColor> DefaultDayBackgroundColorGradientItems = new List<ThemeColor>
@@ -145,6 +146,5 @@ namespace QuoteApp.Globals
                 {"Dating", EnEvaluation.Extension},
                 {"Technology", EnEvaluation.Extension}
             };
-
     }
 }

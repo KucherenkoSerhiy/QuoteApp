@@ -4,6 +4,7 @@ using Android.Graphics;
 using Android.OS;
 using QuoteApp.Backend.Services;
 using QuoteApp.Droid;
+using SkiaSharp;
 using SkiaSharp.Views.Forms;
 using Xamarin.Forms;
 using Xamarin.Forms.Platform.Android;
@@ -13,15 +14,16 @@ namespace QuoteApp.Droid
 {
     public class ShareServiceActivity : Activity, IShareService
     {
-        public async void Share(string subject, string message, ImageSource image)
+        public async void Share(string subject, string message, SKBitmap image)
         {
             var intent = new Intent(Intent.ActionSend);
             //intent.PutExtra(Intent.ExtraSubject, subject);
             intent.PutExtra(Intent.ExtraText, message);
             intent.SetType("image/png");
 
-            var handler = GetHandler(image);
-            var bitmap = await handler.LoadImageAsync(image, this);
+            var imageSource = new SKBitmapImageSource{Bitmap = image};
+            var handler = GetHandler(imageSource);
+            var bitmap = await handler.LoadImageAsync(imageSource, this);
 
             var path = Environment.GetExternalStoragePublicDirectory(Environment.DirectoryDownloads
                                                                      + Java.IO.File.Separator + "shareImage.png");

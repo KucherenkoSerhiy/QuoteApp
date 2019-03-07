@@ -62,7 +62,7 @@ namespace QuoteApp.FrontEnd.View.ItemView
 
         public int QuoteTextSize => QuoteAppUtils.PxToPt(App.ScreenHeight/50);
         public int ThemeTextSize => QuoteAppUtils.PxToPt(App.ScreenHeight/25);
-        public int ButtonTextSize => QuoteAppUtils.PxToPt(App.ScreenHeight/40);
+        public int ButtonTextSize => QuoteAppUtils.PxToPt(QuoteAppConstants.DefaultButtonTextSize);
         public string ButtonBackText => BackupQuote == null? "Back" : "Prev Quote";
 
         public Color LineColor => PersistentProperties.Instance.NightModeActivated
@@ -193,10 +193,10 @@ namespace QuoteApp.FrontEnd.View.ItemView
             //}).Start();
 
             SKBitmap imageSource = GetImageToExport();
-            QuoteAppUtils.SKBitmap = imageSource;
-            _background.InvalidateSurface();
-            //DependencyService.Get<IShareService>()
-            //    .Share("First try", "Zero deaths. Bring it on.", GetImageToExport());
+            //QuoteAppUtils.SKBitmap = imageSource;
+            //_background.InvalidateSurface();
+            DependencyService.Get<IShareService>()
+                .Share("First try", "Zero deaths. Bring it on.", GetImageToExport());
         }
         
         #endregion
