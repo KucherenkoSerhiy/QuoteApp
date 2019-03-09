@@ -16,34 +16,15 @@ namespace QuoteApp.Backend.BusinessLogic.Subsystem.QuoteExport
         /// <returns></returns>
         public static SKBitmap GenerateImageWithQuote(SKBitmap background, string quoteText, string autor, string textColor)
         {
-            int numberOfCharactersInLine = 30;
-            int lines = (quoteText.Length / numberOfCharactersInLine) + 1;
-            int maxLines = Math.Max(lines, 16);
-
             int textSize = 64;
 
             using (SKCanvas bitmapCanvas = new SKCanvas(background))
             {                
-                //bitmapCanvas.DrawText(quoteText, quoteTextPositionX, quoteTextPositionY, textPaint);
-                //bitmapCanvas.DrawText(autor, autorPositionX, autorPositiony, autorPaint);
-
-                //THIS WORKS
-                //var font = SKTypeface.FromFamilyName("Arial");
-                //var brush = new SKPaint
-                //{
-                //    Typeface = font,
-                //    TextSize = 64.0f,
-                //    IsAntialias = true,
-                //    Color = new SKColor(255, 255, 255, 255)
-                //};
-
-                //bitmapCanvas.DrawText("Resized!", 0, background.Height * 0.5f / 2.0f, brush);
-
                 // define brushes for text and autor
                 var textPaint = new SKPaint
                 {
                     TextSize = textSize,
-                    Typeface = SKTypeface.FromFamilyName("sans-serif-thin"),
+                    Typeface = SKTypeface.FromFamilyName("sans-serif"),
                     Color = SKColor.Parse(textColor),
                     TextAlign = SKTextAlign.Center,
                     IsAntialias = true
@@ -52,7 +33,7 @@ namespace QuoteApp.Backend.BusinessLogic.Subsystem.QuoteExport
                 var autorPaint = new SKPaint
                 {
                     TextSize = textSize,
-                    Typeface = SKTypeface.FromFamilyName("sans-serif-thin", SKFontStyleWeight.Black,
+                    Typeface = SKTypeface.FromFamilyName("sans-serif", SKFontStyleWeight.Normal,
                         SKFontStyleWidth.Normal, SKFontStyleSlant.Italic),
                     Color = SKColor.Parse(textColor),
                     TextAlign = SKTextAlign.Right,
@@ -64,13 +45,13 @@ namespace QuoteApp.Backend.BusinessLogic.Subsystem.QuoteExport
                 for (var i = 0; i < multilineQuoteText.Length; i++)
                 {
                     string s = multilineQuoteText[i];
-                    bitmapCanvas.DrawText(s, background.Width/2, (background.Height * 0.5f + 120 * i) / 2.0f, textPaint);
+                    bitmapCanvas.DrawText(s, background.Width/2, (background.Height * 0.5f + 125 * i) / 2.0f, textPaint);
                 }
 
                 // Draw Author
                 float autorPositionX = background.Width - 50;
                 float autorPositiony = background.Height - 100;
-                bitmapCanvas.DrawText($"-{autor}", autorPositionX, autorPositiony, autorPaint);
+                bitmapCanvas.DrawText($"- {autor}", autorPositionX, autorPositiony, autorPaint);
 
                 return background;
             }

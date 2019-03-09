@@ -183,18 +183,6 @@ namespace QuoteApp.FrontEnd.View.ItemView
         
         private void ShareButton_OnTapped(object sender, EventArgs e)
         {
-            //new Thread(() =>
-            //{
-            //    ShareButtonImage.Source = PersistentProperties.Instance.NightModeActivated
-            //        ? "icon_link_day.png" : "icon_link_night.png";
-            //    Thread.Sleep(250);
-            //    ShareButtonImage.Source = PersistentProperties.Instance.NightModeActivated
-            //        ? "icon_link_night.png" : "icon_link_day.png";
-            //}).Start();
-
-            SKBitmap imageSource = GetImageToExport();
-            //QuoteAppUtils.SKBitmap = imageSource;
-            //_background.InvalidateSurface();
             DependencyService.Get<IShareService>()
                 .Share("First try", "Zero deaths. Bring it on.", GetImageToExport());
         }

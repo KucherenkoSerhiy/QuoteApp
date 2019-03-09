@@ -22,6 +22,10 @@ namespace QuoteApp.Droid
             ToolbarResource = Resource.Layout.Toolbar;
 
             RequestWindowFeature(WindowFeatures.NoTitle);
+
+            StrictMode.VmPolicy.Builder builder = new StrictMode.VmPolicy.Builder();
+            StrictMode.SetVmPolicy(builder.Build());
+
             base.OnCreate(savedInstanceState);
             global::Xamarin.Forms.Forms.Init(this, savedInstanceState);
 
